@@ -1,31 +1,38 @@
 export function initGallery() {
   const wrap = document.getElementById("gallery-drag")
   const track = document.getElementById("gallery-track")
-  const cursor = document.getElementById("cursor-drag")
   const lightbox = document.getElementById("lightbox")
   const lightboxImage = document.getElementById("lightbox-image")
   const lightboxClose = document.getElementById("lightbox-close")
   if (!wrap || !track) return
+
+  // Desktop uses GSAP horizontal scrub; keep drag/swipe for touch / small screens
+  const useDrag = () =>
+    window.matchMedia("(max-width: 767px)").matches ||
+    window.matchMedia("(pointer: coarse)").matches
 
   let isDown = false
   let startX = 0
   let scrollLeft = 0
   let moved = false
 
+  const scroller = () => wrap
+
   const onDown = (clientX) => {
+    if (!useDrag()) return
     isDown = true
     moved = false
     wrap.classList.add("is-dragging")
     startX = clientX - wrap.offsetLeft
-    scrollLeft = wrap.scrollLeft
+    scrollLeft = scroller().scrollLeft
   }
 
   const onMove = (clientX) => {
-    if (!isDown) return
+    if (!isDown || !useDrag()) return
     const x = clientX - wrap.offsetLeft
     const walk = (x - startX) * 1.15
     if (Math.abs(walk) > 4) moved = true
-    wrap.scrollLeft = scrollLeft - walk
+    scroller().scrollLeft = scrollLeft - walk
   }
 
   const onUp = () => {
@@ -36,28 +43,9 @@ export function initGallery() {
   wrap.addEventListener("mousedown", (e) => onDown(e.pageX))
   window.addEventListener("mousemove", (e) => onMove(e.pageX))
   window.addEventListener("mouseup", onUp)
-
-  wrap.addEventListener(
-    "touchstart",
-    (e) => onDown(e.touches[0].pageX),
-    { passive: true },
-  )
-  wrap.addEventListener(
-    "touchmove",
-    (e) => onMove(e.touches[0].pageX),
-    { passive: true },
-  )
+  wrap.addEventListener("touchstart", (e) => onDown(e.touches[0].pageX), { passive: true })
+  wrap.addEventListener("touchmove", (e) => onMove(e.touches[0].pageX), { passive: true })
   wrap.addEventListener("touchend", onUp)
-
-  const finePointer = window.matchMedia("(pointer: fine)").matches
-  if (finePointer && cursor) {
-    wrap.addEventListener("pointerenter", () => cursor.classList.add("is-active"))
-    wrap.addEventListener("pointerleave", () => cursor.classList.remove("is-active"))
-    wrap.addEventListener("pointermove", (e) => {
-      cursor.style.left = `${e.clientX}px`
-      cursor.style.top = `${e.clientY}px`
-    })
-  }
 
   const openLightbox = (src, alt) => {
     if (!lightbox || !lightboxImage) return

@@ -1,38 +1,56 @@
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { initSmoothScroll, scrollToTarget } from "./smooth.js"
+import { initReveals } from "./reveals.js"
+import { initMagnetic } from "./magnetic.js"
+import { initCursor } from "./cursor.js"
+import { initHeroAtmosphere } from "./heroAtmosphere.js"
+import { initPinnedStories } from "./pinned.js"
+import { initMarquee } from "./marquee.js"
+
+gsap.registerPlugin(ScrollTrigger)
+
 export function initMotion() {
+  initSmoothScroll()
+  initCursor()
+  initMagnetic()
+  initHeroAtmosphere()
+  initMarquee()
+  initReveals()
+  initPinnedStories()
+
   const hero = document.querySelector(".hero")
   requestAnimationFrame(() => hero?.classList.add("is-ready"))
 
-  const reveals = document.querySelectorAll(".reveal")
-  if (!reveals.length) return
-
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    reveals.forEach((el) => el.classList.add("is-visible"))
-    return
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible")
-          observer.unobserve(entry.target)
-        }
-      })
-    },
-    { threshold: 0.16, rootMargin: "0px 0px -8% 0px" },
-  )
-
-  reveals.forEach((el) => observer.observe(el))
-
-  const parallax = document.querySelector("[data-parallax] img")
-  if (parallax && window.matchMedia("(pointer: fine)").matches) {
-    window.addEventListener(
-      "scroll",
-      () => {
-        const y = Math.min(window.scrollY * 0.18, 120)
-        parallax.style.transform = `scale(1) translateY(${y}px)`
+  // Hero content entrance after splash / on load
+  const heroIntro = document.querySelectorAll("[data-hero-intro]")
+  if (heroIntro.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    gsap.fromTo(
+      heroIntro,
+      { autoAlpha: 0, y: 40 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 1.15,
+        stagger: 0.12,
+        ease: "power3.out",
+        delay: 0.15,
       },
-      { passive: true },
     )
   }
+
+  // Anchor links use Lenis
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const id = link.getAttribute("href")
+      if (!id || id === "#") return
+      const target = document.querySelector(id)
+      if (!target) return
+      event.preventDefault()
+      scrollToTarget(target)
+    })
+  })
+
+  // Refresh triggers after images load
+  window.addEventListener("load", () => ScrollTrigger.refresh())
 }

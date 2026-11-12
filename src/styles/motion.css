@@ -1,0 +1,288 @@
+/* Era-inspired interaction layer — Dynamix visual tokens only */
+
+html.has-smooth-scroll {
+  scroll-behavior: auto;
+}
+
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none;
+}
+
+html.has-custom-cursor a,
+html.has-custom-cursor button,
+html.has-custom-cursor input,
+html.has-custom-cursor select,
+html.has-custom-cursor textarea,
+html.has-custom-cursor label,
+html.has-custom-cursor .amenities__tab,
+html.has-custom-cursor .amenities__item {
+  cursor: none;
+}
+
+.site-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 160;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  pointer-events: none;
+  mix-blend-mode: difference;
+  display: grid;
+  place-items: center;
+  transition:
+    width var(--dur-fast) var(--ease-out),
+    height var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-soft);
+}
+
+.site-cursor__label {
+  opacity: 0;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.site-cursor[data-state="drag"],
+.site-cursor[data-state="view"],
+.site-cursor[data-state="explore"] {
+  width: 4.6rem;
+  height: 4.6rem;
+  background: rgba(248, 247, 243, 0.92);
+  mix-blend-mode: normal;
+}
+
+.site-cursor[data-state="drag"] .site-cursor__label,
+.site-cursor[data-state="view"] .site-cursor__label,
+.site-cursor[data-state="explore"] .site-cursor__label {
+  opacity: 1;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 95;
+  width: 100%;
+  height: 2px;
+  transform-origin: left center;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--color-terracotta), var(--color-accent));
+  pointer-events: none;
+}
+
+/* Split text */
+.split-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+}
+
+.split-line__mask,
+.split-word {
+  display: inline-block;
+  will-change: transform;
+}
+
+.split-word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+}
+
+/* Preloader progress */
+.splash__progress {
+  width: min(16rem, 58vw);
+  margin-top: 0.5rem;
+}
+
+.splash__progress-track {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.22);
+  overflow: hidden;
+}
+
+.splash__progress-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.splash__progress-label {
+  margin-top: 0.55rem;
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-wide);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Hero atmosphere tabs */
+.hero__atmosphere {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.1rem;
+}
+
+.hero__atmosphere-tab {
+  background: transparent;
+  border: 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  padding: 0.2rem 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.hero__atmosphere-tab.is-active,
+.hero__atmosphere-tab[aria-selected="true"] {
+  color: var(--color-pure);
+}
+
+.hero__atmosphere-tab.is-active::after,
+.hero__atmosphere-tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.25rem;
+  height: 1px;
+  background: var(--color-accent);
+}
+
+.hero__atmosphere-divider {
+  width: 1px;
+  height: 0.85rem;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.hero__media-stack {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__media-stack [data-atmosphere-pane] {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__media-stack img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Marquee */
+.experience-marquee {
+  overflow: hidden;
+  border-block: 1px solid var(--color-border);
+  background: var(--color-cream);
+  padding-block: 1rem;
+}
+
+.experience-marquee__track {
+  display: flex;
+  gap: 2.5rem;
+  width: max-content;
+  will-change: transform;
+}
+
+.experience-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  color: var(--color-heading);
+}
+
+.experience-marquee__item::after {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* Horizontal scrub gallery shell */
+.gallery-scrub {
+  position: relative;
+  overflow: hidden;
+  padding-block: 1rem 2rem;
+}
+
+.gallery-scrub__track {
+  display: flex;
+  gap: 1.1rem;
+  width: max-content;
+  padding-inline: var(--section-pad-x);
+  will-change: transform;
+}
+
+.gallery-scrub .gallery__card {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 767px) {
+  .gallery-scrub {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .gallery-scrub::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-scrub__track {
+    transform: none !important;
+    padding-inline: var(--section-pad-x);
+  }
+
+  .gallery-scrub .gallery__card {
+    scroll-snap-align: start;
+  }
+}
+
+/* Magnetic helpers */
+[data-magnetic] {
+  display: inline-flex;
+}
+
+[data-magnetic-inner] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+}
+
+/* Soft line accent used in storytelling */
+.story-line {
+  width: 1px;
+  height: 4.5rem;
+  background: linear-gradient(180deg, var(--color-accent), transparent);
+  margin-block: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-cursor,
+  .scroll-progress {
+    display: none !important;
+  }
+
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: auto;
+  }
+}

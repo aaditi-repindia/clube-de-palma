@@ -6,9 +6,8 @@ import { initGallery } from "./modules/gallery.js"
 import { initMembershipForm } from "./modules/membership.js"
 import { initMotion } from "./modules/motion.js"
 
-initSplash()
 initNav()
 initAmenities()
 initGallery()
 initMembershipForm()
-initMotion()
+initSplash({ onComplete: initMotion })

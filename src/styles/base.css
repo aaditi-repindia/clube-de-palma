@@ -137,14 +137,19 @@ ol {
 .reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition:
-    opacity var(--dur-slow) var(--ease-out),
-    transform var(--dur-slow) var(--ease-out);
 }
 
 .reveal.is-visible {
   opacity: 1;
   transform: none;
+}
+
+[data-reveal="h"],
+[data-reveal="p"],
+[data-reveal="ctn"],
+[data-reveal="slide"],
+[data-reveal="words"] {
+  will-change: transform, opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {

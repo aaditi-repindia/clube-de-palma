@@ -94,18 +94,13 @@
 .hero__media {
   position: absolute;
   inset: 0;
+  overflow: hidden;
 }
 
 .hero__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1.08);
-  transition: transform 8s var(--ease-soft);
-}
-
-.hero.is-ready .hero__media img {
-  transform: scale(1);
 }
 
 .hero__scrim {
@@ -445,27 +440,13 @@
   font-size: var(--text-small);
 }
 
-.gallery__track-wrap {
-  overflow-x: auto;
-  overflow-y: hidden;
-  cursor: grab;
-  scrollbar-width: none;
-}
-
-.gallery__track-wrap::-webkit-scrollbar {
-  display: none;
-}
-
-.gallery__track-wrap.is-dragging {
-  cursor: grabbing;
-}
-
+.gallery-scrub__track,
 .gallery__track {
   display: flex;
   gap: 1rem;
   width: max-content;
   user-select: none;
-  touch-action: pan-y;
+  align-items: flex-start;
 }
 
 .gallery__card {

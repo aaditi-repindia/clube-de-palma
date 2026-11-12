@@ -68,3 +68,7 @@ Buttons: black fill, `border-radius: 20px`, hover fills `#56C1A9`.
 ## Assets mirrored locally
 
 Photography, logos, social icons, and Seasons woff2 copied from the live WordPress media library into `public/assets/` for prototype use.
+
+## Motion reference (interaction only)
+
+Interaction patterns inspired by https://www.era-residence.com/ (Lenis smooth scroll, GSAP ScrollTrigger reveals, pinned/horizontal scrub, magnetic CTAs, atmosphere crossfade, preloader progress). Visual identity, colours, and typography remain Dynamix Club de Palma only.
