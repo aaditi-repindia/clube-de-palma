@@ -4,7 +4,6 @@ import { initSmoothScroll, scrollToTarget } from "./smooth.js"
 import { initReveals } from "./reveals.js"
 import { initMagnetic } from "./magnetic.js"
 import { initCursor } from "./cursor.js"
-import { initHeroAtmosphere } from "./heroAtmosphere.js"
 import { initPinnedStories } from "./pinned.js"
 import { initMarquee } from "./marquee.js"
 
@@ -14,7 +13,6 @@ export function initMotion() {
   initSmoothScroll()
   initCursor()
   initMagnetic()
-  initHeroAtmosphere()
   initMarquee()
   initReveals()
   initPinnedStories()

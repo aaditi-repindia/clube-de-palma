@@ -9,13 +9,12 @@ export function initSplash({ onComplete } = {}) {
   const label = document.querySelector("[data-preloader-label]")
   const arch = document.querySelector("[data-portal-arch]")
   const archShape = document.querySelector(".splash__arch-shape")
-  const portalImages = [...document.querySelectorAll("[data-portal-image]")]
+  const portalImage = document.querySelector("[data-portal-image]")
   const copy = document.querySelector("[data-portal-copy]")
   const hero = document.querySelector(".hero")
   const progressWrap = document.querySelector(".splash__progress")
   const veil = document.querySelector(".splash__veil")
   const watermark = document.querySelector(".splash__watermark")
-  const atmosphereTabs = [...document.querySelectorAll("[data-portal-atmosphere-tab]")]
 
   if (!splash) {
     onComplete?.()
@@ -25,35 +24,7 @@ export function initSplash({ onComplete } = {}) {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   const forceIntro = new URLSearchParams(window.location.search).has("intro")
   const seen = !forceIntro && sessionStorage.getItem(SESSION_KEY) === "1"
-  let activeAtmosphere = "courtyard"
   let exiting = false
-
-  const setPortalAtmosphere = (key) => {
-    activeAtmosphere = key
-    atmosphereTabs.forEach((tab) => {
-      const on = tab.dataset.portalAtmosphereTab === key
-      tab.classList.toggle("is-active", on)
-      tab.setAttribute("aria-selected", String(on))
-    })
-    portalImages.forEach((img) => {
-      const on = img.dataset.portalImage === key
-      gsap.to(img, {
-        autoAlpha: on ? 1 : 0,
-        duration: 0.85,
-        ease: "power2.inOut",
-        overwrite: "auto",
-      })
-    })
-  }
-
-  atmosphereTabs.forEach((tab) => {
-    tab.addEventListener("click", () => setPortalAtmosphere(tab.dataset.portalAtmosphereTab))
-  })
-
-  const syncHeroAtmosphere = () => {
-    const heroTab = document.querySelector(`[data-atmosphere-tab="${activeAtmosphere}"]`)
-    heroTab?.click()
-  }
 
   const revealHero = () => {
     hero?.classList.add("hero--visible", "is-ready", "is-portal-ready")
@@ -65,7 +36,6 @@ export function initSplash({ onComplete } = {}) {
     splash.classList.add("is-done")
     document.body.classList.remove("is-locked")
     revealHero()
-    syncHeroAtmosphere()
     onComplete?.()
   }
 
@@ -95,9 +65,8 @@ export function initSplash({ onComplete } = {}) {
       onComplete: cleanup,
     })
 
-    // Hold the brand lockup slightly longer for continuity, then dissolve into hero lockup
     tl.to(
-      [progressWrap, skip, watermark, "[data-portal-atmosphere]"].filter(Boolean),
+      [progressWrap, skip, watermark].filter(Boolean),
       {
         autoAlpha: 0,
         y: -12,
@@ -135,7 +104,7 @@ export function initSplash({ onComplete } = {}) {
     )
 
     tl.to(
-      portalImages,
+      portalImage,
       {
         scale: 1,
         duration: 1.65,
@@ -169,9 +138,7 @@ export function initSplash({ onComplete } = {}) {
 
     tl.add(() => {
       revealHero()
-      syncHeroAtmosphere()
 
-      // Continuity: brand lockup appears first (same composition as splash)
       gsap.fromTo(
         "[data-hero-lockup]",
         { autoAlpha: 0, y: 18, scale: 0.985 },
@@ -194,7 +161,7 @@ export function initSplash({ onComplete } = {}) {
           duration: 0.95,
           stagger: 0.07,
           ease: "power3.out",
-          delay: 0.25,
+          delay: 0.2,
         },
       )
     }, 0.85)
@@ -225,16 +192,13 @@ export function initSplash({ onComplete } = {}) {
   document.body.classList.add("is-locked")
   hero?.classList.remove("hero--visible", "is-portal-ready")
 
-  // Initial portal state
   gsap.set(arch, { scale: 0.78 })
-  gsap.set(portalImages, { scale: 1.18 })
-  gsap.set(portalImages.find((img) => img.dataset.portalImage === "courtyard"), { autoAlpha: 1 })
-  gsap.set(portalImages.find((img) => img.dataset.portalImage === "nightfall"), { autoAlpha: 0 })
+  gsap.set(portalImage, { scale: 1.18 })
   gsap.set(copy, { autoAlpha: 0 })
-  gsap.set(
-    "[data-portal-word], [data-portal-script], [data-portal-phrase], [data-portal-atmosphere]",
-    { autoAlpha: 0, y: 32 },
-  )
+  gsap.set("[data-portal-word], [data-portal-script], [data-portal-phrase]", {
+    autoAlpha: 0,
+    y: 32,
+  })
   gsap.set(progressWrap, { autoAlpha: 0 })
   gsap.set(watermark, { autoAlpha: 0, scale: 1.08 })
 
@@ -243,20 +207,19 @@ export function initSplash({ onComplete } = {}) {
   intro
     .to(watermark, { autoAlpha: 1, scale: 1, duration: 1.1 }, 0)
     .to(arch, { scale: 1, duration: 1.4 }, 0.08)
-    .to(portalImages, { scale: 1.08, duration: 1.55 }, 0.08)
+    .to(portalImage, { scale: 1.08, duration: 1.55 }, 0.08)
     .to(copy, { autoAlpha: 1, duration: 0.2 }, 0.4)
     .to("[data-portal-word]", { autoAlpha: 1, y: 0, duration: 1, stagger: 0.14 }, 0.45)
     .to("[data-portal-script]", { autoAlpha: 1, y: 0, duration: 0.85 }, 0.62)
     .to("[data-portal-phrase]", { autoAlpha: 1, y: 0, duration: 0.8 }, 0.78)
-    .to("[data-portal-atmosphere]", { autoAlpha: 1, y: 0, duration: 0.7 }, 0.95)
     .to(progressWrap, { autoAlpha: 1, duration: 0.5 }, 0.85)
 
   const progress = { value: 0 }
   const progressTween = gsap.to(progress, {
     value: 100,
-    duration: 2.6,
+    duration: 2.4,
     ease: "power1.inOut",
-    delay: 0.45,
+    delay: 0.4,
     onUpdate: () => {
       const v = Math.round(progress.value)
       if (fill) gsap.set(fill, { scaleX: progress.value / 100 })

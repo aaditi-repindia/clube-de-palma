@@ -193,26 +193,27 @@
   align-items: center;
   gap: 0.75rem;
   z-index: 3;
-  padding: 0.35rem 0.55rem;
-  border-radius: 10px;
-  transition: background var(--dur-med) var(--ease-soft);
+  padding: 0;
+  background: transparent;
 }
 
 .brand img {
-  height: 2.85rem;
+  height: clamp(3.4rem, 4.2vw, 4.6rem);
   width: auto;
 }
 
 .site-header:not(.is-solid) .brand {
-  background: rgba(248, 247, 243, 0.88);
-  box-shadow: 0 8px 28px rgba(5, 5, 5, 0.18);
+  background: transparent;
+  box-shadow: none;
 }
 
 .site-header:not(.is-solid) .brand img {
-  filter: none;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.28));
 }
 
 .footer__brand img {
+  height: clamp(3rem, 3.6vw, 3.8rem);
+  width: auto;
   filter: brightness(1.05);
 }
 
