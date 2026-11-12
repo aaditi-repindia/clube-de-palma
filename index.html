@@ -25,17 +25,28 @@
       <button type="button" class="splash__skip" id="splash-skip">Skip intro</button>
       <div class="splash__stage">
         <div class="splash__veil" aria-hidden="true"></div>
+        <div class="splash__watermark" aria-hidden="true"><span>C</span></div>
         <div class="splash__arch-wrap">
           <div class="splash__arch" data-portal-arch>
             <div class="splash__arch-ring" aria-hidden="true"></div>
-            <div class="splash__arch-media">
-              <img
-                src="/assets/images/hero-pool.jpg"
-                alt=""
-                width="1600"
-                height="700"
-                data-portal-image
-              />
+            <div class="splash__arch-shape">
+              <div class="splash__arch-media" data-portal-media>
+                <img
+                  src="/assets/images/hero-pool.jpg"
+                  alt=""
+                  width="1600"
+                  height="700"
+                  data-portal-image="courtyard"
+                />
+                <img
+                  class="is-hidden"
+                  src="/assets/images/hero-night-1.jpg"
+                  alt=""
+                  width="1600"
+                  height="900"
+                  data-portal-image="nightfall"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -49,10 +60,14 @@
             <span>A place</span>
             <span>to belong</span>
           </div>
-          <div class="splash__atmosphere" data-portal-atmosphere>
-            <span class="is-active">Courtyard</span>
+          <div class="splash__atmosphere" data-portal-atmosphere role="tablist" aria-label="Atmosphere preview">
+            <button type="button" class="is-active" role="tab" aria-selected="true" data-portal-atmosphere-tab="courtyard">
+              Courtyard
+            </button>
             <span class="splash__atmosphere-line" aria-hidden="true"></span>
-            <span>Nightfall</span>
+            <button type="button" role="tab" aria-selected="false" data-portal-atmosphere-tab="nightfall">
+              Nightfall
+            </button>
           </div>
         </div>
         <div class="splash__progress">
@@ -109,14 +124,35 @@
         </div>
         <div class="hero__scrim" aria-hidden="true"></div>
         <div class="hero__content">
-          <div class="hero__brand-lockup" data-hero-intro>
+          <div class="hero__brand-lockup" data-hero-intro data-hero-lockup>
             <p class="hero__word">CLUBE</p>
             <p class="hero__script">de</p>
             <p class="hero__word hero__word--offset">PALMA</p>
           </div>
-          <div class="hero__phrase-row" data-hero-intro>
+          <div class="hero__phrase-row" data-hero-intro data-hero-lockup>
             <span>A place</span>
             <span>to belong</span>
+          </div>
+          <div class="hero__atmosphere" data-hero-intro data-hero-lockup role="tablist" aria-label="Club atmosphere">
+            <button
+              class="hero__atmosphere-tab is-active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              data-atmosphere-tab="courtyard"
+            >
+              Courtyard
+            </button>
+            <span class="hero__atmosphere-divider" aria-hidden="true"></span>
+            <button
+              class="hero__atmosphere-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-atmosphere-tab="nightfall"
+            >
+              Nightfall
+            </button>
           </div>
           <p class="eyebrow" data-hero-intro style="color: var(--color-accent)">Discover a clube of endless options</p>
           <h1 class="hero__title" data-hero-intro>A haven of experiences, where you belong</h1>
@@ -137,27 +173,6 @@
             >
               <span data-magnetic-inner>Apply for Membership</span>
             </a>
-          </div>
-          <div class="hero__atmosphere" data-hero-intro role="tablist" aria-label="Club atmosphere">
-            <button
-              class="hero__atmosphere-tab is-active"
-              type="button"
-              role="tab"
-              aria-selected="true"
-              data-atmosphere-tab="courtyard"
-            >
-              Courtyard
-            </button>
-            <span class="hero__atmosphere-divider" aria-hidden="true"></span>
-            <button
-              class="hero__atmosphere-tab"
-              type="button"
-              role="tab"
-              aria-selected="false"
-              data-atmosphere-tab="nightfall"
-            >
-              Nightfall
-            </button>
           </div>
         </div>
         <a class="hero__scroll" href="#about" aria-label="Scroll to about">
