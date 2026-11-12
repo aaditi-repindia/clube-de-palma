@@ -193,6 +193,7 @@
 }
 
 .brand {
+  --brand-h: clamp(3.2rem, 4.2vw, 4.5rem);
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -201,27 +202,38 @@
   padding: 0;
   margin-right: auto;
   background: transparent;
+  width: calc(var(--brand-h) * 411 / 212);
+  height: var(--brand-h);
 }
 
 .brand img,
 .brand__mark {
-  height: clamp(3.2rem, 4.2vw, 4.5rem);
-  width: auto;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
   display: block;
+  transition: opacity var(--dur-med) var(--ease-soft);
+  pointer-events: none;
+}
+
+/* Hero: white mark. Scrolled solid header: crossfade to coloured mark */
+.brand__mark--light {
+  opacity: 1;
 }
 
 .brand__mark--dark {
-  display: none;
+  opacity: 0;
 }
 
-/* After scroll: solid header uses the coloured Club de Palma mark */
 .site-header.is-solid .brand__mark--light {
-  display: none;
+  opacity: 0;
 }
 
 .site-header.is-solid .brand__mark--dark {
-  display: block;
-  height: clamp(2.9rem, 3.8vw, 4rem);
+  opacity: 1;
 }
 
 .footer__brand img {

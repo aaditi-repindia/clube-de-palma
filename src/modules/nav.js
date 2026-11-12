@@ -9,11 +9,16 @@ export function initNav() {
 
   const setSolid = () => {
     if (!header) return
-    header.classList.toggle("is-solid", window.scrollY > 40)
+    const hero = document.getElementById("top")
+    const leaveHero = hero
+      ? window.scrollY > Math.max(48, hero.offsetHeight * 0.12)
+      : window.scrollY > 48
+    header.classList.toggle("is-solid", leaveHero)
   }
 
   setSolid()
   window.addEventListener("scroll", setSolid, { passive: true })
+  window.addEventListener("resize", setSolid, { passive: true })
 
   const setNavOpen = (open) => {
     nav?.classList.toggle("is-open", open)
