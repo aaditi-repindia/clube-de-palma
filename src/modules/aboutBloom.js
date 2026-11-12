@@ -1,35 +1,48 @@
 import gsap from "gsap"
 
 const BLOOM_SPOTS = [
-  { x: "7%", y: "14%", size: 4.8, delay: 0, rotate: -18 },
-  { x: "18%", y: "5%", size: 3.6, delay: 0.9, rotate: 12 },
-  { x: "82%", y: "7%", size: 4.2, delay: 1.7, rotate: 16 },
-  { x: "93%", y: "24%", size: 3.7, delay: 2.6, rotate: -8 },
-  { x: "5%", y: "62%", size: 4.0, delay: 1.3, rotate: 14 },
-  { x: "4%", y: "36%", size: 3.3, delay: 3.2, rotate: -22 },
-  { x: "78%", y: "90%", size: 5.0, delay: 0.5, rotate: 8 },
-  { x: "93%", y: "72%", size: 4.1, delay: 2.1, rotate: -12 },
-  { x: "54%", y: "94%", size: 3.5, delay: 2.9, rotate: 18 },
-  { x: "36%", y: "4%", size: 3.2, delay: 3.7, rotate: -6 },
-  { x: "12%", y: "90%", size: 3.8, delay: 2.4, rotate: 10 },
-  { x: "96%", y: "48%", size: 3.4, delay: 3.5, rotate: -14 },
+  { x: "7%", y: "14%", size: 5.2, delay: 0, rotate: -18 },
+  { x: "18%", y: "5%", size: 3.9, delay: 0.9, rotate: 12 },
+  { x: "82%", y: "7%", size: 4.6, delay: 1.7, rotate: 16 },
+  { x: "93%", y: "24%", size: 4.0, delay: 2.6, rotate: -8 },
+  { x: "5%", y: "62%", size: 4.4, delay: 1.3, rotate: 14 },
+  { x: "4%", y: "36%", size: 3.6, delay: 3.2, rotate: -22 },
+  { x: "78%", y: "90%", size: 5.4, delay: 0.5, rotate: 8 },
+  { x: "93%", y: "72%", size: 4.5, delay: 2.1, rotate: -12 },
+  { x: "54%", y: "94%", size: 3.8, delay: 2.9, rotate: 18 },
+  { x: "36%", y: "4%", size: 3.5, delay: 3.7, rotate: -6 },
+  { x: "12%", y: "90%", size: 4.1, delay: 2.4, rotate: 10 },
+  { x: "96%", y: "48%", size: 3.7, delay: 3.5, rotate: -14 },
 ]
 
-const PETAL_ANGLES = [0, 72, 144, 216, 288]
+/** Outer ring of jasmine petals */
+const OUTER_ANGLES = [0, 72, 144, 216, 288]
+/** Inner accent petals, offset between the outer ones */
+const INNER_ANGLES = [36, 108, 180, 252, 324]
+
+/** Soft pointed petal path (tip at top, base near flower center) */
+const PETAL_PATH =
+  "M50 14 C58 18 64 28 63 40 C62 48 57 54 50 56 C43 54 38 48 37 40 C36 28 42 18 50 14 Z"
+
+function petalGroup(angle, index, ring) {
+  return `
+    <g class="about__bloom-petal-wrap about__bloom-petal-wrap--${ring}" data-petal="${index}" data-ring="${ring}" transform="rotate(${angle} 50 50)">
+      <path class="about__bloom-petal about__bloom-petal--${ring}" d="${PETAL_PATH}" />
+    </g>
+  `
+}
 
 function jasmineSvg() {
-  const petals = PETAL_ANGLES.map(
-    (angle, index) => `
-      <g class="about__bloom-petal-wrap" data-petal="${index}" transform="rotate(${angle} 50 50)">
-        <ellipse class="about__bloom-petal" cx="50" cy="30" rx="12" ry="24" />
-      </g>`,
-  ).join("")
+  const outer = OUTER_ANGLES.map((angle, i) => petalGroup(angle, i, "outer")).join("")
+  const inner = INNER_ANGLES.map((angle, i) => petalGroup(angle, i + 5, "inner")).join("")
 
   return `
     <svg class="about__bloom-svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-      <g class="about__bloom-petals">${petals}</g>
-      <circle class="about__bloom-center" cx="50" cy="50" r="6" />
-      <circle class="about__bloom-center-dot" cx="50" cy="50" r="2.4" />
+      <g class="about__bloom-petals about__bloom-petals--outer">${outer}</g>
+      <g class="about__bloom-petals about__bloom-petals--inner">${inner}</g>
+      <circle class="about__bloom-center" cx="50" cy="50" r="7" />
+      <circle class="about__bloom-center-mid" cx="50" cy="50" r="4.2" />
+      <circle class="about__bloom-center-dot" cx="50" cy="50" r="2" />
     </svg>
   `.trim()
 }
@@ -44,39 +57,53 @@ function createBloom(spot) {
   return { el, delay: spot.delay, rotate: spot.rotate }
 }
 
-function setBudPose(wraps, centerNodes) {
-  wraps.forEach((wrap) => {
-    const petal = wrap.querySelector(".about__bloom-petal")
-    gsap.set(petal, {
-      svgOrigin: "50 50",
-      scaleX: 0.42,
-      scaleY: 0.28,
-      y: 14,
-      opacity: 0.9,
-    })
-  })
-  gsap.set(centerNodes, { svgOrigin: "50 50", scale: 0.5, opacity: 0.5 })
+function petalsOf(el, ring) {
+  return [...el.querySelectorAll(`.about__bloom-petal--${ring}`)]
 }
 
-function setOpenPose(wraps, centerNodes) {
-  wraps.forEach((wrap) => {
-    const petal = wrap.querySelector(".about__bloom-petal")
-    gsap.set(petal, {
-      svgOrigin: "50 50",
-      scaleX: 1,
-      scaleY: 1,
-      y: 0,
-      opacity: 1,
-    })
+function setBudPose(el) {
+  const outer = petalsOf(el, "outer")
+  const inner = petalsOf(el, "inner")
+  const centers = el.querySelectorAll(
+    ".about__bloom-center, .about__bloom-center-mid, .about__bloom-center-dot",
+  )
+
+  gsap.set(outer, {
+    svgOrigin: "50 50",
+    scaleX: 0.38,
+    scaleY: 0.22,
+    y: 18,
+    opacity: 0.85,
   })
-  gsap.set(centerNodes, { svgOrigin: "50 50", scale: 1, opacity: 1 })
+  gsap.set(inner, {
+    svgOrigin: "50 50",
+    scaleX: 0.28,
+    scaleY: 0.16,
+    y: 20,
+    opacity: 0.55,
+  })
+  gsap.set(centers, { svgOrigin: "50 50", scale: 0.45, opacity: 0.45 })
+}
+
+function setOpenPose(el) {
+  const outer = petalsOf(el, "outer")
+  const inner = petalsOf(el, "inner")
+  const centers = el.querySelectorAll(
+    ".about__bloom-center, .about__bloom-center-mid, .about__bloom-center-dot",
+  )
+
+  gsap.set(outer, { svgOrigin: "50 50", scaleX: 1, scaleY: 1, y: 0, opacity: 1 })
+  gsap.set(inner, { svgOrigin: "50 50", scaleX: 0.78, scaleY: 0.72, y: 4, opacity: 0.95 })
+  gsap.set(centers, { svgOrigin: "50 50", scale: 1, opacity: 1 })
 }
 
 function animateBloom(el, delay, rotate) {
-  const wraps = [...el.querySelectorAll(".about__bloom-petal-wrap")]
-  const petals = wraps.map((wrap) => wrap.querySelector(".about__bloom-petal"))
-  const centerNodes = el.querySelectorAll(".about__bloom-center, .about__bloom-center-dot")
-  if (!petals.length) return
+  const outer = petalsOf(el, "outer")
+  const inner = petalsOf(el, "inner")
+  const centers = el.querySelectorAll(
+    ".about__bloom-center, .about__bloom-center-mid, .about__bloom-center-dot",
+  )
+  if (!outer.length) return
 
   gsap.set(el, {
     xPercent: -50,
@@ -87,7 +114,7 @@ function animateBloom(el, delay, rotate) {
     transformOrigin: "50% 50%",
   })
 
-  setBudPose(wraps, centerNodes)
+  setBudPose(el)
 
   const tl = gsap.timeline({
     repeat: -1,
@@ -95,29 +122,54 @@ function animateBloom(el, delay, rotate) {
     delay,
   })
 
-  // Bud → open blossom
+  // Bud → open: outer petals unfurl first, then inner petals
   tl.to(
-    petals,
+    outer,
     {
       scaleX: 1,
       scaleY: 1,
       y: 0,
       opacity: 1,
-      duration: 3.3,
-      stagger: { each: 0.1, from: "start" },
+      duration: 3.2,
+      stagger: { each: 0.11, from: "start" },
       svgOrigin: "50 50",
     },
     0,
   )
-    .to(centerNodes, { scale: 1, opacity: 1, duration: 2.6, svgOrigin: "50 50" }, 0.4)
+    .to(
+      inner,
+      {
+        scaleX: 0.78,
+        scaleY: 0.72,
+        y: 4,
+        opacity: 0.95,
+        duration: 2.8,
+        stagger: { each: 0.09, from: "start" },
+        svgOrigin: "50 50",
+      },
+      0.45,
+    )
+    .to(centers, { scale: 1, opacity: 1, duration: 2.5, svgOrigin: "50 50" }, 0.5)
 
     // Soft living hold
     .to(
-      petals,
+      outer,
       {
-        scaleX: 1.05,
-        scaleY: 1.04,
-        duration: 1.9,
+        scaleX: 1.04,
+        scaleY: 1.03,
+        duration: 1.8,
+        yoyo: true,
+        repeat: 1,
+        svgOrigin: "50 50",
+      },
+      3.3,
+    )
+    .to(
+      inner,
+      {
+        scaleX: 0.82,
+        scaleY: 0.76,
+        duration: 1.8,
         yoyo: true,
         repeat: 1,
         svgOrigin: "50 50",
@@ -125,21 +177,34 @@ function animateBloom(el, delay, rotate) {
       3.3,
     )
 
-    // Open → bud again
+    // Open → bud
     .to(
-      petals,
+      inner,
       {
-        scaleX: 0.42,
-        scaleY: 0.28,
-        y: 14,
-        opacity: 0.9,
-        duration: 3.5,
+        scaleX: 0.28,
+        scaleY: 0.16,
+        y: 20,
+        opacity: 0.55,
+        duration: 2.8,
+        stagger: { each: 0.06, from: "end" },
+        svgOrigin: "50 50",
+      },
+      6.6,
+    )
+    .to(
+      outer,
+      {
+        scaleX: 0.38,
+        scaleY: 0.22,
+        y: 18,
+        opacity: 0.85,
+        duration: 3.4,
         stagger: { each: 0.08, from: "end" },
         svgOrigin: "50 50",
       },
-      6.8,
+      6.9,
     )
-    .to(centerNodes, { scale: 0.5, opacity: 0.5, duration: 2.9, svgOrigin: "50 50" }, 7.0)
+    .to(centers, { scale: 0.45, opacity: 0.45, duration: 2.8, svgOrigin: "50 50" }, 7.1)
     .to({}, { duration: 1.0 })
 
   gsap.to(el, {
@@ -164,6 +229,7 @@ export function initAboutBloom() {
   if (!section) return
 
   section.querySelector(".about__blooms")?.remove()
+  section.querySelector(".about__backdrop")?.remove()
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   const layer = document.createElement("div")
@@ -179,28 +245,10 @@ export function initAboutBloom() {
 
   if (reduced) {
     blooms.forEach(({ el, rotate }) => {
-      const wraps = [...el.querySelectorAll(".about__bloom-petal-wrap")]
-      const centerNodes = el.querySelectorAll(".about__bloom-center, .about__bloom-center-dot")
       gsap.set(el, { xPercent: -50, yPercent: -50, rotate, scale: 1, opacity: 1 })
-      setOpenPose(wraps, centerNodes)
+      setOpenPose(el)
     })
     return
-  }
-
-  const backdropImg = section.querySelector(".about__backdrop img")
-  if (backdropImg) {
-    gsap.fromTo(
-      backdropImg,
-      { opacity: 0.88, scale: 1 },
-      {
-        opacity: 1,
-        scale: 1.012,
-        duration: 9.5,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-      },
-    )
   }
 
   blooms.forEach(({ el, delay, rotate }) => animateBloom(el, delay, rotate))
