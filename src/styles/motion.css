@@ -95,40 +95,11 @@ html.has-custom-cursor .amenities__item {
   padding-bottom: 0.08em;
 }
 
-/* Preloader progress */
-.splash__progress {
-  width: min(16rem, 58vw);
-  margin-top: 0.5rem;
-}
-
-.splash__progress-track {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.22);
-  overflow: hidden;
-}
-
-.splash__progress-fill {
-  display: block;
-  height: 100%;
-  width: 100%;
-  background: var(--color-accent);
-  transform: scaleX(0);
-  transform-origin: left center;
-}
-
-.splash__progress-label {
-  margin-top: 0.55rem;
-  font-size: var(--text-label);
-  letter-spacing: var(--tracking-wide);
-  color: rgba(255, 255, 255, 0.7);
-}
-
 /* Hero atmosphere tabs */
 .hero__atmosphere {
   display: inline-flex;
   align-items: center;
   gap: 0.85rem;
-  margin-bottom: 1.1rem;
 }
 
 .hero__atmosphere-tab {
