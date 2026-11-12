@@ -56,8 +56,8 @@ export function initSplash({ onComplete } = {}) {
     const target = archShape || arch
     const rect = target.getBoundingClientRect()
     const scale = Math.max(
-      (window.innerWidth * 1.2) / rect.width,
-      (window.innerHeight * 1.2) / rect.height,
+      (window.innerWidth * 1.15) / rect.width,
+      (window.innerHeight * 1.15) / rect.height,
     )
 
     const tl = gsap.timeline({
@@ -83,11 +83,12 @@ export function initSplash({ onComplete } = {}) {
       0.05,
     )
 
+    // Expand the portal frame...
     tl.to(
       arch,
       {
         scale,
-        duration: 1.65,
+        duration: 1.7,
         ease: "power3.inOut",
       },
       0.12,
@@ -103,12 +104,15 @@ export function initSplash({ onComplete } = {}) {
       0.18,
     )
 
+    // ...but counter-scale the full-viewport image so it never upscales/pixelates
     tl.to(
       portalImage,
       {
-        scale: 1,
-        duration: 1.65,
-        ease: "power2.out",
+        xPercent: -50,
+        yPercent: -50,
+        scale: 1 / scale,
+        duration: 1.7,
+        ease: "power3.inOut",
       },
       0.12,
     )
@@ -173,7 +177,7 @@ export function initSplash({ onComplete } = {}) {
         duration: 0.55,
         ease: "power2.inOut",
       },
-      1.45,
+      1.5,
     )
   }
 
@@ -192,8 +196,9 @@ export function initSplash({ onComplete } = {}) {
   document.body.classList.add("is-locked")
   hero?.classList.remove("hero--visible", "is-portal-ready")
 
-  gsap.set(arch, { scale: 0.78 })
-  gsap.set(portalImage, { scale: 1.18 })
+  // Soft Ken Burns without leaving viewport-native resolution
+  gsap.set(arch, { scale: 0.82 })
+  gsap.set(portalImage, { xPercent: -50, yPercent: -50, scale: 1.04 })
   gsap.set(copy, { autoAlpha: 0 })
   gsap.set("[data-portal-word], [data-portal-script], [data-portal-phrase]", {
     autoAlpha: 0,
@@ -207,7 +212,7 @@ export function initSplash({ onComplete } = {}) {
   intro
     .to(watermark, { autoAlpha: 1, scale: 1, duration: 1.1 }, 0)
     .to(arch, { scale: 1, duration: 1.4 }, 0.08)
-    .to(portalImage, { scale: 1.08, duration: 1.55 }, 0.08)
+    .to(portalImage, { scale: 1.02, duration: 1.6 }, 0.08)
     .to(copy, { autoAlpha: 1, duration: 0.2 }, 0.4)
     .to("[data-portal-word]", { autoAlpha: 1, y: 0, duration: 1, stagger: 0.14 }, 0.45)
     .to("[data-portal-script]", { autoAlpha: 1, y: 0, duration: 0.85 }, 0.62)
