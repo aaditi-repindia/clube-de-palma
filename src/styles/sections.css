@@ -132,6 +132,7 @@
   object-fit: contain;
   object-position: center;
   max-width: none;
+  opacity: 0.95;
 }
 
 .about__content {
