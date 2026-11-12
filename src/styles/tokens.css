@@ -1,0 +1,105 @@
+/* Dynamix Club de Palma — design tokens extracted from live brand */
+
+@font-face {
+  font-family: "Seasons";
+  src: url("/assets/fonts/Seasons.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+  REQUIRED BRAND FONTS (files not supplied in repo):
+  - TFarrow Light → place as /assets/fonts/TFarrow-Light.woff2
+  - Optima → place as /assets/fonts/Optima.woff2
+  Until then: Seasons (live display) + Optima system stack.
+*/
+@font-face {
+  font-family: "TFarrow Light";
+  src: url("/assets/fonts/TFarrow-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Optima";
+  src: url("/assets/fonts/Optima.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Colour — from live Elementor / Woodmart brand usage */
+  --color-accent: #56c1a9;
+  --color-accent-soft: rgba(86, 193, 169, 0.14);
+  --color-terracotta: #a25d50; /* sampled from CDP logo wordmark / palm trunks */
+  --color-ink: #050505;
+  --color-ink-soft: #202020;
+  --color-black: #000000;
+  --color-title: #3a3a3a;
+  --color-heading: #474747;
+  --color-body: #3d3d3d;
+  --color-muted: #767676;
+  --color-cream: #f8f7f3;
+  --color-soft: #fafafa;
+  --color-white: #fdfdfd;
+  --color-pure: #ffffff;
+  --color-gold: #e0b252;
+  --color-border: rgba(5, 5, 5, 0.1);
+  --color-overlay: rgba(5, 5, 5, 0.42);
+
+  /* Typography */
+  --font-display: "TFarrow Light", "Seasons", Georgia, "Times New Roman", serif;
+  --font-body: Optima, Candara, "Segoe UI", "Lucida Grande", sans-serif;
+
+  --text-hero: clamp(2.75rem, 6.5vw, 5.75rem);
+  --text-display: clamp(2.25rem, 4.8vw, 4.25rem);
+  --text-h2: clamp(1.85rem, 3.4vw, 3rem);
+  --text-h3: clamp(1.25rem, 2vw, 1.75rem);
+  --text-body: clamp(1rem, 1.15vw, 1.125rem);
+  --text-small: 0.875rem;
+  --text-label: 0.75rem;
+  --leading-tight: 1.05;
+  --leading-snug: 1.25;
+  --leading-body: 1.65;
+  --tracking-wide: 0.14em;
+  --tracking-label: 0.18em;
+
+  /* Spacing */
+  --space-2xs: 0.35rem;
+  --space-xs: 0.6rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6.5rem;
+  --space-3xl: 9rem;
+  --section-pad-y: clamp(4.5rem, 10vw, 8.5rem);
+  --section-pad-x: clamp(1.25rem, 5vw, 5.5rem);
+  --content-max: 92rem;
+  --narrow: 42rem;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 220ms;
+  --dur-med: 480ms;
+  --dur-slow: 900ms;
+
+  /* Components */
+  --radius-btn: 20px;
+  --radius-soft: 12px;
+  --radius-pill: 999px;
+  --nav-h: 5rem;
+  --shadow-soft: 0 18px 50px rgba(5, 5, 5, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 1ms;
+    --dur-med: 1ms;
+    --dur-slow: 1ms;
+  }
+}
