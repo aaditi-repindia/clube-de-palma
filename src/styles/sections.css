@@ -24,14 +24,16 @@
   image-rendering: auto;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  /* Soften bright courtyard so navy Dynamix mark stays readable */
+  filter: brightness(0.78) saturate(0.92);
 }
 
 .hero__scrim {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(5, 5, 5, 0.35) 0%, rgba(5, 5, 5, 0.15) 35%, rgba(5, 5, 5, 0.72) 100%),
-    linear-gradient(90deg, rgba(5, 5, 5, 0.45), transparent 55%);
+    linear-gradient(180deg, rgba(5, 5, 5, 0.55) 0%, rgba(5, 5, 5, 0.22) 32%, rgba(5, 5, 5, 0.68) 100%),
+    linear-gradient(90deg, rgba(5, 5, 5, 0.28), transparent 50%);
 }
 
 .hero__content {

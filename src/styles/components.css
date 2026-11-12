@@ -211,10 +211,9 @@
   height: clamp(3.2rem, 4.2vw, 4.5rem);
 }
 
-/* Stronger contrast for Dynamix mark over bright hero photography */
 .site-header:not(.is-solid) .brand img,
 .site-header:not(.is-solid) .brand__mark {
-  filter: contrast(1.18) drop-shadow(0 1px 1px rgba(255, 255, 255, 0.45)) drop-shadow(0 2px 8px rgba(5, 5, 5, 0.28));
+  filter: none;
 }
 
 .footer__brand img {
