@@ -6,14 +6,18 @@ It is **not** a replacement for the live WordPress site and does not include bac
 
 ## What you can explore
 
-1. Welcome splash (session-aware, skippable, reduced-motion safe)
-2. Cinematic hero with Explore / Apply CTAs
-3. About storytelling
+1. Welcome splash / progress preloader (session-aware, skippable, reduced-motion safe)
+2. Cinematic hero with Courtyard / Nightfall atmosphere crossfade
+3. About storytelling with scrubbed layered photography
 4. Interactive amenities discovery (verified facilities only)
-5. Draggable / swipe photo gallery with lightbox
+5. Horizontally scrubbed gallery (touch swipe on mobile) with lightbox
 6. Membership narrative, benefits, enquiry form + link to the live application portal
 7. Events & Club News (clearly labelled CMS placeholders where live content is unavailable)
 8. Contact strip and structured footer
+
+### Motion language
+
+Interaction patterns are inspired by [Era Residence](https://www.era-residence.com/) (Lenis smooth scroll, GSAP ScrollTrigger, magnetic CTAs, reveal masks, pinned/horizontal scrub). Visual identity stays Dynamix only.
 
 ## Run locally
 
