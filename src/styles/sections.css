@@ -129,9 +129,10 @@
 .about__backdrop img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   max-width: none;
+  opacity: 0.92;
 }
 
 .about__content {
