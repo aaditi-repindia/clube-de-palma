@@ -118,32 +118,20 @@
   padding-block: clamp(5.5rem, 12vw, 9.5rem);
 }
 
-.about__flora {
+.about__backdrop {
   position: absolute;
+  inset: 0;
   z-index: 0;
   pointer-events: none;
   user-select: none;
 }
 
-.about__flora img {
-  display: block;
+.about__backdrop img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   max-width: none;
-}
-
-.about__flora--plants {
-  top: -4%;
-  left: -3%;
-  width: clamp(15rem, 38vw, 34rem);
-  transform: rotate(-2deg);
-}
-
-.about__flora--flowers {
-  right: -4%;
-  bottom: -6%;
-  width: clamp(14rem, 34vw, 30rem);
-  transform: rotate(3deg);
 }
 
 .about__content {
@@ -206,20 +194,6 @@
   .section.about {
     min-height: auto;
     padding-block: clamp(4.5rem, 16vw, 6.5rem);
-  }
-
-  .about__flora--plants {
-    width: min(68vw, 16.5rem);
-    top: -2%;
-    left: -8%;
-    opacity: 0.92;
-  }
-
-  .about__flora--flowers {
-    width: min(62vw, 15rem);
-    right: -10%;
-    bottom: -4%;
-    opacity: 0.92;
   }
 
   .about__statement {
