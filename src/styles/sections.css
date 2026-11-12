@@ -133,9 +133,9 @@
   object-position: center;
   max-width: none;
   opacity: 1;
-  filter: saturate(1.12) contrast(1.06) brightness(0.98);
+  filter: saturate(1.28) contrast(1.14) brightness(0.96);
   transform-origin: center center;
-  will-change: transform;
+  will-change: transform, opacity;
 }
 
 .about__blooms {
@@ -153,10 +153,9 @@
   top: var(--bloom-y);
   width: var(--bloom-size);
   height: var(--bloom-size);
-  transform: translate(-50%, -50%) rotate(var(--bloom-rotate, 0deg));
-  transform-origin: center center;
   will-change: transform;
-  filter: drop-shadow(0 6px 14px rgba(80, 70, 50, 0.12));
+  filter: drop-shadow(0 4px 10px rgba(80, 70, 50, 0.14));
+  opacity: 0.98;
 }
 
 .about__bloom-stage {

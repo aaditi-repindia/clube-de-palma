@@ -8,16 +8,18 @@ const STAGES = [
 
 /** Soft frame positions — small blooms around the edges, not the center */
 const BLOOM_SPOTS = [
-  { x: "7%", y: "11%", size: 3.1, delay: 0, rotate: -12 },
-  { x: "20%", y: "5%", size: 2.4, delay: 0.8, rotate: 8 },
-  { x: "86%", y: "9%", size: 2.8, delay: 1.5, rotate: 14 },
-  { x: "94%", y: "26%", size: 2.2, delay: 2.2, rotate: -6 },
-  { x: "6%", y: "70%", size: 2.6, delay: 1.2, rotate: 10 },
-  { x: "4%", y: "40%", size: 2.1, delay: 2.9, rotate: -18 },
-  { x: "78%", y: "90%", size: 3.2, delay: 0.5, rotate: 6 },
-  { x: "93%", y: "76%", size: 2.7, delay: 1.9, rotate: -10 },
-  { x: "58%", y: "95%", size: 2.3, delay: 2.6, rotate: 16 },
-  { x: "40%", y: "4%", size: 2.0, delay: 3.3, rotate: -4 },
+  { x: "8%", y: "12%", size: 3.4, delay: 0, rotate: -10 },
+  { x: "22%", y: "5%", size: 2.6, delay: 1.1, rotate: 8 },
+  { x: "84%", y: "8%", size: 3.0, delay: 2.0, rotate: 12 },
+  { x: "94%", y: "28%", size: 2.5, delay: 3.1, rotate: -6 },
+  { x: "5%", y: "68%", size: 2.9, delay: 1.6, rotate: 10 },
+  { x: "4%", y: "38%", size: 2.3, delay: 3.8, rotate: -16 },
+  { x: "76%", y: "91%", size: 3.5, delay: 0.7, rotate: 6 },
+  { x: "93%", y: "74%", size: 2.9, delay: 2.5, rotate: -9 },
+  { x: "56%", y: "95%", size: 2.5, delay: 3.4, rotate: 14 },
+  { x: "38%", y: "4%", size: 2.2, delay: 4.4, rotate: -4 },
+  { x: "14%", y: "92%", size: 2.4, delay: 2.8, rotate: 7 },
+  { x: "96%", y: "52%", size: 2.1, delay: 4.0, rotate: -12 },
 ]
 
 function createBloom(spot) {
@@ -26,7 +28,6 @@ function createBloom(spot) {
   el.style.setProperty("--bloom-x", spot.x)
   el.style.setProperty("--bloom-y", spot.y)
   el.style.setProperty("--bloom-size", `${spot.size}rem`)
-  el.style.setProperty("--bloom-rotate", `${spot.rotate}deg`)
 
   STAGES.forEach((src, index) => {
     const img = document.createElement("img")
@@ -39,15 +40,25 @@ function createBloom(spot) {
     el.appendChild(img)
   })
 
-  return { el, delay: spot.delay }
+  return { el, delay: spot.delay, rotate: spot.rotate }
 }
 
-function animateBloom(el, delay) {
+function animateBloom(el, delay, rotate) {
   const stages = el.querySelectorAll(".about__bloom-stage")
   if (stages.length < 3) return
 
-  gsap.set(stages, { opacity: 0, scale: 0.72 })
-  gsap.set(stages[0], { opacity: 0.55, scale: 0.82 })
+  const [bud, opening, open] = stages
+
+  gsap.set(el, {
+    xPercent: -50,
+    yPercent: -50,
+    rotate,
+    scale: 1,
+    transformOrigin: "50% 65%",
+  })
+
+  gsap.set(stages, { opacity: 0, scale: 0.78 })
+  gsap.set(bud, { opacity: 0.78, scale: 0.88 })
 
   const tl = gsap.timeline({
     repeat: -1,
@@ -56,36 +67,34 @@ function animateBloom(el, delay) {
   })
 
   // Bud → opening
-  tl.to(stages[0], { opacity: 0.2, scale: 0.95, duration: 2.4 }, 0)
-    .to(stages[1], { opacity: 0.85, scale: 1, duration: 2.4 }, 0)
+  tl.to(bud, { opacity: 0.16, scale: 0.98, duration: 2.7 }, 0)
+    .to(opening, { opacity: 0.94, scale: 1.02, duration: 2.7 }, 0)
 
-    // Opening → open blossom
-    .to(stages[1], { opacity: 0.15, scale: 1.04, duration: 2.6 }, 2.2)
-    .to(stages[2], { opacity: 1, scale: 1.08, duration: 2.6 }, 2.2)
+    // Opening → full blossom
+    .to(opening, { opacity: 0.1, scale: 1.06, duration: 2.9 }, 2.5)
+    .to(open, { opacity: 1, scale: 1.1, duration: 2.9 }, 2.5)
 
-    // Soft hold + organic sway
-    .to(
-      el,
-      {
-        rotate: "+=3",
-        duration: 3.2,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: 1,
-      },
-      3.2,
-    )
+    // Quiet hold
+    .to(open, { opacity: 0.97, scale: 1.08, duration: 2.3 }, 5.2)
 
-    // Open → gently settle back toward bud for seamless loop
-    .to(stages[2], { opacity: 0.12, scale: 0.9, duration: 2.8 }, 6.4)
-    .to(stages[1], { opacity: 0.35, scale: 0.86, duration: 2.4 }, 6.6)
-    .to(stages[0], { opacity: 0.55, scale: 0.82, duration: 2.6 }, 7.0)
-    .to(stages[1], { opacity: 0, scale: 0.78, duration: 1.8 }, 8.2)
+    // Fold back toward bud for a seamless loop
+    .to(open, { opacity: 0.06, scale: 0.92, duration: 2.9 }, 7.2)
+    .to(opening, { opacity: 0.42, scale: 0.9, duration: 2.5 }, 7.4)
+    .to(bud, { opacity: 0.78, scale: 0.88, duration: 2.7 }, 7.8)
+    .to(opening, { opacity: 0, scale: 0.8, duration: 1.7 }, 9.6)
+    .to({}, { duration: 1.2 })
 
-  // Continuous micro-breath on the whole bloom
+  gsap.to(el, {
+    rotate: rotate + 3.5,
+    duration: 5.4 + delay * 0.12,
+    ease: "sine.inOut",
+    yoyo: true,
+    repeat: -1,
+  })
+
   gsap.to(el, {
     scale: 1.04,
-    duration: 4.8 + delay * 0.15,
+    duration: 4.8 + delay * 0.16,
     ease: "sine.inOut",
     yoyo: true,
     repeat: -1,
@@ -106,25 +115,30 @@ export function initAboutBloom() {
   section.insertBefore(layer, section.querySelector(".about__content"))
 
   if (reduced) {
-    blooms.forEach(({ el }) => {
+    blooms.forEach(({ el, rotate }) => {
       const stages = el.querySelectorAll(".about__bloom-stage")
+      gsap.set(el, { xPercent: -50, yPercent: -50, rotate, scale: 1 })
       gsap.set(stages, { opacity: 0, scale: 1 })
-      gsap.set(stages[2], { opacity: 0.9, scale: 1 })
+      gsap.set(stages[2], { opacity: 0.95, scale: 1 })
     })
     return
   }
 
-  // Backdrop gently breathes so the whole botanical frame feels alive
   const backdropImg = section.querySelector(".about__backdrop img")
   if (backdropImg) {
-    gsap.to(backdropImg, {
-      scale: 1.015,
-      duration: 8,
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
-    })
+    gsap.fromTo(
+      backdropImg,
+      { opacity: 0.86, scale: 1 },
+      {
+        opacity: 1,
+        scale: 1.01,
+        duration: 9.5,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      },
+    )
   }
 
-  blooms.forEach(({ el, delay }) => animateBloom(el, delay))
+  blooms.forEach(({ el, delay, rotate }) => animateBloom(el, delay, rotate))
 }
