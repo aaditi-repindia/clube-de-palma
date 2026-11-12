@@ -118,67 +118,36 @@
   padding-block: clamp(5.5rem, 12vw, 9.5rem);
 }
 
-.about__blooms {
+.about__flora {
   position: absolute;
-  inset: 0;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
   user-select: none;
-  overflow: hidden;
+  filter: drop-shadow(0 14px 24px rgba(5, 5, 5, 0.06));
 }
 
-.about__bloom {
-  position: absolute;
-  left: var(--bloom-x);
-  top: var(--bloom-y);
-  width: var(--bloom-size);
-  height: var(--bloom-size);
-  display: block;
-  will-change: transform;
-  filter: drop-shadow(0 6px 14px rgba(80, 70, 50, 0.14));
-  opacity: 1;
-}
-
-.about__bloom-svg {
+.about__flora img {
   display: block;
   width: 100%;
-  height: 100%;
-  overflow: visible;
+  height: auto;
+  max-width: none;
 }
 
-.about__bloom-petal {
-  paint-order: stroke fill;
+.about__flora--plants {
+  top: -2%;
+  left: -2%;
+  width: clamp(15rem, 38vw, 34rem);
 }
 
-.about__bloom-petal--outer {
-  fill: rgba(250, 244, 232, 0.96);
-  stroke: rgba(148, 124, 92, 0.58);
-  stroke-width: 1.05;
-}
-
-.about__bloom-petal--inner {
-  fill: rgba(255, 250, 240, 0.92);
-  stroke: rgba(176, 148, 108, 0.42);
-  stroke-width: 0.85;
-}
-
-.about__bloom-center {
-  fill: rgba(222, 186, 98, 0.9);
-  stroke: rgba(168, 132, 54, 0.35);
-  stroke-width: 0.55;
-}
-
-.about__bloom-center-mid {
-  fill: rgba(236, 206, 122, 0.95);
-}
-
-.about__bloom-center-dot {
-  fill: rgba(166, 122, 48, 0.92);
+.about__flora--flowers {
+  right: -2%;
+  bottom: -3%;
+  width: clamp(14rem, 34vw, 30rem);
 }
 
 .about__content {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   width: min(52rem, 100%);
   margin-inline: auto;
   padding-inline: clamp(1.25rem, 5vw, 2.5rem);
@@ -246,15 +215,16 @@
     gap: 1.15rem;
   }
 
-  .about__bloom {
-    width: calc(var(--bloom-size) * 0.82);
-    height: calc(var(--bloom-size) * 0.82);
+  .about__flora--plants {
+    width: min(70vw, 17rem);
+    top: -1%;
+    left: -7%;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .about__bloom {
-    will-change: auto;
+  .about__flora--flowers {
+    width: min(64vw, 15.5rem);
+    right: -8%;
+    bottom: -2%;
   }
 }
 

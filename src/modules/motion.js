@@ -6,7 +6,6 @@ import { initMagnetic } from "./magnetic.js"
 import { initCursor } from "./cursor.js"
 import { initPinnedStories } from "./pinned.js"
 import { initMarquee } from "./marquee.js"
-import { initAboutBloom } from "./aboutBloom.js"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -17,8 +16,6 @@ export function initMotion() {
   initMarquee()
   initReveals()
   initPinnedStories()
-  initAboutBloom()
-
   const hero = document.querySelector(".hero")
   requestAnimationFrame(() => hero?.classList.add("is-ready"))
 
