@@ -114,7 +114,7 @@
 }
 
 .field__error {
-  color: #a33;
+  color: #9b2c2c;
   font-size: 0.8rem;
   min-height: 1.1rem;
 }
@@ -122,7 +122,29 @@
 .field.is-invalid input,
 .field.is-invalid select,
 .field.is-invalid textarea {
-  border-color: #a33;
+  border-color: #9b2c2c;
+  background: #fff7f7;
+}
+
+.field.is-invalid .checkbox {
+  outline: 1px solid #9b2c2c;
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.form-summary-error {
+  display: none;
+  margin-bottom: 0.85rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-soft);
+  background: #fff1f1;
+  color: #9b2c2c;
+  border: 1px solid rgba(155, 44, 44, 0.25);
+  font-size: var(--text-small);
+}
+
+.form-summary-error.is-visible {
+  display: block;
 }
 
 .checkbox {
@@ -170,7 +192,10 @@
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  z-index: 2;
+  z-index: 3;
+  padding: 0.35rem 0.55rem;
+  border-radius: 10px;
+  transition: background var(--dur-med) var(--ease-soft);
 }
 
 .brand img {
@@ -178,8 +203,13 @@
   width: auto;
 }
 
+.site-header:not(.is-solid) .brand {
+  background: rgba(248, 247, 243, 0.88);
+  box-shadow: 0 8px 28px rgba(5, 5, 5, 0.18);
+}
+
 .site-header:not(.is-solid) .brand img {
-  filter: drop-shadow(0 1px 10px rgba(0, 0, 0, 0.35));
+  filter: none;
 }
 
 .footer__brand img {
@@ -203,6 +233,22 @@
 
 .site-header.is-solid .nav a,
 .site-header.is-solid .nav-toggle {
+  color: var(--color-ink);
+}
+
+/* Keep membership CTA readable when the solid-header rule recolors nav links */
+.site-header .nav a.nav__cta,
+.site-header.is-solid .nav a.nav__cta {
+  background: var(--color-ink);
+  color: var(--color-pure);
+  border-color: transparent;
+}
+
+.site-header .nav a.nav__cta:hover,
+.site-header .nav a.nav__cta:focus-visible,
+.site-header.is-solid .nav a.nav__cta:hover,
+.site-header.is-solid .nav a.nav__cta:focus-visible {
+  background: var(--color-accent);
   color: var(--color-ink);
 }
 
@@ -236,7 +282,7 @@
   background: transparent;
   color: var(--color-pure);
   cursor: pointer;
-  z-index: 2;
+  z-index: 5;
   position: relative;
 }
 
@@ -260,20 +306,24 @@
   .nav {
     position: fixed;
     inset: 0;
+    z-index: 4;
     background: rgba(248, 247, 243, 0.98);
     flex-direction: column;
     justify-content: center;
     gap: 1.4rem;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     transform: translateY(-8px);
     transition:
       opacity var(--dur-med) var(--ease-soft),
-      transform var(--dur-med) var(--ease-soft);
+      transform var(--dur-med) var(--ease-soft),
+      visibility var(--dur-med) var(--ease-soft);
   }
 
   .nav.is-open {
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
     transform: none;
   }

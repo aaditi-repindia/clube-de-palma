@@ -53,15 +53,28 @@ export function initMembershipForm() {
   const wrap = document.getElementById("enquiry-form-wrap")
   const success = document.getElementById("enquiry-success")
   const reset = document.getElementById("enquiry-reset")
+  const summary = document.getElementById("enquiry-summary-error")
   if (!form) return
 
   form.addEventListener("submit", (e) => {
     e.preventDefault()
-    if (!validate(form)) return
+    const ok = validate(form)
+    if (!ok) {
+      if (summary) {
+        summary.textContent = "Please correct the highlighted fields before continuing."
+        summary.classList.add("is-visible")
+      }
+      const firstInvalid = form.querySelector(".field.is-invalid")
+      firstInvalid?.scrollIntoView({ behavior: "smooth", block: "center" })
+      firstInvalid?.querySelector("input, select, textarea, .checkbox")?.focus?.()
+      return
+    }
 
+    summary?.classList.remove("is-visible")
     // Prototype only — no backend. Confirmation UI, then point to live application.
     wrap.style.display = "none"
     success?.classList.add("is-visible")
+    success?.scrollIntoView({ behavior: "smooth", block: "center" })
   })
 
   reset?.addEventListener("click", () => {
@@ -70,6 +83,7 @@ export function initMembershipForm() {
     form.querySelectorAll(".field__error").forEach((el) => {
       el.textContent = ""
     })
+    summary?.classList.remove("is-visible")
     success?.classList.remove("is-visible")
     wrap.style.display = ""
   })

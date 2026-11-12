@@ -76,7 +76,7 @@
   --space-xl: 4rem;
   --space-2xl: 6.5rem;
   --space-3xl: 9rem;
-  --section-pad-y: clamp(4.5rem, 10vw, 8.5rem);
+  --section-pad-y: clamp(3.75rem, 8vw, 7rem);
   --section-pad-x: clamp(1.25rem, 5vw, 5.5rem);
   --content-max: 92rem;
   --narrow: 42rem;

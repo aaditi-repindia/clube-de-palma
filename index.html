@@ -260,6 +260,12 @@
                 <h3>Enquire about membership</h3>
                 <p>Share a few details and our membership team will be in touch. This prototype stores nothing on a server.</p>
                 <form id="membership-form" novalidate>
+                  <div
+                    class="form-summary-error"
+                    id="enquiry-summary-error"
+                    role="alert"
+                    aria-live="assertive"
+                  ></div>
                   <div class="form-grid">
                     <div class="field">
                       <label for="full-name">Full name</label>
@@ -389,7 +395,7 @@
             </article>
             <article class="event-card">
               <div class="event-card__media">
-                <img src="/assets/images/amenity-badminton.jpg" alt="" />
+                <img src="/assets/images/amenity-badminton.jpg" alt="Badminton court at Clube de Palma" width="440" height="660" />
               </div>
               <div class="event-card__body">
                 <span class="placeholder-tag">Placeholder</span>
