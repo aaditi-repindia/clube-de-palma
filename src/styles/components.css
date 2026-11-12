@@ -37,9 +37,9 @@
 
 .btn--ghost:hover,
 .btn--ghost:focus-visible {
-  background: var(--color-pure);
+  background: var(--color-accent);
   color: var(--color-ink);
-  border-color: var(--color-pure);
+  border-color: var(--color-accent);
 }
 
 .btn--light {
