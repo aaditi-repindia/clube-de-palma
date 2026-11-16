@@ -180,18 +180,6 @@
   text-wrap: pretty;
 }
 
-.about__mark {
-  margin-top: clamp(0.5rem, 1.5vw, 1rem);
-  width: 2.75rem;
-  opacity: 0.72;
-}
-
-.about__mark img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
 @media (max-width: 720px) {
   .section.about {
     min-height: auto;
