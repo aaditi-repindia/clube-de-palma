@@ -92,7 +92,13 @@
           <a href="#experiences">Experiences</a>
           <a href="#events">Events</a>
           <a href="#contact">Contact</a>
-          <a class="btn nav__cta" href="#membership" data-magnetic>
+          <a
+            class="btn nav__cta"
+            href="https://dynamixclubedepalma.co.in/clubdepalma/membership/form"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-magnetic
+          >
             <span data-magnetic-inner>Apply for Membership</span>
           </a>
         </nav>
@@ -194,162 +200,6 @@
                 <!-- Cards rendered by amenities.js -->
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section membership" id="membership" aria-labelledby="membership-title">
-        <div class="container">
-          <div class="membership__intro">
-            <p class="eyebrow" data-reveal="p">Membership</p>
-            <h2 id="membership-title" data-reveal="words">More than a place. A way of belonging.</h2>
-            <p data-reveal="p">
-              Clube de Palma brings together like-minded individuals and neighbours to create a community. Members have
-              exclusive access to everything our clube has to offer — recreation, sport, wellness, dining and shared celebration.
-            </p>
-          </div>
-
-          <div class="membership__grid">
-            <div class="benefits" data-reveal="ctn">
-              <article class="benefit">
-                <h3>Access to club facilities</h3>
-                <p>Enjoy the full recreational campus — pools, courts, indoor games, banquet and social spaces.</p>
-              </article>
-              <article class="benefit">
-                <h3>Sporting &amp; wellness life</h3>
-                <p>From racquet sports and gymnasium training to yoga in the garden, everyday rituals of wellbeing.</p>
-              </article>
-              <article class="benefit">
-                <h3>Dining &amp; social privileges</h3>
-                <p>Gather at Sabores, Café Verde and O Bar Azul — coastal evenings with members and guests.</p>
-              </article>
-              <article class="benefit">
-                <h3>Family experiences</h3>
-                <p>Kids’ pools, play areas and guided sport lessons create a nurturing environment for all ages.</p>
-              </article>
-              <article class="benefit">
-                <h3>Celebrations &amp; community</h3>
-                <p>Host landmark moments in the banquet hall overlooking the central courtyard.</p>
-              </article>
-              <p class="form-note" style="color: rgba(255,255,255,0.55)">
-                Membership categories and fees follow official club policy. Full applications are completed on the
-                club’s existing membership system.
-              </p>
-            </div>
-
-            <div class="membership__form-card" id="enquiry" data-reveal="ctn">
-              <div id="enquiry-form-wrap">
-                <h3>Enquire about membership</h3>
-                <p>Share a few details and our membership team will be in touch. This prototype stores nothing on a server.</p>
-                <form id="membership-form" novalidate>
-                  <div
-                    class="form-summary-error"
-                    id="enquiry-summary-error"
-                    role="alert"
-                    aria-live="assertive"
-                  ></div>
-                  <div class="form-grid">
-                    <div class="field">
-                      <label for="full-name">Full name</label>
-                      <input id="full-name" name="fullName" type="text" autocomplete="name" required />
-                      <div class="field__error" data-error-for="fullName"></div>
-                    </div>
-                    <div class="field">
-                      <label for="email">Email address</label>
-                      <input id="email" name="email" type="email" autocomplete="email" required />
-                      <div class="field__error" data-error-for="email"></div>
-                    </div>
-                    <div class="field">
-                      <label for="mobile">Mobile number</label>
-                      <input id="mobile" name="mobile" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91" required />
-                      <div class="field__error" data-error-for="mobile"></div>
-                    </div>
-                    <div class="field">
-                      <label for="interest">Membership interest</label>
-                      <select id="interest" name="interest" required>
-                        <option value="">Select an option</option>
-                        <option>Family membership</option>
-                        <option>Individual membership</option>
-                        <option>Corporate / group enquiry</option>
-                        <option>General information</option>
-                      </select>
-                      <div class="field__error" data-error-for="interest"></div>
-                    </div>
-                    <div class="field field--full">
-                      <label for="residency">Residential status</label>
-                      <select id="residency" name="residency">
-                        <option value="">Prefer not to say</option>
-                        <option>Residential</option>
-                        <option>Non-residential</option>
-                      </select>
-                      <div class="field__error" data-error-for="residency"></div>
-                    </div>
-                    <div class="field field--full">
-                      <label for="message">Message or additional information</label>
-                      <textarea id="message" name="message" maxlength="800"></textarea>
-                      <div class="field__error" data-error-for="message"></div>
-                    </div>
-                    <div class="field field--full">
-                      <label class="checkbox">
-                        <input type="checkbox" name="consent" id="consent" required />
-                        <span>
-                          I consent to Clube de Palma contacting me about membership. See the
-                          <a href="https://dynamixclubedepalma.co.in/privacy-policy/" target="_blank" rel="noopener noreferrer">privacy policy</a>.
-                        </span>
-                      </label>
-                      <div class="field__error" data-error-for="consent"></div>
-                    </div>
-                  </div>
-                  <div class="form-actions">
-                    <button class="btn" type="submit">Enquire About Membership</button>
-                    <a
-                      class="btn btn--outline"
-                      href="https://dynamixclubedepalma.co.in/clubdepalma/membership/form"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Start official application
-                    </a>
-                  </div>
-                  <p class="form-note" style="margin-top: 0.85rem">
-                    Official applications take around 15 minutes. You can save progress and return later on the live membership portal.
-                  </p>
-                </form>
-              </div>
-              <div class="form-success" id="enquiry-success" aria-live="polite">
-                <p class="eyebrow">Thank you</p>
-                <h3>Your enquiry is ready to send</h3>
-                <p>
-                  This prototype confirms your details locally. For a live submission, continue to the official membership application.
-                </p>
-                <div class="cta-row">
-                  <a
-                    class="btn"
-                    href="https://dynamixclubedepalma.co.in/clubdepalma/membership/form"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Continue to application
-                  </a>
-                  <button class="btn btn--outline" type="button" id="enquiry-reset">Send another enquiry</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="membership__invite" data-reveal="ctn">
-            <p class="eyebrow" style="color: var(--color-accent)">Your invitation</p>
-            <h3 data-reveal="h">Begin your journey into Clube de Palma</h3>
-            <p>Ready to apply? Gather a recent profile picture and a little about yourself — then step into membership.</p>
-            <a
-              class="btn btn--light"
-              href="https://dynamixclubedepalma.co.in/clubdepalma/membership/form"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-magnetic
-            >
-              <span data-magnetic-inner>Apply for Membership <span class="btn__arrow" aria-hidden="true">→</span></span>
-            </a>
           </div>
         </div>
       </section>
@@ -463,7 +313,6 @@
             </address>
           </div>
           <div class="cta-row">
-            <a class="btn" href="#enquiry">Enquire About Membership</a>
             <a class="btn btn--outline" href="https://dynamixclubedepalma.co.in/contact-us/" target="_blank" rel="noopener noreferrer">Contact page</a>
           </div>
         </div>
@@ -492,7 +341,6 @@
           <ul>
             <li><a href="#about">About Us</a></li>
             <li><a href="#experiences">Amenities</a></li>
-            <li><a href="#membership">Membership</a></li>
             <li><a href="#events">Events</a></li>
             <li><a href="#news">Club News</a></li>
             <li><a href="#contact">Contact Us</a></li>

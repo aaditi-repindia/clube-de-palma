@@ -64,25 +64,6 @@ export function initPinnedStories() {
     }
   }
 
-  // Membership invite parallax media
-  const invite = document.querySelector(".membership__invite")
-  if (invite) {
-    gsap.fromTo(
-      invite,
-      { backgroundPosition: "50% 30%" },
-      {
-        backgroundPosition: "50% 70%",
-        ease: "none",
-        scrollTrigger: {
-          trigger: invite,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      },
-    )
-  }
-
   // Progress scrollbar thumb (Era-like scroll progress)
   const progress = document.querySelector("[data-scroll-progress]")
   if (progress) {
