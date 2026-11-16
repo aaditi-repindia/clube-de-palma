@@ -235,9 +235,27 @@
                 The latest happenings, stories and moments from our community.
               </p>
             </div>
+            <div class="journal__controls" data-journal-controls data-reveal="ctn">
+              <button class="journal__nav journal__nav--prev" type="button" aria-label="Previous story" data-journal-prev>
+                <span aria-hidden="true">←</span>
+              </button>
+              <button class="journal__nav journal__nav--next" type="button" aria-label="Next story" data-journal-next>
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
           </div>
-          <div class="journal__stage" data-journal-stage aria-live="polite">
-            <!-- Entries rendered by journal.js -->
+
+          <div
+            class="journal-carousel"
+            data-journal-carousel
+            data-cursor="drag"
+            data-cursor-label="Drag"
+          >
+            <div class="journal-carousel__viewport">
+              <div class="journal-carousel__track" data-journal-track aria-live="polite">
+                <!-- Cards rendered by journal.js -->
+              </div>
+            </div>
           </div>
         </div>
       </section>

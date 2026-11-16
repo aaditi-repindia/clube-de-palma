@@ -17,8 +17,8 @@ export const journalItems = [
   },
   {
     id: "house-notices",
-    category: "clube-news",
-    label: "Clube News",
+    category: "clube-announcements",
+    label: "Clube Announcements",
     title: "House notices & club rules",
     description:
       "Important member information, facility advisories and the rules that keep Clube de Palma refined, welcoming and well run.",
