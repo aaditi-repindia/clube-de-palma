@@ -16,29 +16,24 @@ export function initAmenities() {
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   const canHover = window.matchMedia("(hover: hover)").matches
-  const total = amenities.length
 
   track.innerHTML = amenities
-    .map((item, index) => {
-      const n = String(index + 1).padStart(2, "0")
-      const totalLabel = String(total).padStart(2, "0")
-      return `
+    .map(
+      (item, index) => `
       <article class="amenity-card" data-amenity-card data-index="${index}">
         <div class="amenity-card__fold" data-amenity-fold>
           <div class="amenity-card__media">
             <img src="${item.image}" alt="${item.alt}" width="1200" height="1600" loading="lazy" decoding="async" draggable="false" />
             <div class="amenity-card__scrim" aria-hidden="true"></div>
           </div>
-          <p class="amenity-card__index" aria-hidden="true">${n} / ${totalLabel}</p>
-          <p class="amenity-card__watermark" aria-hidden="true">${n}</p>
           <div class="amenity-card__content">
             <h3 class="amenity-card__title">${item.name}</h3>
             <span class="amenity-card__rule" aria-hidden="true"></span>
             <p class="amenity-card__blurb">${item.blurb}</p>
           </div>
         </div>
-      </article>`
-    })
+      </article>`,
+    )
     .join("")
 
   const cards = [...track.querySelectorAll("[data-amenity-card]")]
@@ -116,10 +111,11 @@ export function initAmenities() {
         return
       }
 
-      const rotateY = clamped * -18
-      const scale = 1 - Math.min(0.06, abs * 0.04)
-      const z = (1 - Math.min(1, abs)) * 36
-      const opacity = 1 - Math.min(0.18, abs * 0.1)
+      // Centre card stays flat and prominent; neighbours tilt like a coverflow.
+      const rotateY = clamped * -24
+      const scale = 1 - Math.min(0.1, abs * 0.055)
+      const z = (1 - Math.min(1, abs)) * 52
+      const opacity = 1 - Math.min(0.2, abs * 0.11)
       const origin = clamped < -0.05 ? "right center" : clamped > 0.05 ? "left center" : "center center"
 
       gsap.set(fold, {
@@ -211,17 +207,18 @@ export function initAmenities() {
 
     if (reduced) return
 
-    // Pin at 100vh; vertical scroll scrubs the track edge-to-edge.
-    // Lenis already smooths scroll — keep scrub tight to avoid laggy/jerky catch-up.
+    // Pin while the frame fills the viewport; release as soon as the last card is flush.
+    // Lenis smooths the wheel — keep scrub short for a controlled, fluid feel.
+    const travel = () => Math.max(maxTravel(), 1)
     tween = gsap.to(track, {
       x: () => -maxTravel(),
       ease: "none",
       scrollTrigger: {
         trigger: frame,
         start: "top top",
-        end: () => `+=${Math.max(maxTravel(), window.innerHeight * 0.75)}`,
+        end: () => `+=${travel()}`,
         pin: true,
-        scrub: 0.35,
+        scrub: 0.4,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         pinSpacing: true,

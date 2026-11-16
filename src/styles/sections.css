@@ -197,7 +197,7 @@
 
 /* ——— Amenities discovery ——— */
 .amenities {
-  --amenities-chrome: calc(var(--nav-h) + clamp(14.75rem, 32vh, 19rem));
+  --amenities-chrome: calc(var(--nav-h) + clamp(11.75rem, 22vh, 15.25rem));
   background: var(--color-cream);
   overflow: visible;
   padding-block: 0;
@@ -207,13 +207,13 @@
   position: relative;
   height: 100vh;
   height: 100dvh;
-  min-height: 36rem;
+  min-height: 34rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   gap: 0;
-  padding-top: calc(var(--nav-h) + clamp(0.85rem, 2vh, 1.6rem));
-  padding-bottom: clamp(2.5rem, 5vh, 3.5rem);
+  padding-top: calc(var(--nav-h) + clamp(0.65rem, 1.6vh, 1.25rem));
+  padding-bottom: clamp(1.1rem, 2.2vh, 1.75rem);
   box-sizing: border-box;
   background: var(--color-cream);
   overflow-x: clip;
@@ -226,7 +226,7 @@
   justify-content: space-between;
   gap: 1.5rem;
   flex-shrink: 0;
-  margin-bottom: clamp(3.25rem, 8vh, 5rem);
+  margin-bottom: clamp(1.75rem, 4vh, 2.75rem);
 }
 
 .amenities__intro h2 {
@@ -271,7 +271,7 @@
   flex: 1 1 auto;
   min-height: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   perspective: 2200px;
   cursor: grab;
   user-select: none;
@@ -286,7 +286,7 @@
   width: 100%;
   overflow-x: clip;
   overflow-y: visible;
-  padding-block: 1.15rem 2.85rem;
+  padding-block: 0.55rem 1.15rem;
 }
 
 .amenities-carousel__track {
@@ -296,8 +296,8 @@
   width: max-content;
   will-change: transform;
   transform-style: preserve-3d;
-  /* Align with heading column on the left; flush to the right edge at the end of travel */
-  padding-inline: var(--section-pad-x) 0;
+  /* Match heading column inset on both ends so travel finishes without a blank strip or overflow */
+  padding-inline: var(--section-pad-x);
 }
 
 .amenity-card {
@@ -345,34 +345,6 @@
   background:
     linear-gradient(180deg, rgba(5, 5, 5, 0.12) 0%, rgba(5, 5, 5, 0.08) 38%, rgba(5, 5, 5, 0.68) 100%);
   pointer-events: none;
-}
-
-.amenity-card__index {
-  position: absolute;
-  top: 1.05rem;
-  left: 1.15rem;
-  z-index: 3;
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.amenity-card__watermark {
-  position: absolute;
-  right: 0.55rem;
-  bottom: 0.35rem;
-  z-index: 1;
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(5.5rem, 12vw, 8.5rem);
-  line-height: 0.8;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.1);
-  pointer-events: none;
-  user-select: none;
 }
 
 .amenity-card__content {
@@ -427,7 +399,6 @@
   transform: scale(1.07);
 }
 
-.amenity-card.is-active .amenity-card__blurb,
 .amenity-card:hover .amenity-card__blurb,
 .amenity-card.is-open .amenity-card__blurb {
   opacity: 1;
@@ -435,7 +406,6 @@
   max-height: 8.5rem;
 }
 
-.amenity-card.is-active .amenity-card__scrim,
 .amenity-card:hover .amenity-card__scrim,
 .amenity-card.is-open .amenity-card__scrim {
   background:
@@ -444,17 +414,18 @@
 
 @media (max-width: 900px) {
   .amenities {
-    --amenities-chrome: calc(var(--nav-h) + clamp(14.5rem, 28vh, 18rem));
+    --amenities-chrome: calc(var(--nav-h) + clamp(12.5rem, 24vh, 16rem));
   }
 
   .amenities__frame {
-    min-height: 34rem;
+    min-height: 32rem;
+    padding-bottom: clamp(1rem, 2vh, 1.5rem);
   }
 
   .amenities__intro {
     align-items: start;
     flex-direction: column;
-    margin-bottom: clamp(2.25rem, 5.5vh, 3.25rem);
+    margin-bottom: clamp(1.5rem, 3.5vh, 2.25rem);
   }
 
   .amenities__intro h2 {
@@ -468,7 +439,7 @@
 
 @media (max-width: 640px) {
   .amenities {
-    --amenities-chrome: calc(var(--nav-h) + clamp(15rem, 30vh, 19rem));
+    --amenities-chrome: calc(var(--nav-h) + clamp(13rem, 26vh, 16.5rem));
   }
 
   .amenity-card {
@@ -477,10 +448,6 @@
 
   .amenities-carousel__track {
     gap: 1.1rem;
-  }
-
-  .amenity-card__watermark {
-    font-size: 5rem;
   }
 }
 
