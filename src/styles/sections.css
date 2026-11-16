@@ -510,16 +510,17 @@
   font-weight: 300;
   font-size: clamp(1.7rem, 3vw, 2.55rem);
   line-height: var(--leading-tight);
-  max-width: 18ch;
+  max-width: 14ch;
 }
 
 .membership-promo__text {
   margin: 0;
-  max-width: 38ch;
+  max-width: 42ch;
   font-family: var(--font-body);
   font-size: clamp(0.95rem, 1.1vw, 1.05rem);
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.88);
+  text-wrap: balance;
 }
 
 .membership-promo .btn {
@@ -537,11 +538,11 @@
   }
 
   .membership-promo h2 {
-    max-width: 14ch;
+    max-width: 12ch;
   }
 
   .membership-promo__text {
-    max-width: 32ch;
+    max-width: 28ch;
   }
 }
 
