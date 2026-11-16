@@ -459,6 +459,91 @@
   }
 }
 
+/* ——— Membership promo band ——— */
+.membership-promo {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: center;
+  min-height: clamp(12.5rem, 24vh, 16rem);
+  padding-block: clamp(1.75rem, 3.5vh, 2.5rem);
+  overflow: hidden;
+  color: var(--color-pure);
+}
+
+.membership-promo__media,
+.membership-promo__overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.membership-promo__media {
+  z-index: 0;
+  background:
+    url("/assets/images/membership-promo-courtyard.jpg") center / cover no-repeat;
+  transform: scale(1.02);
+}
+
+.membership-promo__overlay {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.64) 0%, rgba(5, 5, 5, 0.5) 52%, rgba(5, 5, 5, 0.42) 100%);
+}
+
+.membership-promo__content {
+  position: relative;
+  z-index: 2;
+  max-width: 34rem;
+  display: grid;
+  justify-items: start;
+  gap: 0.65rem;
+}
+
+.membership-promo__eyebrow {
+  color: var(--color-accent);
+  margin-bottom: 0;
+}
+
+.membership-promo h2 {
+  margin: 0;
+  color: var(--color-pure);
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.7rem, 3vw, 2.55rem);
+  line-height: var(--leading-tight);
+  max-width: 16ch;
+}
+
+.membership-promo__content > p {
+  margin: 0;
+  max-width: 36ch;
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.membership-promo .btn {
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 640px) {
+  .membership-promo {
+    min-height: 13.5rem;
+    padding-block: 1.75rem;
+  }
+
+  .membership-promo__overlay {
+    background:
+      linear-gradient(180deg, rgba(5, 5, 5, 0.6) 0%, rgba(5, 5, 5, 0.54) 100%);
+  }
+
+  .membership-promo h2 {
+    max-width: none;
+  }
+}
+
 /* ——— Gallery ——— */
 .gallery {
   background:
