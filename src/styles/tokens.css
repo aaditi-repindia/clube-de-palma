@@ -9,26 +9,11 @@
 }
 
 /*
-  REQUIRED BRAND FONTS (files not supplied in repo):
-  - TFarrow Light → place as /assets/fonts/TFarrow-Light.woff2
-  - Optima → place as /assets/fonts/Optima.woff2
-  Until then: Seasons (live display) + Optima system stack.
+  Brand fonts TFarrow Light / Optima are not in this repo.
+  Do not @font-face missing files — failed downloads can stall the splash in some browsers.
+  When files are added under /assets/fonts/, restore the @font-face rules.
+  Until then: Seasons (shipped) + Optima system stack.
 */
-@font-face {
-  font-family: "TFarrow Light";
-  src: url("/assets/fonts/TFarrow-Light.woff2") format("woff2");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Optima";
-  src: url("/assets/fonts/Optima.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 
 :root {
   /* Colour — from live Elementor / Woodmart brand usage */
@@ -51,7 +36,7 @@
   --color-overlay: rgba(5, 5, 5, 0.42);
 
   /* Typography */
-  --font-display: "TFarrow Light", "Seasons", Georgia, "Times New Roman", serif;
+  --font-display: "Seasons", Georgia, "Times New Roman", serif;
   --font-body: Optima, Candara, "Segoe UI", "Lucida Grande", sans-serif;
 
   --text-hero: clamp(2.75rem, 6.5vw, 5.75rem);

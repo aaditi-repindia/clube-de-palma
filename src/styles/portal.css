@@ -17,11 +17,14 @@
   color: var(--color-pure);
   background: var(--portal-frame-deep);
   overflow: hidden;
-  display: block;
 }
 
+/* Never let a display rule override the hidden attribute after the intro ends */
+.splash[hidden],
 .splash.is-done {
-  pointer-events: none;
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
 }
 
 .splash__skip {
@@ -37,6 +40,8 @@
   cursor: pointer;
   font-family: var(--font-body);
   letter-spacing: 0.06em;
+  pointer-events: auto;
+  touch-action: manipulation;
 }
 
 .splash__stage {

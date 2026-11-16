@@ -198,21 +198,40 @@
 /* ——— Amenities discovery ——— */
 .amenities {
   background: var(--color-cream);
+  padding-block: 0;
+  overflow: visible;
+}
+
+.amenities__stage {
+  /* JS sets --amenities-card-max-h from measured intro + padding */
+  --amenities-card-max-h: 28rem;
+  box-sizing: border-box;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: calc(var(--nav-h) + clamp(0.85rem, 2vw, 1.35rem));
+  padding-bottom: clamp(1.1rem, 2.4vw, 1.75rem);
+  background: var(--color-cream);
   overflow: hidden;
-  padding-bottom: clamp(3rem, 7vw, 5.5rem);
 }
 
 .amenities__intro {
   display: flex;
   align-items: end;
   justify-content: space-between;
-  gap: 1.5rem;
-  margin-bottom: clamp(1.75rem, 4vw, 3rem);
+  gap: clamp(1rem, 3vw, 2rem);
+  margin-bottom: clamp(1.35rem, 3.2vw, 2.35rem);
+  flex-shrink: 0;
 }
 
 .amenities__intro h2 {
-  font-size: var(--text-display);
-  max-width: 12ch;
+  font-size: clamp(2.05rem, 3.6vw, 3.65rem);
+  max-width: none;
+  white-space: nowrap;
+  line-height: 1.05;
 }
 
 .amenities__controls {
@@ -247,10 +266,16 @@
 .amenities-carousel {
   position: relative;
   width: 100%;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
   perspective: 2200px;
   cursor: grab;
   user-select: none;
   touch-action: pan-y;
+  min-height: 0;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .amenities-carousel.is-dragging {
@@ -258,13 +283,18 @@
 }
 
 .amenities-carousel__viewport {
-  overflow: hidden;
-  padding-block: 0.75rem 1.75rem;
+  width: 100%;
+  height: 100%;
+  overflow-x: clip;
+  overflow-y: visible;
+  display: flex;
+  align-items: center;
+  padding-block: 0;
 }
 
 .amenities-carousel__track {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   gap: clamp(1.35rem, 2.8vw, 2.35rem);
   width: max-content;
   will-change: transform;
@@ -275,8 +305,11 @@
 .amenity-card {
   position: relative;
   flex: 0 0 auto;
-  width: min(70vw, 24rem);
+  box-sizing: border-box;
+  width: min(72vw, 24rem, calc(var(--amenities-card-max-h) * 3 / 4.05));
   aspect-ratio: 3 / 4.05;
+  height: auto;
+  max-height: var(--amenities-card-max-h);
   transform-style: preserve-3d;
 }
 
@@ -318,43 +351,18 @@
   pointer-events: none;
 }
 
-.amenity-card__index {
-  position: absolute;
-  top: 1.05rem;
-  left: 1.15rem;
-  z-index: 3;
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.amenity-card__watermark {
-  position: absolute;
-  right: 0.55rem;
-  bottom: 0.35rem;
-  z-index: 1;
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(5.5rem, 12vw, 8.5rem);
-  line-height: 0.8;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.1);
-  pointer-events: none;
-  user-select: none;
-}
-
 .amenity-card__content {
   position: absolute;
   inset: auto 0 0;
   z-index: 2;
-  padding: 1.45rem 1.3rem 1.55rem;
+  padding: 1.45rem 1.3rem 1.65rem;
   color: var(--color-pure);
   display: grid;
   justify-items: start;
   gap: 0.55rem;
+  /* Keep title + rule (+ hover blurb) inside the card face */
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .amenity-card__title {
@@ -417,22 +425,26 @@
     flex-direction: column;
   }
 
+  .amenities__intro h2 {
+    font-size: clamp(1.85rem, 5.2vw, 2.85rem);
+  }
+
   .amenity-card {
-    width: min(76vw, 20rem);
+    max-width: min(78vw, 20rem);
   }
 }
 
 @media (max-width: 640px) {
+  .amenities__intro h2 {
+    font-size: clamp(1.7rem, 7vw, 2.25rem);
+  }
+
   .amenity-card {
-    width: min(82vw, 18rem);
+    max-width: min(84vw, 18.5rem);
   }
 
   .amenities-carousel__track {
     gap: 1.1rem;
-  }
-
-  .amenity-card__watermark {
-    font-size: 5rem;
   }
 }
 
@@ -526,133 +538,6 @@
     width: 72vw;
     margin-top: 0;
     aspect-ratio: 3 / 4;
-  }
-}
-
-/* ——— Membership ——— */
-.membership {
-  background: var(--color-ink);
-  color: rgba(255, 255, 255, 0.88);
-}
-
-.membership h2,
-.membership h3 {
-  color: var(--color-pure);
-}
-
-.membership__intro {
-  max-width: 48rem;
-  margin-bottom: 3rem;
-}
-
-.membership__intro h2 {
-  font-size: var(--text-display);
-  margin-bottom: 1rem;
-}
-
-.membership__grid {
-  display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: clamp(1.5rem, 4vw, 3rem);
-}
-
-.benefits {
-  display: grid;
-  gap: 1rem;
-}
-
-.benefit {
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
-  padding-top: 1rem;
-}
-
-.benefit h3 {
-  font-size: 1.35rem;
-  margin-bottom: 0.4rem;
-}
-
-.benefit p {
-  color: rgba(255, 255, 255, 0.72);
-}
-
-.membership__form-card {
-  background: var(--color-cream);
-  color: var(--color-body);
-  padding: clamp(1.4rem, 3vw, 2.2rem);
-  border-radius: 4px;
-}
-
-.membership__form-card h3 {
-  color: var(--color-title);
-  font-size: var(--text-h3);
-  margin-bottom: 0.35rem;
-}
-
-.membership__form-card > p {
-  color: var(--color-muted);
-  margin-bottom: 1.4rem;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.form-grid .field--full {
-  grid-column: 1 / -1;
-}
-
-.form-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  align-items: center;
-  margin-top: 0.5rem;
-}
-
-.form-note {
-  font-size: var(--text-small);
-  color: var(--color-muted);
-}
-
-.form-success {
-  display: none;
-  text-align: center;
-  padding: 2rem 1rem;
-}
-
-.form-success.is-visible {
-  display: grid;
-  gap: 0.85rem;
-  justify-items: center;
-}
-
-.form-success h3 {
-  font-size: var(--text-h2);
-}
-
-.membership__invite {
-  margin-top: 3.5rem;
-  padding: clamp(2rem, 5vw, 3.5rem);
-  background:
-    linear-gradient(120deg, rgba(5, 5, 5, 0.55), rgba(86, 193, 169, 0.35)),
-    url("/assets/images/hero-night-2.jpg") center / cover;
-  min-height: 18rem;
-  display: grid;
-  align-content: center;
-  gap: 1rem;
-}
-
-.membership__invite h3 {
-  font-size: var(--text-h2);
-  max-width: 14ch;
-}
-
-@media (max-width: 900px) {
-  .membership__grid,
-  .form-grid {
-    grid-template-columns: 1fr;
   }
 }
 

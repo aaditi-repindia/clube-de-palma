@@ -1,6 +1,6 @@
 import gsap from "gsap"
 
-const SESSION_KEY = "cdp-splash-seen"
+const HARD_TIMEOUT_MS = 8000
 
 export function initSplash({ onComplete } = {}) {
   const splash = document.getElementById("splash")
@@ -22,27 +22,54 @@ export function initSplash({ onComplete } = {}) {
   }
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  const forceIntro = new URLSearchParams(window.location.search).has("intro")
-  const seen = !forceIntro && sessionStorage.getItem(SESSION_KEY) === "1"
   let exiting = false
+  let finished = false
+  let progressTween = null
+  let intro = null
+  let hardTimer = 0
 
   const revealHero = () => {
     hero?.classList.add("hero--visible", "is-ready", "is-portal-ready")
   }
 
-  const cleanup = () => {
+  const hideSplashEl = () => {
+    gsap.killTweensOf(splash)
+    gsap.set(splash, { clearProps: "opacity,visibility,transform" })
     splash.hidden = true
     splash.setAttribute("aria-hidden", "true")
     splash.classList.add("is-done")
+    splash.style.display = "none"
+  }
+
+  const cleanup = () => {
+    if (finished) return
+    finished = true
+    window.clearTimeout(hardTimer)
+    progressTween?.kill()
+    intro?.kill()
+    hideSplashEl()
     document.body.classList.remove("is-locked")
     revealHero()
     onComplete?.()
   }
 
+  const safePortalScale = () => {
+    const target = archShape || arch
+    if (!target) return 8
+    const rect = target.getBoundingClientRect()
+    const w = Math.max(rect.width, 1)
+    const h = Math.max(rect.height, 1)
+    const scale = Math.max((window.innerWidth * 1.15) / w, (window.innerHeight * 1.15) / h)
+    if (!Number.isFinite(scale) || scale <= 0) return 8
+    return Math.min(scale, 40)
+  }
+
   const playPortalExit = () => {
-    if (exiting) return
+    if (exiting || finished) return
     exiting = true
-    sessionStorage.setItem(SESSION_KEY, "1")
+    window.clearTimeout(hardTimer)
+    progressTween?.kill()
+    intro?.kill()
 
     if (reduced || !arch) {
       gsap.to(splash, {
@@ -50,20 +77,17 @@ export function initSplash({ onComplete } = {}) {
         duration: 0.3,
         onComplete: cleanup,
       })
+      window.setTimeout(cleanup, 600)
       return
     }
 
-    const target = archShape || arch
-    const rect = target.getBoundingClientRect()
-    const scale = Math.max(
-      (window.innerWidth * 1.15) / rect.width,
-      (window.innerHeight * 1.15) / rect.height,
-    )
-
+    const scale = safePortalScale()
     const tl = gsap.timeline({
       defaults: { ease: "power3.inOut" },
       onComplete: cleanup,
     })
+
+    window.setTimeout(cleanup, 4500)
 
     tl.to(
       [progressWrap, skip, watermark].filter(Boolean),
@@ -83,56 +107,43 @@ export function initSplash({ onComplete } = {}) {
       0.05,
     )
 
-    // Expand the portal frame...
-    tl.to(
-      arch,
-      {
-        scale,
-        duration: 1.7,
-        ease: "power3.inOut",
-      },
-      0.12,
-    )
+    tl.to(arch, { scale, duration: 1.7, ease: "power3.inOut" }, 0.12)
 
-    tl.to(
-      archShape,
-      {
-        borderRadius: "0% 0% 0% 0% / 0% 0% 0% 0%",
-        duration: 1.55,
-        ease: "power2.inOut",
-      },
-      0.18,
-    )
+    if (archShape) {
+      tl.to(
+        archShape,
+        {
+          borderRadius: "0% 0% 0% 0% / 0% 0% 0% 0%",
+          duration: 1.55,
+          ease: "power2.inOut",
+        },
+        0.18,
+      )
+    }
 
-    // ...but counter-scale the full-viewport image so it never upscales/pixelates
-    tl.to(
-      portalImage,
-      {
-        xPercent: -50,
-        yPercent: -50,
-        scale: 1 / scale,
-        duration: 1.7,
-        ease: "power3.inOut",
-      },
-      0.12,
-    )
+    if (portalImage) {
+      tl.to(
+        portalImage,
+        {
+          xPercent: -50,
+          yPercent: -50,
+          scale: 1 / scale,
+          duration: 1.7,
+          ease: "power3.inOut",
+        },
+        0.12,
+      )
+    }
 
-    tl.to(
-      veil,
-      {
-        autoAlpha: 0,
-        duration: 1,
-        ease: "power2.inOut",
-      },
-      0.35,
-    )
+    if (veil) {
+      tl.to(veil, { autoAlpha: 0, duration: 1, ease: "power2.inOut" }, 0.35)
+    }
 
     tl.to(
       "[data-portal-word], [data-portal-script]",
       {
         autoAlpha: 0,
         y: -16,
-        filter: "blur(6px)",
         duration: 0.55,
         stagger: 0.04,
         ease: "power2.in",
@@ -170,76 +181,77 @@ export function initSplash({ onComplete } = {}) {
       )
     }, 0.85)
 
-    tl.to(
-      splash,
-      {
-        autoAlpha: 0,
-        duration: 0.55,
-        ease: "power2.inOut",
-      },
-      1.5,
-    )
+    tl.to(splash, { autoAlpha: 0, duration: 0.55, ease: "power2.inOut" }, 1.5)
   }
 
-  if (seen || reduced) {
+  // Respect reduced motion: skip cinematic intro, still unlock the page
+  if (reduced) {
     cleanup()
-    if (!reduced) {
-      gsap.fromTo(
-        "[data-hero-intro]",
-        { autoAlpha: 0, y: 22 },
-        { autoAlpha: 1, y: 0, duration: 0.85, stagger: 0.06, ease: "power3.out", delay: 0.05 },
-      )
-    }
     return
   }
+
+  // Always replay the arch intro on each full page load (refresh included)
+  splash.hidden = false
+  splash.classList.remove("is-done")
+  splash.style.removeProperty("display")
+  gsap.set(splash, { clearProps: "opacity,visibility" })
 
   document.body.classList.add("is-locked")
   hero?.classList.remove("hero--visible", "is-portal-ready")
 
-  // Soft Ken Burns without leaving viewport-native resolution
-  gsap.set(arch, { scale: 0.82 })
-  gsap.set(portalImage, { xPercent: -50, yPercent: -50, scale: 1.04 })
-  gsap.set(copy, { autoAlpha: 0 })
+  if (arch) gsap.set(arch, { scale: 0.82 })
+  if (portalImage) gsap.set(portalImage, { xPercent: -50, yPercent: -50, scale: 1.04 })
+  if (copy) gsap.set(copy, { autoAlpha: 0 })
   gsap.set("[data-portal-word], [data-portal-script], [data-portal-phrase]", {
     autoAlpha: 0,
     y: 32,
   })
-  gsap.set(progressWrap, { autoAlpha: 0 })
-  gsap.set(watermark, { autoAlpha: 0, scale: 1.08 })
+  if (progressWrap) gsap.set(progressWrap, { autoAlpha: 0 })
+  if (watermark) gsap.set(watermark, { autoAlpha: 0, scale: 1.08 })
+  if (fill) gsap.set(fill, { scaleX: 0 })
+  if (label) label.textContent = "0%"
 
-  const intro = gsap.timeline({ defaults: { ease: "power3.out" } })
+  const startIntro = () => {
+    if (finished || exiting) return
 
-  intro
-    .to(watermark, { autoAlpha: 1, scale: 1, duration: 1.1 }, 0)
-    .to(arch, { scale: 1, duration: 1.4 }, 0.08)
-    .to(portalImage, { scale: 1.02, duration: 1.6 }, 0.08)
-    .to(copy, { autoAlpha: 1, duration: 0.2 }, 0.4)
-    .to("[data-portal-word]", { autoAlpha: 1, y: 0, duration: 1, stagger: 0.14 }, 0.45)
-    .to("[data-portal-script]", { autoAlpha: 1, y: 0, duration: 0.85 }, 0.62)
-    .to("[data-portal-phrase]", { autoAlpha: 1, y: 0, duration: 0.8 }, 0.78)
-    .to(progressWrap, { autoAlpha: 1, duration: 0.5 }, 0.85)
+    intro = gsap.timeline({ defaults: { ease: "power3.out" } })
 
-  const progress = { value: 0 }
-  const progressTween = gsap.to(progress, {
-    value: 100,
-    duration: 2.4,
-    ease: "power1.inOut",
-    delay: 0.4,
-    onUpdate: () => {
-      const v = Math.round(progress.value)
-      if (fill) gsap.set(fill, { scaleX: progress.value / 100 })
-      if (label) label.textContent = `${v}%`
-    },
-    onComplete: playPortalExit,
+    if (watermark) intro.to(watermark, { autoAlpha: 1, scale: 1, duration: 1.1 }, 0)
+    if (arch) intro.to(arch, { scale: 1, duration: 1.4 }, 0.08)
+    if (portalImage) intro.to(portalImage, { scale: 1.02, duration: 1.6 }, 0.08)
+    if (copy) intro.to(copy, { autoAlpha: 1, duration: 0.2 }, 0.4)
+    intro.to("[data-portal-word]", { autoAlpha: 1, y: 0, duration: 1, stagger: 0.14 }, 0.45)
+    intro.to("[data-portal-script]", { autoAlpha: 1, y: 0, duration: 0.85 }, 0.62)
+    intro.to("[data-portal-phrase]", { autoAlpha: 1, y: 0, duration: 0.8 }, 0.78)
+    if (progressWrap) intro.to(progressWrap, { autoAlpha: 1, duration: 0.5 }, 0.85)
+
+    const progress = { value: 0 }
+    progressTween = gsap.to(progress, {
+      value: 100,
+      duration: 2.4,
+      ease: "power1.inOut",
+      delay: 0.35,
+      onUpdate: () => {
+        const v = Math.round(progress.value)
+        if (fill) gsap.set(fill, { scaleX: progress.value / 100 })
+        if (label) label.textContent = `${v}%`
+      },
+      onComplete: playPortalExit,
+    })
+  }
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(startIntro)
   })
 
-  skip?.addEventListener(
-    "click",
-    () => {
-      progressTween.kill()
-      intro.kill()
-      playPortalExit()
-    },
-    { once: true },
-  )
+  hardTimer = window.setTimeout(() => {
+    if (!finished) playPortalExit()
+  }, HARD_TIMEOUT_MS)
+
+  const onSkip = (event) => {
+    event?.preventDefault?.()
+    playPortalExit()
+  }
+
+  skip?.addEventListener("click", onSkip)
 }
