@@ -197,9 +197,27 @@
 
 /* ——— Amenities discovery ——— */
 .amenities {
+  --amenities-chrome: calc(var(--nav-h) + clamp(14.75rem, 32vh, 19rem));
   background: var(--color-cream);
-  overflow: hidden;
-  padding-bottom: clamp(3rem, 7vw, 5.5rem);
+  overflow: visible;
+  padding-block: 0;
+}
+
+.amenities__frame {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 36rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0;
+  padding-top: calc(var(--nav-h) + clamp(0.85rem, 2vh, 1.6rem));
+  padding-bottom: clamp(2.5rem, 5vh, 3.5rem);
+  box-sizing: border-box;
+  background: var(--color-cream);
+  overflow-x: clip;
+  overflow-y: hidden;
 }
 
 .amenities__intro {
@@ -207,12 +225,15 @@
   align-items: end;
   justify-content: space-between;
   gap: 1.5rem;
-  margin-bottom: clamp(1.75rem, 4vw, 3rem);
+  flex-shrink: 0;
+  margin-bottom: clamp(3.25rem, 8vh, 5rem);
 }
 
 .amenities__intro h2 {
-  font-size: var(--text-display);
-  max-width: 12ch;
+  font-size: clamp(1.85rem, 4.2vw, 4.25rem);
+  max-width: none;
+  white-space: nowrap;
+  line-height: 1.08;
 }
 
 .amenities__controls {
@@ -247,6 +268,10 @@
 .amenities-carousel {
   position: relative;
   width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
   perspective: 2200px;
   cursor: grab;
   user-select: none;
@@ -258,8 +283,10 @@
 }
 
 .amenities-carousel__viewport {
-  overflow: hidden;
-  padding-block: 0.75rem 1.75rem;
+  width: 100%;
+  overflow-x: clip;
+  overflow-y: visible;
+  padding-block: 1.15rem 2.85rem;
 }
 
 .amenities-carousel__track {
@@ -275,8 +302,9 @@
 .amenity-card {
   position: relative;
   flex: 0 0 auto;
-  width: min(70vw, 24rem);
+  width: min(70vw, 24rem, calc((100dvh - var(--amenities-chrome)) * 3 / 4.05));
   aspect-ratio: 3 / 4.05;
+  max-height: calc(100dvh - var(--amenities-chrome));
   transform-style: preserve-3d;
 }
 
@@ -398,13 +426,15 @@
   transform: scale(1.07);
 }
 
+.amenity-card.is-active .amenity-card__blurb,
 .amenity-card:hover .amenity-card__blurb,
 .amenity-card.is-open .amenity-card__blurb {
   opacity: 1;
   transform: translateY(0);
-  max-height: 7.5rem;
+  max-height: 8.5rem;
 }
 
+.amenity-card.is-active .amenity-card__scrim,
 .amenity-card:hover .amenity-card__scrim,
 .amenity-card.is-open .amenity-card__scrim {
   background:
@@ -412,19 +442,36 @@
 }
 
 @media (max-width: 900px) {
+  .amenities {
+    --amenities-chrome: calc(var(--nav-h) + clamp(14.5rem, 28vh, 18rem));
+  }
+
+  .amenities__frame {
+    min-height: 34rem;
+  }
+
   .amenities__intro {
     align-items: start;
     flex-direction: column;
+    margin-bottom: clamp(2.25rem, 5.5vh, 3.25rem);
+  }
+
+  .amenities__intro h2 {
+    font-size: clamp(1.55rem, 6.8vw, 2.75rem);
   }
 
   .amenity-card {
-    width: min(76vw, 20rem);
+    width: min(76vw, 20rem, calc((100dvh - var(--amenities-chrome)) * 3 / 4.05));
   }
 }
 
 @media (max-width: 640px) {
+  .amenities {
+    --amenities-chrome: calc(var(--nav-h) + clamp(15rem, 30vh, 19rem));
+  }
+
   .amenity-card {
-    width: min(82vw, 18rem);
+    width: min(82vw, 18rem, calc((100dvh - var(--amenities-chrome)) * 3 / 4.05));
   }
 
   .amenities-carousel__track {

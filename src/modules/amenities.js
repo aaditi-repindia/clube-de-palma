@@ -1,12 +1,18 @@
 import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { amenities } from "../data/amenities.js"
+import { getLenis } from "./smooth.js"
+
+gsap.registerPlugin(ScrollTrigger)
 
 export function initAmenities() {
+  const section = document.querySelector("[data-amenities-section]")
+  const frame = document.querySelector("[data-amenities-frame]")
   const root = document.querySelector("[data-amenities-carousel]")
   const track = document.querySelector("[data-amenities-track]")
   const prev = document.querySelector("[data-amenities-prev]")
   const next = document.querySelector("[data-amenities-next]")
-  if (!root || !track) return
+  if (!section || !frame || !root || !track) return
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   const canHover = window.matchMedia("(hover: hover)").matches
@@ -45,10 +51,18 @@ export function initAmenities() {
   let startX = 0
   let startOffset = 0
   let raf = 0
+  let pinTrigger = null
+  let syncingScroll = false
+  let ignoreScrub = false
 
   const gap = () => {
     const styles = getComputedStyle(track)
     return Number.parseFloat(styles.columnGap || styles.gap || "36") || 36
+  }
+
+  const trackPad = () => {
+    const styles = getComputedStyle(track)
+    return Number.parseFloat(styles.paddingInlineStart || styles.paddingLeft || "0") || 0
   }
 
   const cardWidth = () => cards[0]?.getBoundingClientRect().width || 360
@@ -57,10 +71,32 @@ export function initAmenities() {
 
   const offsetForIndex = (index) => {
     const centerPad = Math.max(0, (root.clientWidth - cardWidth()) / 2)
-    return -(index * cardStep()) + centerPad
+    // Track padding-inline offsets the first card; subtract it so cards truly center.
+    return -(index * cardStep()) + centerPad - trackPad()
   }
 
   const maxIndex = () => Math.max(0, cards.length - 1)
+
+  const travel = () => Math.abs(offsetForIndex(maxIndex()) - offsetForIndex(0))
+
+  /** Extra scroll after the last card is centered so it stays fully on-screen before Membership enters. */
+  const endBuffer = () => Math.max(window.innerHeight * 0.45, cardWidth() * 0.75)
+
+  const scrollDistance = () => travel() + endBuffer()
+
+  const offsetFromProgress = (progress) => {
+    const start = offsetForIndex(0)
+    const end = offsetForIndex(maxIndex())
+    return start + (end - start) * gsap.utils.clamp(0, 1, progress)
+  }
+
+  const progressFromOffset = (value) => {
+    const start = offsetForIndex(0)
+    const end = offsetForIndex(maxIndex())
+    const span = end - start
+    if (Math.abs(span) < 1) return 0
+    return gsap.utils.clamp(0, 1, (value - start) / span)
+  }
 
   const setActive = (index, animate = true) => {
     active = Math.max(0, Math.min(maxIndex(), index))
@@ -70,9 +106,26 @@ export function initAmenities() {
   }
 
   const nearestIndex = (value) => {
-    const centerPad = Math.max(0, (root.clientWidth - cardWidth()) / 2)
+    const centerPad = Math.max(0, (root.clientWidth - cardWidth()) / 2) - trackPad()
     const raw = (-value + centerPad) / cardStep()
     return Math.max(0, Math.min(maxIndex(), Math.round(raw)))
+  }
+
+  const scrollToProgress = (progress, immediate = false) => {
+    if (!pinTrigger) return
+    const start = pinTrigger.start
+    const end = pinTrigger.end
+    const y = start + (end - start) * gsap.utils.clamp(0, 1, progress)
+    syncingScroll = true
+    const lenis = getLenis()
+    if (lenis) {
+      lenis.scrollTo(y, { immediate, force: true, lock: false })
+    } else {
+      window.scrollTo({ top: y, behavior: immediate ? "auto" : "smooth" })
+    }
+    window.requestAnimationFrame(() => {
+      syncingScroll = false
+    })
   }
 
   const updateFolds = () => {
@@ -129,12 +182,24 @@ export function initAmenities() {
     raf = requestAnimationFrame(tick)
   }
 
-  prev?.addEventListener("click", () => setActive(active - 1))
-  next?.addEventListener("click", () => setActive(active + 1))
+  const goToIndex = (index, { syncScroll = true } = {}) => {
+    setActive(index)
+    if (syncScroll && pinTrigger) {
+      ignoreScrub = true
+      scrollToProgress(index / Math.max(1, maxIndex()), false)
+      window.setTimeout(() => {
+        ignoreScrub = false
+      }, 120)
+    }
+  }
+
+  prev?.addEventListener("click", () => goToIndex(active - 1))
+  next?.addEventListener("click", () => goToIndex(active + 1))
 
   const onPointerDown = (event) => {
     if (event.target.closest("button, a")) return
     dragging = true
+    ignoreScrub = true
     root.classList.add("is-dragging")
     startX = event.clientX ?? event.touches?.[0]?.clientX ?? 0
     startOffset = x
@@ -152,7 +217,14 @@ export function initAmenities() {
     if (!dragging) return
     dragging = false
     root.classList.remove("is-dragging")
-    setActive(nearestIndex(x))
+    const index = nearestIndex(x)
+    setActive(index)
+    if (pinTrigger) {
+      scrollToProgress(index / Math.max(1, maxIndex()), true)
+    }
+    window.setTimeout(() => {
+      ignoreScrub = false
+    }, 80)
   }
 
   root.addEventListener("pointerdown", onPointerDown)
@@ -160,17 +232,30 @@ export function initAmenities() {
   window.addEventListener("pointerup", onPointerUp)
   window.addEventListener("pointercancel", onPointerUp)
 
+  // Horizontal trackpad pans still nudge the carousel; vertical wheel drives the pinned scrub.
   root.addEventListener(
     "wheel",
     (event) => {
       const mostlyHorizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY)
-      if (!mostlyHorizontal && Math.abs(event.deltaY) < 10) return
+      if (!mostlyHorizontal) return
       event.preventDefault()
-      const delta = mostlyHorizontal ? event.deltaX : event.deltaY
-      targetX = targetX - delta * 1.05
-      // Soft live preview while wheeling; snap shortly after
+      if (!pinTrigger) {
+        targetX = targetX - event.deltaX * 1.05
+        window.clearTimeout(root._snapTimer)
+        root._snapTimer = window.setTimeout(() => goToIndex(nearestIndex(targetX)), 90)
+        return
+      }
+      const start = offsetForIndex(0)
+      const end = offsetForIndex(maxIndex())
+      const next = gsap.utils.clamp(Math.min(start, end), Math.max(start, end), targetX - event.deltaX * 1.05)
+      targetX = next
+      ignoreScrub = true
+      scrollToProgress(progressFromOffset(next), true)
       window.clearTimeout(root._snapTimer)
-      root._snapTimer = window.setTimeout(() => setActive(nearestIndex(targetX)), 90)
+      root._snapTimer = window.setTimeout(() => {
+        goToIndex(nearestIndex(targetX))
+        ignoreScrub = false
+      }, 90)
     },
     { passive: false },
   )
@@ -180,7 +265,7 @@ export function initAmenities() {
       card.addEventListener("click", () => {
         const index = Number(card.dataset.index)
         if (index !== active) {
-          setActive(index)
+          goToIndex(index)
           return
         }
         cards.forEach((el) => el.classList.toggle("is-open", el === card && !card.classList.contains("is-open")))
@@ -188,11 +273,43 @@ export function initAmenities() {
     })
   }
 
+  const setupPin = () => {
+    pinTrigger?.kill()
+    pinTrigger = null
+
+    if (reduced) {
+      setActive(0, false)
+      return
+    }
+
+    pinTrigger = ScrollTrigger.create({
+      trigger: frame,
+      start: "top top",
+      end: () => `+=${scrollDistance()}`,
+      pin: true,
+      scrub: 1,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      pinSpacing: true,
+      onUpdate: (self) => {
+        if (dragging || ignoreScrub || syncingScroll) return
+        // Hold the final card fully centered through the end buffer portion of the scrub.
+        const travelRatio = travel() / Math.max(scrollDistance(), 1)
+        const cardProgress = gsap.utils.clamp(0, 1, self.progress / Math.max(travelRatio, 0.0001))
+        targetX = offsetFromProgress(cardProgress)
+        if (Math.abs(targetX - x) > cardStep() * 0.85) x = targetX
+      },
+    })
+  }
+
+  setupPin()
+
   window.addEventListener(
     "resize",
     () => {
       setActive(active, false)
       render()
+      ScrollTrigger.refresh()
     },
     { passive: true },
   )
@@ -208,9 +325,11 @@ export function initAmenities() {
       onComplete: () => {
         setActive(0, false)
         updateFolds()
+        ScrollTrigger.refresh()
       },
     })
   }
 
   raf = requestAnimationFrame(tick)
+  window.addEventListener("load", () => ScrollTrigger.refresh(), { once: true })
 }

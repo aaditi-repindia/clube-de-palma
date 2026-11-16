@@ -166,31 +166,33 @@
         </div>
       </div>
 
-      <section class="section amenities" id="experiences" aria-labelledby="experiences-title">
-        <div class="container amenities__intro">
-          <div data-reveal="ctn">
-            <p class="eyebrow" data-reveal="p">Amenities &amp; experiences</p>
-            <h2 id="experiences-title" data-reveal="h">Discover your Clube</h2>
+      <section class="section amenities" id="experiences" aria-labelledby="experiences-title" data-amenities-section>
+        <div class="amenities__frame" data-amenities-frame>
+          <div class="container amenities__intro">
+            <div data-reveal="ctn">
+              <p class="eyebrow" data-reveal="p">Amenities &amp; experiences</p>
+              <h2 id="experiences-title" data-reveal="h">Discover your Clube</h2>
+            </div>
+            <div class="amenities__controls" data-reveal="ctn">
+              <button class="amenities__nav amenities__nav--prev" type="button" aria-label="Previous amenity" data-amenities-prev>
+                <span aria-hidden="true">←</span>
+              </button>
+              <button class="amenities__nav amenities__nav--next" type="button" aria-label="Next amenity" data-amenities-next>
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
           </div>
-          <div class="amenities__controls" data-reveal="ctn">
-            <button class="amenities__nav amenities__nav--prev" type="button" aria-label="Previous amenity" data-amenities-prev>
-              <span aria-hidden="true">←</span>
-            </button>
-            <button class="amenities__nav amenities__nav--next" type="button" aria-label="Next amenity" data-amenities-next>
-              <span aria-hidden="true">→</span>
-            </button>
-          </div>
-        </div>
 
-        <div
-          class="amenities-carousel"
-          data-amenities-carousel
-          data-cursor="drag"
-          data-cursor-label="Drag"
-        >
-          <div class="amenities-carousel__viewport">
-            <div class="amenities-carousel__track" data-amenities-track aria-live="polite">
-              <!-- Cards rendered by amenities.js -->
+          <div
+            class="amenities-carousel"
+            data-amenities-carousel
+            data-cursor="drag"
+            data-cursor-label="Drag"
+          >
+            <div class="amenities-carousel__viewport">
+              <div class="amenities-carousel__track" data-amenities-track aria-live="polite">
+                <!-- Cards rendered by amenities.js -->
+              </div>
             </div>
           </div>
         </div>
