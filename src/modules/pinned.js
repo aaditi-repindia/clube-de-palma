@@ -64,26 +64,6 @@ export function initPinnedStories() {
     }
   }
 
-  // Horizontal scrub gallery — Era loc-scroll-area pattern
-  const scrub = document.querySelector("[data-scroll-horizontal]")
-  const track = scrub?.querySelector("[data-scroll-track]")
-  if (scrub && track && window.matchMedia("(min-width: 768px)").matches) {
-    const getScroll = () => Math.max(0, track.scrollWidth - scrub.clientWidth)
-    gsap.to(track, {
-      x: () => -getScroll(),
-      ease: "none",
-      scrollTrigger: {
-        trigger: scrub,
-        start: "top top+=64",
-        end: () => `+=${getScroll()}`,
-        pin: true,
-        scrub: 1,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
-    })
-  }
-
   // Membership invite parallax media
   const invite = document.querySelector(".membership__invite")
   if (invite) {

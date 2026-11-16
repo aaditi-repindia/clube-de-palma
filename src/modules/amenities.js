@@ -10,28 +10,35 @@ export function initAmenities() {
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   const canHover = window.matchMedia("(hover: hover)").matches
+  const total = amenities.length
 
   track.innerHTML = amenities
-    .map(
-      (item, index) => `
-      <article class="amenity-card" data-amenity-card style="--i: ${index}">
+    .map((item, index) => {
+      const n = String(index + 1).padStart(2, "0")
+      const totalLabel = String(total).padStart(2, "0")
+      return `
+      <article class="amenity-card" data-amenity-card data-index="${index}">
         <div class="amenity-card__fold" data-amenity-fold>
           <div class="amenity-card__media">
             <img src="${item.image}" alt="${item.alt}" width="1200" height="1600" loading="lazy" decoding="async" draggable="false" />
             <div class="amenity-card__scrim" aria-hidden="true"></div>
           </div>
+          <p class="amenity-card__index" aria-hidden="true">${n} / ${totalLabel}</p>
+          <p class="amenity-card__watermark" aria-hidden="true">${n}</p>
           <div class="amenity-card__content">
             <h3 class="amenity-card__title">${item.name}</h3>
+            <span class="amenity-card__rule" aria-hidden="true"></span>
             <p class="amenity-card__blurb">${item.blurb}</p>
           </div>
         </div>
-      </article>`,
-    )
+      </article>`
+    })
     .join("")
 
   const cards = [...track.querySelectorAll("[data-amenity-card]")]
   const folds = cards.map((card) => card.querySelector("[data-amenity-fold]"))
 
+  let active = 0
   let x = 0
   let targetX = 0
   let dragging = false
@@ -41,48 +48,62 @@ export function initAmenities() {
 
   const gap = () => {
     const styles = getComputedStyle(track)
-    return Number.parseFloat(styles.columnGap || styles.gap || "28") || 28
+    return Number.parseFloat(styles.columnGap || styles.gap || "36") || 36
   }
 
-  const cardStep = () => {
-    const first = cards[0]
-    if (!first) return 320
-    return first.getBoundingClientRect().width + gap()
+  const cardWidth = () => cards[0]?.getBoundingClientRect().width || 360
+
+  const cardStep = () => cardWidth() + gap()
+
+  const offsetForIndex = (index) => {
+    const centerPad = Math.max(0, (root.clientWidth - cardWidth()) / 2)
+    return -(index * cardStep()) + centerPad
   }
 
-  const maxScroll = () => {
-    const overflow = track.scrollWidth - root.clientWidth
-    return Math.max(0, overflow + root.clientWidth * 0.08)
+  const maxIndex = () => Math.max(0, cards.length - 1)
+
+  const setActive = (index, animate = true) => {
+    active = Math.max(0, Math.min(maxIndex(), index))
+    targetX = offsetForIndex(active)
+    if (!animate || reduced) x = targetX
+    cards.forEach((card, i) => card.classList.toggle("is-active", i === active))
   }
 
-  const clamp = (value) => Math.min(0, Math.max(-maxScroll(), value))
+  const nearestIndex = (value) => {
+    const centerPad = Math.max(0, (root.clientWidth - cardWidth()) / 2)
+    const raw = (-value + centerPad) / cardStep()
+    return Math.max(0, Math.min(maxIndex(), Math.round(raw)))
+  }
 
   const updateFolds = () => {
-    if (reduced) {
-      folds.forEach((fold) => {
-        if (!fold) return
-        gsap.set(fold, { rotateY: 0, rotateX: 0, scale: 1, transformOrigin: "center center" })
-      })
-      return
-    }
-
     const viewportCenter = root.getBoundingClientRect().left + root.clientWidth / 2
+
     cards.forEach((card, index) => {
       const fold = folds[index]
       if (!fold) return
       const rect = card.getBoundingClientRect()
       const cardCenter = rect.left + rect.width / 2
-      const norm = (cardCenter - viewportCenter) / (root.clientWidth * 0.55)
-      const clamped = Math.max(-1.35, Math.min(1.35, norm))
-      const foldY = clamped * -28
-      const foldX = Math.abs(clamped) * 4
-      const scale = 1 - Math.min(0.08, Math.abs(clamped) * 0.06)
-      const origin = clamped < 0 ? "right center" : "left center"
+      const norm = (cardCenter - viewportCenter) / Math.max(cardWidth(), 1)
+      const clamped = Math.max(-1.6, Math.min(1.6, norm))
+      const abs = Math.abs(clamped)
+
+      if (reduced) {
+        gsap.set(fold, { rotateY: 0, scale: 1, x: 0, z: 0, opacity: 1 })
+        return
+      }
+
+      // Center stays flat; neighbours fold inward like pages
+      const rotateY = clamped * -22
+      const scale = 1 - Math.min(0.08, abs * 0.05)
+      const z = (1 - Math.min(1, abs)) * 48
+      const opacity = 1 - Math.min(0.22, abs * 0.12)
+      const origin = clamped < -0.05 ? "right center" : clamped > 0.05 ? "left center" : "center center"
 
       gsap.set(fold, {
-        rotateY: foldY,
-        rotateX: foldX,
+        rotateY,
         scale,
+        z,
+        opacity,
         transformOrigin: origin,
         force3D: true,
       })
@@ -90,27 +111,29 @@ export function initAmenities() {
   }
 
   const render = () => {
-    gsap.set(track, { x })
+    gsap.set(track, { x, force3D: true })
     updateFolds()
   }
 
   const tick = () => {
     if (!dragging) {
-      x += (targetX - x) * (reduced ? 1 : 0.12)
-      if (Math.abs(targetX - x) < 0.15) x = targetX
+      x += (targetX - x) * (reduced ? 1 : 0.14)
+      if (Math.abs(targetX - x) < 0.2) x = targetX
+      const live = nearestIndex(x)
+      if (live !== active) {
+        active = live
+        cards.forEach((card, i) => card.classList.toggle("is-active", i === active))
+      }
     }
     render()
     raf = requestAnimationFrame(tick)
   }
 
-  const goBy = (dir) => {
-    targetX = clamp(targetX - dir * cardStep())
-  }
-
-  prev?.addEventListener("click", () => goBy(-1))
-  next?.addEventListener("click", () => goBy(1))
+  prev?.addEventListener("click", () => setActive(active - 1))
+  next?.addEventListener("click", () => setActive(active + 1))
 
   const onPointerDown = (event) => {
+    if (event.target.closest("button, a")) return
     dragging = true
     root.classList.add("is-dragging")
     startX = event.clientX ?? event.touches?.[0]?.clientX ?? 0
@@ -121,8 +144,7 @@ export function initAmenities() {
   const onPointerMove = (event) => {
     if (!dragging) return
     const clientX = event.clientX ?? event.touches?.[0]?.clientX ?? 0
-    const delta = clientX - startX
-    x = clamp(startOffset + delta)
+    x = startOffset + (clientX - startX)
     targetX = x
   }
 
@@ -130,10 +152,7 @@ export function initAmenities() {
     if (!dragging) return
     dragging = false
     root.classList.remove("is-dragging")
-    // Soft snap toward nearest card
-    const step = cardStep()
-    const nearest = Math.round(-targetX / step) * step
-    targetX = clamp(-nearest)
+    setActive(nearestIndex(x))
   }
 
   root.addEventListener("pointerdown", onPointerDown)
@@ -144,18 +163,26 @@ export function initAmenities() {
   root.addEventListener(
     "wheel",
     (event) => {
-      if (Math.abs(event.deltaY) > Math.abs(event.deltaX) && Math.abs(event.deltaY) < 8) return
+      const mostlyHorizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY)
+      if (!mostlyHorizontal && Math.abs(event.deltaY) < 10) return
       event.preventDefault()
-      const delta = event.deltaY + event.deltaX
-      targetX = clamp(targetX - delta * 1.05)
+      const delta = mostlyHorizontal ? event.deltaX : event.deltaY
+      targetX = targetX - delta * 1.05
+      // Soft live preview while wheeling; snap shortly after
+      window.clearTimeout(root._snapTimer)
+      root._snapTimer = window.setTimeout(() => setActive(nearestIndex(targetX)), 90)
     },
     { passive: false },
   )
 
-  // Touch-friendly: open blurbs on tap when hover is unavailable
   if (!canHover) {
     cards.forEach((card) => {
       card.addEventListener("click", () => {
+        const index = Number(card.dataset.index)
+        if (index !== active) {
+          setActive(index)
+          return
+        }
         cards.forEach((el) => el.classList.toggle("is-open", el === card && !card.classList.contains("is-open")))
       })
     })
@@ -164,23 +191,24 @@ export function initAmenities() {
   window.addEventListener(
     "resize",
     () => {
-      targetX = clamp(targetX)
-      x = clamp(x)
+      setActive(active, false)
       render()
     },
     { passive: true },
   )
 
-  // Gentle entrance flap
+  setActive(0, false)
   if (!reduced) {
     gsap.from(folds, {
-      rotateY: (i) => (i % 2 === 0 ? 18 : -18),
-      opacity: 0.35,
-      duration: 1.15,
-      stagger: 0.06,
+      rotateY: (i) => (i === 0 ? 0 : i % 2 === 0 ? 26 : -26),
+      opacity: 0.4,
+      duration: 1.05,
+      stagger: 0.05,
       ease: "power3.out",
-      clearProps: "opacity",
-      onComplete: updateFolds,
+      onComplete: () => {
+        setActive(0, false)
+        updateFolds()
+      },
     })
   }
 
