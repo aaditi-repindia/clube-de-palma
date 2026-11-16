@@ -296,7 +296,8 @@
   width: max-content;
   will-change: transform;
   transform-style: preserve-3d;
-  padding-inline: var(--section-pad-x);
+  /* Align with heading column on the left; flush to the right edge at the end of travel */
+  padding-inline: var(--section-pad-x) 0;
 }
 
 .amenity-card {
