@@ -296,8 +296,8 @@
   width: max-content;
   will-change: transform;
   transform-style: preserve-3d;
-  /* Match heading column inset on both ends so travel finishes without a blank strip or overflow */
-  padding-inline: var(--section-pad-x);
+  /* Side pad is set in JS so the first/last cards can reach centre and expand fully */
+  padding-inline: var(--amenities-side-pad, var(--section-pad-x));
 }
 
 .amenity-card {

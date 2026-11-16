@@ -54,7 +54,16 @@ export function initAmenities() {
 
   const cardStep = () => cardWidth() + gap()
 
-  /** Travel until the last card is flush with the right edge — no trailing blank strip. */
+  /**
+   * Horizontal inset so card 0 can sit fully centred at progress 0 and the last
+   * card can sit fully centred at progress 1 — no edge clipping on expand/tilt.
+   */
+  const syncSidePad = () => {
+    const pad = Math.max(0, (root.clientWidth - cardWidth()) / 2)
+    track.style.setProperty("--amenities-side-pad", `${pad}px`)
+  }
+
+  /** Travel from first-card-centred → last-card-centred. */
   const maxTravel = () => Math.max(0, track.scrollWidth - root.clientWidth)
 
   const clampX = (value) => gsap.utils.clamp(-maxTravel(), 0, value)
@@ -63,6 +72,12 @@ export function initAmenities() {
     const travel = maxTravel()
     if (travel < 1) return 0
     return gsap.utils.clamp(0, 1, -x / travel)
+  }
+
+  const progressForIndex = (index) => {
+    const travel = maxTravel()
+    if (travel < 1) return 0
+    return gsap.utils.clamp(0, 1, (index * cardStep()) / travel)
   }
 
   /** Prefer the card closest to the viewport center; pin ends to first/last card. */
@@ -143,9 +158,7 @@ export function initAmenities() {
 
   const goBy = (dir) => {
     const next = gsap.utils.clamp(0, cards.length - 1, active + dir)
-    const travel = maxTravel()
-    const target = travel < 1 ? 0 : gsap.utils.clamp(0, 1, (next * cardStep()) / travel)
-    scrollToProgress(target, { immediate: false })
+    scrollToProgress(progressForIndex(next), { immediate: false })
   }
 
   prev?.addEventListener("click", () => goBy(-1))
@@ -185,9 +198,7 @@ export function initAmenities() {
       card.addEventListener("click", () => {
         const index = Number(card.dataset.index)
         if (index !== active) {
-          const travel = maxTravel()
-          const target = travel < 1 ? 0 : gsap.utils.clamp(0, 1, (index * cardStep()) / travel)
-          scrollToProgress(target)
+          scrollToProgress(progressForIndex(index))
           return
         }
         cards.forEach((el) => el.classList.toggle("is-open", el === card && !card.classList.contains("is-open")))
@@ -200,14 +211,18 @@ export function initAmenities() {
     tween?.kill()
     tween = null
 
+    syncSidePad()
     gsap.set(track, { x: 0, force3D: true })
     active = 0
     cards.forEach((card, i) => card.classList.toggle("is-active", i === 0))
     updateFolds()
 
-    if (reduced) return
+    if (reduced) {
+      syncSidePad()
+      return
+    }
 
-    // Pin while the frame fills the viewport; release as soon as the last card is flush.
+    // Pin while the frame fills the viewport; travel spans first→last centred cards.
     // Lenis smooths the wheel — keep scrub short for a controlled, fluid feel.
     const travel = () => Math.max(maxTravel(), 1)
     tween = gsap.to(track, {
@@ -222,6 +237,7 @@ export function initAmenities() {
         anticipatePin: 1,
         invalidateOnRefresh: true,
         pinSpacing: true,
+        onRefresh: () => syncSidePad(),
         onUpdate: () => {
           setActiveFromViewport()
           updateFolds()
