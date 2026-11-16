@@ -89,7 +89,7 @@
   --dur-slow: 900ms;
 
   /* Components */
-  --radius-btn: 20px;
+  --radius-btn: 0;
   --radius-soft: 12px;
   --radius-pill: 999px;
   --nav-h: 5.75rem;
