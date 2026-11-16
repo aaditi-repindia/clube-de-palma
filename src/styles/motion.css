@@ -15,8 +15,8 @@ html.has-custom-cursor input,
 html.has-custom-cursor select,
 html.has-custom-cursor textarea,
 html.has-custom-cursor label,
-html.has-custom-cursor .amenities__tab,
-html.has-custom-cursor .amenities__item {
+html.has-custom-cursor .amenities__nav,
+html.has-custom-cursor .amenity-card {
   cursor: none;
 }
 

@@ -167,43 +167,30 @@
       </div>
 
       <section class="section amenities" id="experiences" aria-labelledby="experiences-title">
-        <div class="container">
-          <div class="amenities__head">
-            <div>
-              <p class="eyebrow" data-reveal="p">Amenities &amp; experiences</p>
-              <h2 id="experiences-title" data-reveal="h">Discover your Clube</h2>
-            </div>
-            <div class="amenities__tabs" role="tablist" aria-label="Experience categories" data-reveal="ctn">
-              <button class="amenities__tab" type="button" role="tab" aria-selected="true" data-category="recreation">Recreation</button>
-              <button class="amenities__tab" type="button" role="tab" aria-selected="false" data-category="sports">Sports</button>
-              <button class="amenities__tab" type="button" role="tab" aria-selected="false" data-category="wellness">Wellness</button>
-              <button class="amenities__tab" type="button" role="tab" aria-selected="false" data-category="dining">Dining &amp; Social</button>
-              <button class="amenities__tab" type="button" role="tab" aria-selected="false" data-category="family">Family &amp; Leisure</button>
-            </div>
+        <div class="container amenities__intro">
+          <div data-reveal="ctn">
+            <p class="eyebrow" data-reveal="p">Amenities &amp; experiences</p>
+            <h2 id="experiences-title" data-reveal="h">Discover your Clube</h2>
           </div>
+          <div class="amenities__controls" data-reveal="ctn">
+            <button class="amenities__nav amenities__nav--prev" type="button" aria-label="Previous amenity" data-amenities-prev>
+              <span aria-hidden="true">←</span>
+            </button>
+            <button class="amenities__nav amenities__nav--next" type="button" aria-label="Next amenity" data-amenities-next>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
 
-          <div class="amenities__stage" data-reveal="ctn">
-            <div
-              class="amenities__gallery"
-              id="amenities-gallery"
-              aria-live="polite"
-              data-cursor="view"
-              data-cursor-label="View"
-            ></div>
-            <div class="amenities__panel">
-              <p class="eyebrow" id="amenities-eyebrow">Recreation</p>
-              <h3 id="amenities-title">Indoor &amp; outdoor leisure</h3>
-              <p id="amenities-intro">Explore verified facilities that shape everyday club life.</p>
-              <div class="amenities__list" id="amenities-list" role="list"></div>
-              <a
-                class="btn btn--outline"
-                href="https://dynamixclubedepalma.co.in/amenities/"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-magnetic
-              >
-                <span data-magnetic-inner>View all amenities <span class="btn__arrow" aria-hidden="true">→</span></span>
-              </a>
+        <div
+          class="amenities-carousel"
+          data-amenities-carousel
+          data-cursor="drag"
+          data-cursor-label="Drag"
+        >
+          <div class="amenities-carousel__viewport">
+            <div class="amenities-carousel__track" data-amenities-track aria-live="polite">
+              <!-- Cards rendered by amenities.js -->
             </div>
           </div>
         </div>
