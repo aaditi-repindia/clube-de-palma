@@ -764,12 +764,13 @@
 
 .journal-card {
   /*
-    Exactly 1.5 cards in view:
-    viewport = peek * cardWidth + gap  →  cardWidth = (viewport - gap) / peek
+    Width is assigned in journal.js as (viewport - gap) / peek
+    so each card gets the exact pixel size for a 1.5-card layout.
+    CSS fallback keeps the same ratio before JS runs.
   */
-  flex: 0 0 calc((100cqi - var(--journal-gap)) / var(--journal-peek));
-  width: calc((100cqi - var(--journal-gap)) / var(--journal-peek));
-  max-width: calc((100cqi - var(--journal-gap)) / var(--journal-peek));
+  flex: 0 0 var(--journal-card-width, calc((100cqi - var(--journal-gap)) / var(--journal-peek)));
+  width: var(--journal-card-width, calc((100cqi - var(--journal-gap)) / var(--journal-peek)));
+  max-width: var(--journal-card-width, calc((100cqi - var(--journal-gap)) / var(--journal-peek)));
   display: grid;
   grid-template-rows: var(--journal-media-h) minmax(0, auto);
   background: var(--color-pure);
@@ -779,9 +780,9 @@
 }
 
 .journal-carousel.is-single .journal-card {
-  flex-basis: min(100cqi, 42rem);
-  width: min(100cqi, 42rem);
-  max-width: min(100cqi, 42rem);
+  flex-basis: var(--journal-card-width, min(100cqi, 42rem));
+  width: var(--journal-card-width, min(100cqi, 42rem));
+  max-width: var(--journal-card-width, min(100cqi, 42rem));
 }
 
 .journal-card__media {

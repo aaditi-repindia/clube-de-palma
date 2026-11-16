@@ -79,15 +79,44 @@ export function initJournal() {
   let moved = false
   let startX = 0
   let startOffset = 0
+  let measuredCardWidth = 0
 
   const viewport = root.querySelector(".journal-carousel__viewport")
+  const section = root.closest(".journal") || document.documentElement
 
   const gap = () => {
     const styles = getComputedStyle(track)
     return Number.parseFloat(styles.columnGap || styles.gap || "24") || 24
   }
 
-  const cardWidth = () => cards[0]?.getBoundingClientRect().width || 0
+  const peek = () => {
+    const value = Number.parseFloat(getComputedStyle(section).getPropertyValue("--journal-peek"))
+    return Number.isFinite(value) && value > 0 ? value : 1.5
+  }
+
+  /** Width that fits exactly `peek` cards in the viewport: (viewport - gap) / peek */
+  const targetCardWidth = () => {
+    if (!viewport) return 0
+    if (cards.length <= 1) {
+      return Math.min(viewport.clientWidth, 42 * 16)
+    }
+    return Math.max(0, (viewport.clientWidth - gap()) / peek())
+  }
+
+  const syncCardWidths = () => {
+    const width = targetCardWidth()
+    measuredCardWidth = width
+    const px = `${width}px`
+    cards.forEach((card) => {
+      card.style.flex = `0 0 ${px}`
+      card.style.width = px
+      card.style.maxWidth = px
+      card.style.minWidth = px
+    })
+    track.style.setProperty("--journal-card-width", px)
+  }
+
+  const cardWidth = () => measuredCardWidth || cards[0]?.getBoundingClientRect().width || 0
   const step = () => cardWidth() + gap()
   const maxIndex = () => Math.max(0, cards.length - 1)
   /** End flush keeps a peek of the previous card instead of empty right space. */
@@ -210,10 +239,14 @@ export function initJournal() {
     "resize",
     () => {
       window.clearTimeout(resizeTimer)
-      resizeTimer = window.setTimeout(() => goTo(index, { immediate: true }), 120)
+      resizeTimer = window.setTimeout(() => {
+        syncCardWidths()
+        goTo(index, { immediate: true })
+      }, 120)
     },
     { passive: true },
   )
 
+  syncCardWidths()
   goTo(0, { immediate: true })
 }
