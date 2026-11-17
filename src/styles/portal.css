@@ -1,65 +1,45 @@
-/* Cinematic portal splash → hero
-   Interaction inspired by Era Residence; Dynamix palette + type only */
+/* Arched portal hero
+   Inspired by Era Residence: Architectural arched window framing the pool,
+   expanding smoothly into full-bleed on scroll. Zero artificial preloader. */
 
 :root {
   --portal-frame: #3f2a26; /* deep terracotta ink */
   --portal-frame-deep: #2a1b18;
   --portal-line: var(--color-terracotta);
-  --portal-glow: rgba(86, 193, 169, 0.2);
+  --portal-glow: rgba(86, 193, 169, 0.22);
   --portal-arch-w: min(38vw, 400px);
-  --portal-arch-h: min(78vh, 780px);
+  --portal-arch-h: min(76vh, 760px);
 }
 
-.splash {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  color: var(--color-pure);
-  background: var(--portal-frame-deep);
+.hero--portal {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 38rem;
   overflow: hidden;
-  display: block;
-}
-
-/* Never let a display rule override the hidden state */
-.splash[hidden],
-.splash.is-done {
-  display: none !important;
-  pointer-events: none !important;
-  visibility: hidden !important;
-}
-
-.splash__skip {
-  position: absolute;
-  top: 1.25rem;
-  right: 1.25rem;
-  z-index: 6;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: var(--portal-frame-deep);
   color: var(--color-pure);
-  border-radius: var(--radius-btn);
-  padding: 0.55rem 1rem;
-  cursor: pointer;
-  font-family: var(--font-body);
-  letter-spacing: 0.06em;
 }
 
-.splash__stage {
+.hero__portal-stage {
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
+  overflow: hidden;
 }
 
-.splash__veil {
+.hero__veil {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 50% 28%, var(--portal-glow), transparent 52%),
+    radial-gradient(ellipse at 50% 28%, var(--portal-glow), transparent 54%),
     linear-gradient(180deg, var(--portal-frame) 0%, var(--portal-frame-deep) 100%);
   z-index: 0;
 }
 
-.splash__watermark {
+.hero__watermark {
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -69,7 +49,7 @@
   overflow: hidden;
 }
 
-.splash__watermark span {
+.hero__watermark span {
   font-family: var(--font-display);
   font-size: clamp(12rem, 38vw, 28rem);
   line-height: 0.8;
@@ -79,7 +59,7 @@
 }
 
 /* Arch cutout portal */
-.splash__arch-wrap {
+.hero__arch-wrap {
   position: absolute;
   inset: 0;
   display: grid;
@@ -88,20 +68,20 @@
   pointer-events: none;
 }
 
-.splash__arch {
+.hero__arch {
   position: relative;
   width: var(--portal-arch-w);
   height: var(--portal-arch-h);
   transform-origin: center center;
   will-change: transform;
-  filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.28));
+  filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.32));
 }
 
-.splash__arch-shape {
+.hero__arch-shape {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  /* Tall round-top portal — Era-like arch */
+  /* Tall round-top architectural portal */
   border-radius: 50% 50% 1.1rem 1.1rem / 38% 38% 1.1rem 1.1rem;
   box-shadow:
     0 0 0 1px rgba(162, 93, 80, 0.65),
@@ -109,14 +89,14 @@
     0 0 0 11px rgba(162, 93, 80, 0.22);
 }
 
-.splash__arch-media {
+.hero__arch-media {
   position: absolute;
   inset: 0;
   overflow: hidden;
 }
 
-/* Full-viewport image under the arch clip — stays sharp as the portal expands */
-.splash__arch-media img {
+/* Full-viewport image under the arch clip — stays sharp and static as the portal expands */
+.hero__arch-media img {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -133,7 +113,7 @@
   backface-visibility: hidden;
 }
 
-.splash__arch-ring {
+.hero__arch-ring {
   position: absolute;
   inset: -12px;
   border-radius: 50% 50% 1.35rem 1.35rem / 40% 40% 1.35rem 1.35rem;
@@ -141,18 +121,18 @@
   pointer-events: none;
 }
 
-.splash__copy {
+.hero__copy {
   position: relative;
   z-index: 3;
   width: min(92vw, 920px);
   text-align: center;
-  pointer-events: none;
   display: grid;
   justify-items: center;
-  gap: 0.2rem;
+  gap: 0.4rem;
+  margin-top: clamp(0.5rem, 1.5vh, 1.5rem);
 }
 
-.splash__brand-lockup {
+.hero__brand-lockup {
   display: grid;
   gap: 0;
   justify-items: center;
@@ -160,7 +140,7 @@
   position: relative;
 }
 
-.splash__word {
+.hero__word {
   font-family: var(--font-display);
   font-weight: 300;
   font-size: clamp(4.2rem, 14vw, 9.5rem);
@@ -170,11 +150,11 @@
   margin: 0;
 }
 
-.splash__word--offset {
+.hero__word--offset {
   transform: translateX(-7%);
 }
 
-.splash__script {
+.hero__script {
   font-family: var(--font-body);
   font-style: italic;
   font-size: clamp(2.1rem, 5.8vw, 4rem);
@@ -186,12 +166,12 @@
   z-index: 1;
 }
 
-.splash__phrase {
+.hero__phrase {
   display: flex;
   justify-content: space-between;
   gap: 1.5rem;
   width: min(100%, 36rem);
-  margin-top: 1rem;
+  margin-top: 0.6rem;
   font-family: var(--font-display);
   font-size: clamp(0.85rem, 1.6vw, 1.2rem);
   letter-spacing: 0.16em;
@@ -199,178 +179,84 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-.splash__progress {
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem;
+  margin-top: 1.2rem;
+  z-index: 4;
+}
+
+.hero--portal .hero__scroll {
   position: absolute;
   left: 50%;
-  bottom: 1.75rem;
+  bottom: 1.6rem;
   transform: translateX(-50%);
-  z-index: 4;
-  width: min(14rem, 50vw);
-  text-align: center;
-}
-
-.splash__progress-track {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.2);
-  overflow: hidden;
-}
-
-.splash__progress-fill {
-  display: block;
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(90deg, var(--color-terracotta), var(--color-accent));
-  transform: scaleX(0);
-  transform-origin: left center;
-}
-
-.splash__progress-label {
-  margin-top: 0.45rem;
-  font-size: var(--text-label);
-  letter-spacing: var(--tracking-wide);
-  color: rgba(255, 255, 255, 0.65);
-}
-
-/* Hero — editorial centered continuation of portal */
-.hero {
+  display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  justify-items: center;
-}
-
-.hero__scrim {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(5, 5, 5, 0.34) 0%,
-      rgba(5, 5, 5, 0.16) 38%,
-      rgba(5, 5, 5, 0.5) 100%
-    );
-}
-
-.hero__content {
-  width: min(100% - (var(--section-pad-x) * 2), 58rem);
-  margin: 0 auto;
-  padding-bottom: clamp(4rem, 10vh, 6.5rem);
-  padding-top: calc(var(--nav-h) + 1.5rem);
-  text-align: center;
-  display: grid;
-  justify-items: center;
-  opacity: 0;
-}
-
-.hero--visible .hero__content,
-.hero.is-portal-ready .hero__content {
-  opacity: 1;
-}
-
-.hero__brand-lockup {
-  order: 1;
-  display: grid;
-  gap: 0;
-  justify-items: center;
-  line-height: 0.84;
-  margin-bottom: 0.15rem;
-  position: relative;
-  /* Target ~1/3 of the hero viewport as the dominant focal mark */
-  min-height: 32vh;
-  align-content: center;
-  padding: 0.75rem 1.25rem;
-  isolation: isolate;
-}
-
-.hero__brand-lockup::before {
-  content: "";
-  position: absolute;
-  inset: 8% 4% 6%;
-  z-index: -1;
-  border-radius: 1.25rem;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(5, 5, 5, 0.38) 0%,
-    rgba(5, 5, 5, 0.16) 48%,
-    rgba(5, 5, 5, 0) 74%
-  );
-  pointer-events: none;
-}
-
-.hero__word {
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: clamp(4.8rem, 16vw, 12rem);
-  color: var(--color-pure);
-  letter-spacing: 0.01em;
-  margin: 0;
-  text-shadow:
-    0 2px 0 rgba(5, 5, 5, 0.18),
-    0 10px 28px rgba(5, 5, 5, 0.45),
-    0 0 1px rgba(5, 5, 5, 0.35);
-}
-
-.hero__word--offset {
-  transform: translateX(-6%);
-}
-
-.hero__script {
+  gap: 0.4rem;
+  color: rgba(255, 255, 255, 0.72);
   font-family: var(--font-body);
-  font-style: italic;
-  font-size: clamp(2.4rem, 7vw, 5rem);
-  color: #7fd4c2;
-  margin-top: -0.55em;
-  position: relative;
-  z-index: 1;
-  text-shadow:
-    0 2px 0 rgba(5, 5, 5, 0.2),
-    0 8px 22px rgba(5, 5, 5, 0.4);
+  font-size: var(--text-small);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  z-index: 4;
+  transition: color var(--dur-fast) var(--ease-soft);
 }
 
-.hero .cta-row {
-  order: 2;
-  justify-content: center;
-  margin-top: 1.35rem;
+.hero--portal .hero__scroll:hover {
+  color: var(--color-pure);
 }
 
-.hero__scroll {
-  left: max(1rem, var(--section-pad-x));
+.hero--portal .hero__scroll-line {
+  display: block;
+  width: 1px;
+  height: 1.75rem;
+  background: linear-gradient(180deg, var(--color-accent), transparent);
+  animation: heroScrollPulse 2s infinite ease-in-out;
 }
 
-/* Continuity: hide competing left-aligned hero defaults */
-.hero .hero__content > .eyebrow {
-  letter-spacing: var(--tracking-label);
+@keyframes heroScrollPulse {
+  0%, 100% {
+    transform: scaleY(0.4);
+    transform-origin: top center;
+    opacity: 0.4;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top center;
+    opacity: 1;
+  }
 }
 
 @media (max-width: 700px) {
   :root {
-    --portal-arch-w: min(70vw, 290px);
-    --portal-arch-h: min(64vh, 560px);
+    --portal-arch-w: min(72vw, 290px);
+    --portal-arch-h: min(62vh, 540px);
   }
 
-  .splash__phrase {
+  .hero__phrase {
     width: min(100%, 20rem);
     font-size: 0.72rem;
   }
 
-  .splash__word {
+  .hero__word {
     font-size: clamp(3rem, 16vw, 4.6rem);
   }
 
-  .hero__word {
-    font-size: clamp(3.6rem, 18vw, 5.8rem);
-  }
-
-  .hero__brand-lockup {
-    min-height: 28vh;
-  }
-
-  .splash__script,
   .hero__script {
     font-size: clamp(1.7rem, 9vw, 2.8rem);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .splash__arch,
-  .splash__arch-media img,
-  .hero__content {
+  .hero__arch,
+  .hero__arch-media img,
+  .hero__scroll-line {
     transition: none !important;
+    animation: none !important;
   }
 }

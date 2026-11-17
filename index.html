@@ -21,49 +21,6 @@
 
     <div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
 
-    <div class="splash" id="splash" role="dialog" aria-label="Welcome to Clube de Palma" aria-modal="true">
-      <button type="button" class="splash__skip" id="splash-skip">Skip intro</button>
-      <div class="splash__stage">
-        <div class="splash__veil" aria-hidden="true"></div>
-        <div class="splash__watermark" aria-hidden="true"><span>C</span></div>
-        <div class="splash__arch-wrap">
-          <div class="splash__arch" data-portal-arch>
-            <div class="splash__arch-ring" aria-hidden="true"></div>
-            <div class="splash__arch-shape">
-              <div class="splash__arch-media" data-portal-media>
-                <img
-                  src="/assets/images/hero-pool-2x.jpg"
-                  srcset="/assets/images/hero-pool.jpg 1671w, /assets/images/hero-pool-2x.jpg 2924w"
-                  sizes="100vw"
-                  alt=""
-                  width="2924"
-                  height="1646"
-                  data-portal-image
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="splash__copy" data-portal-copy>
-          <div class="splash__brand-lockup">
-            <p class="splash__word" data-portal-word>CLUBE</p>
-            <p class="splash__script" data-portal-script>de</p>
-            <p class="splash__word splash__word--offset" data-portal-word>PALMA</p>
-          </div>
-          <div class="splash__phrase" data-portal-phrase>
-            <span>A place</span>
-            <span>to belong</span>
-          </div>
-        </div>
-        <div class="splash__progress">
-          <div class="splash__progress-track">
-            <span class="splash__progress-fill" data-preloader-fill></span>
-          </div>
-          <div class="splash__progress-label" data-preloader-label>0%</div>
-        </div>
-      </div>
-    </div>
-
     <header class="site-header" id="site-header">
       <div class="site-header__inner">
         <a class="brand" href="#top" aria-label="Clube de Palma home">
@@ -106,34 +63,61 @@
     </header>
 
     <main id="main">
-      <section class="hero" id="top" aria-label="Hero">
-        <div class="hero__media" data-parallax>
-          <img
-            src="/assets/images/hero-pool-2x.jpg"
-            srcset="/assets/images/hero-pool.jpg 1671w, /assets/images/hero-pool-2x.jpg 2924w"
-            sizes="100vw"
-            alt="Daytime view across the Clube de Palma swimming pool and clubhouse"
-            width="2924"
-            height="1646"
-          />
-        </div>
-        <div class="hero__scrim" aria-hidden="true"></div>
-        <div class="hero__content">
-          <div class="hero__brand-lockup" data-hero-intro data-hero-lockup>
-            <p class="hero__word">CLUBE</p>
-            <p class="hero__script">de</p>
-            <p class="hero__word hero__word--offset">PALMA</p>
+      <section class="hero hero--portal" id="top" aria-label="Hero">
+        <div class="hero__portal-stage" data-portal-stage>
+          <div class="hero__veil" aria-hidden="true"></div>
+          <div class="hero__watermark" aria-hidden="true"><span>C</span></div>
+
+          <div class="hero__arch-wrap">
+            <div class="hero__arch" data-portal-arch>
+              <div class="hero__arch-ring" aria-hidden="true"></div>
+              <div class="hero__arch-shape" data-portal-shape>
+                <div class="hero__arch-media" data-portal-media>
+                  <img
+                    src="/assets/images/hero-pool-2x.jpg"
+                    srcset="/assets/images/hero-pool.jpg 1671w, /assets/images/hero-pool-2x.jpg 2924w"
+                    sizes="100vw"
+                    alt="Daytime view across the Clube de Palma swimming pool and clubhouse"
+                    width="2924"
+                    height="1646"
+                    data-portal-image
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="cta-row" data-hero-intro>
-            <a class="btn btn--light" href="#experiences" data-magnetic>
-              <span data-magnetic-inner>Explore the Clube <span class="btn__arrow" aria-hidden="true">→</span></span>
-            </a>
+
+          <div class="hero__copy" data-portal-copy>
+            <div class="hero__brand-lockup">
+              <h1 class="hero__word">CLUBE</h1>
+              <p class="hero__script">de</p>
+              <p class="hero__word hero__word--offset">PALMA</p>
+            </div>
+            <div class="hero__phrase" data-portal-phrase>
+              <span>A place</span>
+              <span>to belong</span>
+            </div>
+            <div class="cta-row hero__cta" data-portal-cta>
+              <a class="btn btn--light" href="#experiences" data-magnetic>
+                <span data-magnetic-inner>Explore the Clube <span class="btn__arrow" aria-hidden="true">→</span></span>
+              </a>
+              <a
+                class="btn btn--outline"
+                href="https://dynamixclubedepalma.co.in/clubdepalma/membership/form"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-magnetic
+              >
+                <span data-magnetic-inner>Apply for Membership</span>
+              </a>
+            </div>
           </div>
+
+          <a class="hero__scroll" href="#about" aria-label="Scroll to about" data-portal-scroll>
+            <span class="hero__scroll-line" aria-hidden="true"></span>
+            Scroll
+          </a>
         </div>
-        <a class="hero__scroll" href="#about" aria-label="Scroll to about">
-          <span class="hero__scroll-line" aria-hidden="true"></span>
-          Scroll
-        </a>
       </section>
 
       <section class="section about" id="about" aria-labelledby="about-heading">
