@@ -244,21 +244,81 @@
         </div>
       </section>
 
-      <section class="section contact-strip" id="contact" aria-labelledby="contact-title">
-        <div class="container contact-strip__grid" data-reveal="ctn">
-          <div>
-            <p class="eyebrow">Contact</p>
-            <h2 id="contact-title">Get in touch</h2>
-            <address>
-              <strong>Clube de Palma</strong>
-              <span>H. No. ADG/15/PH/II, Near Phase II Gate, Aldeia de Goa, Bambolim, Goa</span>
-              <a href="tel:+919699751872">+91-96997 51872</a>
-              <a href="tel:+918301826935">+91-83018 26935</a>
-              <a href="mailto:vishal.roy@dynamixgroup.co.in">vishal.roy@dynamixgroup.co.in</a>
-            </address>
-          </div>
-          <div class="cta-row">
-            <a class="btn btn--outline" href="https://dynamixclubedepalma.co.in/contact-us/" target="_blank" rel="noopener noreferrer">Contact page</a>
+      <section class="section contact" id="contact" aria-labelledby="contact-title">
+        <div class="container">
+          <div class="contact__panel" data-reveal="ctn">
+            <div class="contact__grid">
+              <div class="contact__intro">
+                <div class="contact__mark" aria-hidden="true">
+                  <span class="contact__mark-orbit"></span>
+                  <span class="contact__mark-core"></span>
+                </div>
+                <h2 id="contact-title" class="contact__title">
+                  <span>Let’s</span>
+                  <span>get</span>
+                  <span>in touch</span>
+                </h2>
+              </div>
+
+              <div class="contact__aside">
+                <form class="contact-form" data-contact-form novalidate>
+                  <div class="contact-form__field">
+                    <label for="contact-name">Full name</label>
+                    <div class="contact-form__control">
+                      <input id="contact-name" name="name" type="text" autocomplete="name" placeholder=" " required />
+                      <span class="contact-form__req" aria-hidden="true">*</span>
+                    </div>
+                  </div>
+
+                  <div class="contact-form__row">
+                    <div class="contact-form__field">
+                      <label for="contact-email">Email</label>
+                      <div class="contact-form__control">
+                        <input id="contact-email" name="email" type="email" autocomplete="email" placeholder=" " required />
+                        <span class="contact-form__req" aria-hidden="true">*</span>
+                      </div>
+                    </div>
+                    <div class="contact-form__field">
+                      <label for="contact-phone">Phone</label>
+                      <div class="contact-form__control">
+                        <input id="contact-phone" name="phone" type="tel" autocomplete="tel" placeholder=" " required />
+                        <span class="contact-form__req" aria-hidden="true">*</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="contact-form__field">
+                    <label for="contact-message">Message</label>
+                    <div class="contact-form__control">
+                      <input id="contact-message" name="message" type="text" placeholder=" " required />
+                      <span class="contact-form__req" aria-hidden="true">*</span>
+                    </div>
+                  </div>
+
+                  <div class="contact-form__actions">
+                    <p class="contact-form__status" data-contact-status role="status" aria-live="polite"></p>
+                    <button class="contact-form__submit" type="submit" aria-label="Send message" data-magnetic>
+                      <span data-magnetic-inner aria-hidden="true">→</span>
+                    </button>
+                  </div>
+                </form>
+
+                <div class="contact__places">
+                  <address class="contact__place">
+                    <strong>Bambolim</strong>
+                    <span>H. No. ADG/15/PH/II, Near Phase II Gate,<br />Aldeia de Goa, Bambolim, Goa</span>
+                    <a href="tel:+919699751872">+91-96997 51872</a>
+                    <a href="tel:+918301826935">+91-83018 26935</a>
+                  </address>
+                  <div class="contact__place">
+                    <strong>Membership</strong>
+                    <a href="mailto:vishal.roy@dynamixgroup.co.in">vishal.roy@dynamixgroup.co.in</a>
+                    <a href="https://dynamixclubedepalma.co.in/contact-us/" target="_blank" rel="noopener noreferrer">Official contact page</a>
+                    <a href="https://dynamixclubedepalma.co.in/clubdepalma/membership/form" target="_blank" rel="noopener noreferrer">Apply for membership</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
