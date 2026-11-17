@@ -35,6 +35,44 @@ function initMembershipParallax() {
   )
 }
 
+function initFooterReveal() {
+  const wrapper = document.querySelector("[data-footer-reveal-wrapper]")
+  const reveal = document.querySelector("[data-footer-reveal]")
+  const bg = document.querySelector("[data-footer-reveal-bg]")
+  const content = document.querySelector("[data-footer-reveal-content]")
+  if (!wrapper || !reveal) return
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    reveal.style.position = "relative"
+    reveal.style.clipPath = "none"
+    reveal.style.pointerEvents = "auto"
+    return
+  }
+
+  ScrollTrigger.create({
+    trigger: wrapper,
+    start: "top bottom",
+    end: "bottom bottom",
+    scrub: true,
+    onUpdate: (self) => {
+      const p = self.progress
+      const inset = (1 - p) * 100
+      reveal.style.clipPath = `inset(${inset}% 0% 0% 0%)`
+      reveal.style.pointerEvents = p > 0.05 ? "auto" : "none"
+      if (bg) {
+        gsap.set(bg, { scale: 1.08 - p * 0.08 })
+      }
+      if (content) {
+        gsap.set(content, { y: (1 - p) * 35, opacity: 0.5 + p * 0.5 })
+      }
+    },
+    onLeaveBack: () => {
+      reveal.style.clipPath = "inset(100% 0% 0% 0%)"
+      reveal.style.pointerEvents = "none"
+    },
+  })
+}
+
 export function initMotion() {
   initSmoothScroll()
   initCursor()
@@ -42,6 +80,7 @@ export function initMotion() {
   initMarquee()
   initReveals()
   initMembershipParallax()
+  initFooterReveal()
   const hero = document.querySelector(".hero")
   requestAnimationFrame(() => hero?.classList.add("is-ready"))
 
