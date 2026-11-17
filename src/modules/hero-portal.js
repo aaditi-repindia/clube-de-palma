@@ -5,6 +5,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 export function initHeroPortal() {
   const hero = document.querySelector(".hero--portal")
+  const header = document.getElementById("site-header")
   if (!hero) return
 
   const arch = hero.querySelector("[data-portal-arch]")
@@ -12,56 +13,55 @@ export function initHeroPortal() {
   const portalImage = hero.querySelector("[data-portal-image]")
   const ring = hero.querySelector(".hero__arch-ring")
   const veil = hero.querySelector(".hero__veil")
-  const watermark = hero.querySelector(".hero__watermark")
-  const phrase = hero.querySelector("[data-portal-phrase]")
-  const scrollIndicator = hero.querySelector("[data-portal-scroll]")
+  const scrim = hero.querySelector("[data-portal-scrim]")
+  const copy = hero.querySelector("[data-portal-copy]")
   const brandLockup = hero.querySelector(".hero__brand-lockup")
+  const phrase = hero.querySelector("[data-portal-phrase]")
   const cta = hero.querySelector("[data-portal-cta]")
+  const scrollIndicator = hero.querySelector("[data-portal-scroll]")
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
-  // Gentle initial entrance on first paint (no blocking, no loader)
-  if (!reduced) {
-    gsap.fromTo(
-      [brandLockup, phrase, cta, scrollIndicator].filter(Boolean),
-      { autoAlpha: 0, y: 20 },
-      {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.9,
-        stagger: 0.08,
-        ease: "power3.out",
-        delay: 0.1,
-      },
-    )
+  // Initial State: Header, logo, banner copies, and CTAs are completely hidden before scroll
+  if (header) gsap.set(header, { autoAlpha: 0, y: -10, pointerEvents: "none" })
+  if (copy) gsap.set(copy, { autoAlpha: 0, pointerEvents: "none" })
+  if (brandLockup) gsap.set(brandLockup, { autoAlpha: 0, y: 28 })
+  if (phrase) gsap.set(phrase, { autoAlpha: 0, y: 20 })
+  if (cta) gsap.set(cta, { autoAlpha: 0, y: 20, pointerEvents: "none" })
+  if (scrim) gsap.set(scrim, { autoAlpha: 0 })
+  if (veil) gsap.set(veil, { autoAlpha: 1 })
+  if (ring) gsap.set(ring, { autoAlpha: 1 })
+  if (arch) gsap.set(arch, { scale: 1 })
+  if (scrollIndicator) gsap.set(scrollIndicator, { autoAlpha: 1 })
 
-    if (arch) {
-      gsap.fromTo(
-        arch,
-        { scale: 0.94 },
-        { scale: 1, duration: 1.1, ease: "power2.out" },
-      )
-    }
+  if (reduced) {
+    if (header) gsap.set(header, { autoAlpha: 1, y: 0, pointerEvents: "auto" })
+    if (copy) gsap.set(copy, { autoAlpha: 1, pointerEvents: "auto" })
+    if (brandLockup) gsap.set(brandLockup, { autoAlpha: 1, y: 0 })
+    if (phrase) gsap.set(phrase, { autoAlpha: 1, y: 0 })
+    if (cta) gsap.set(cta, { autoAlpha: 1, y: 0, pointerEvents: "auto" })
+    if (scrim) gsap.set(scrim, { autoAlpha: 0.35 })
+    if (veil) gsap.set(veil, { autoAlpha: 0 })
+    if (ring) gsap.set(ring, { autoAlpha: 0 })
+    return
   }
-
-  if (reduced || !arch) return
 
   const calcTargetScale = () => {
     const target = archShape || arch
     const rect = target.getBoundingClientRect()
     const w = Math.max(rect.width || 0, 1)
     const h = Math.max(rect.height || 0, 1)
-    const scale = Math.max((window.innerWidth * 1.25) / w, (window.innerHeight * 1.25) / h)
+    const scale = Math.max((window.innerWidth * 1.3) / w, (window.innerHeight * 1.3) / h)
     if (!Number.isFinite(scale) || scale <= 0) return 6
     return Math.min(scale, 35)
   }
 
-  // ScrollTrigger scrub: smoothly expands arch into full-bleed view on scroll
+  // Pin hero for controlled, silky scroll scrubbing
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: hero,
       start: "top top",
-      end: "+=120%",
+      end: "+=170%",
       pin: true,
       scrub: 0.5,
       anticipatePin: 1,
@@ -70,92 +70,143 @@ export function initHeroPortal() {
     },
   })
 
-  // 1. Fade peripheral accents early
-  tl.to(
-    [phrase, scrollIndicator, watermark, ring].filter(Boolean),
-    {
-      autoAlpha: 0,
-      y: -18,
-      duration: 0.35,
-      ease: "power2.inOut",
-    },
-    0,
-  )
+  // Phase 1 (0.00 -> 0.55): Arch zooms until curve disappears and full banner covers viewport
+  if (scrollIndicator) {
+    tl.to(scrollIndicator, { autoAlpha: 0, y: -10, duration: 0.12, ease: "power2.inOut" }, 0)
+  }
+  if (ring) {
+    tl.to(ring, { autoAlpha: 0, duration: 0.16, ease: "power2.inOut" }, 0)
+  }
 
-  // 2. Expand arch to fill screen
+  // Expand arch to fill screen
   tl.to(
     arch,
     {
       scale: () => calcTargetScale(),
-      duration: 1,
+      duration: 0.55,
       ease: "power2.inOut",
     },
-    0.04,
+    0.02,
   )
 
-  // 3. Unround arch corners to full rectangle
+  // Unround arch corners to full rectangle
   if (archShape) {
     tl.to(
       archShape,
       {
         borderRadius: "0px 0px 0px 0px",
         boxShadow: "0 0 0 0 rgba(0,0,0,0)",
-        duration: 0.85,
+        duration: 0.52,
         ease: "power2.inOut",
       },
-      0.08,
+      0.05,
     )
   }
 
-  // 4. Counter-scale image so it stays 100vw/100vh without distortion
+  // Counter-scale image so it remains natural and crisp
   if (portalImage) {
     tl.to(
       portalImage,
       {
         scale: () => 1 / calcTargetScale(),
-        duration: 1,
+        duration: 0.55,
         ease: "power2.inOut",
       },
-      0.04,
+      0.02,
     )
   }
 
-  // 5. Fade out terracotta backdrop to reveal full scene
+  // Terracotta veil fades out as the arch reaches full screen
   if (veil) {
     tl.to(
       veil,
       {
         autoAlpha: 0,
-        duration: 0.85,
+        duration: 0.52,
         ease: "power2.inOut",
       },
-      0.15,
+      0.1,
     )
   }
 
-  // 6. Transition CTA and lockup as page scrolls into next section
-  if (cta) {
+  // Scrim fades in as full banner becomes visible for text readability
+  if (scrim) {
     tl.to(
-      cta,
+      scrim,
       {
-        autoAlpha: 0,
-        y: 24,
-        duration: 0.45,
+        autoAlpha: 0.36,
+        duration: 0.25,
         ease: "power1.inOut",
       },
       0.45,
     )
   }
 
+  // Phase 2 (0.55 -> 0.90): Once curve disappeared and full banner is visible, reveal Header, Logo, Copies & CTAs!
+  if (copy) {
+    tl.to(copy, { autoAlpha: 1, duration: 0.05 }, 0.55)
+  }
+
+  // Header and Logo reveal
+  if (header) {
+    tl.to(
+      header,
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.25,
+        ease: "power3.out",
+        onStart: () => gsap.set(header, { pointerEvents: "auto" }),
+        onReverseComplete: () => gsap.set(header, { pointerEvents: "none" }),
+      },
+      0.55,
+    )
+  }
+
+  // Banner headings ("CLUBE de PALMA") reveal
   if (brandLockup) {
     tl.to(
       brandLockup,
       {
-        y: -30,
-        duration: 0.6,
-        ease: "power1.inOut",
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.26,
+        ease: "power3.out",
       },
-      0.4,
+      0.58,
     )
   }
+
+  // Copies / Phrase ("A place to belong") reveal
+  if (phrase) {
+    tl.to(
+      phrase,
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.24,
+        ease: "power3.out",
+      },
+      0.65,
+    )
+  }
+
+  // CTAs ("Explore the Clube", "Apply for Membership") reveal
+  if (cta) {
+    tl.to(
+      cta,
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.24,
+        ease: "power3.out",
+        onStart: () => gsap.set(cta, { pointerEvents: "auto" }),
+        onReverseComplete: () => gsap.set(cta, { pointerEvents: "none" }),
+      },
+      0.72,
+    )
+  }
+
+  // Phase 3 (0.90 -> 1.00): Stable hold buffer before user scrolls into next section
+  tl.to({}, { duration: 0.1 }, 0.9)
 }
