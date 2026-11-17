@@ -10,7 +10,6 @@ export function initPinnedStories() {
   // About / Concept section: smooth pinned hold so it STAYS comfortably in view without friction or jumps
   const about = document.querySelector(".section.about")
   if (about) {
-    const backdropImg = about.querySelector(".about__backdrop img")
     const content = about.querySelector(".about__content")
     const isMobile = window.matchMedia("(max-width: 720px)").matches
 
@@ -25,16 +24,6 @@ export function initPinnedStories() {
         invalidateOnRefresh: true,
       },
     })
-
-    // Flora backdrop: subtle smooth parallax depth without repaint glitches
-    if (backdropImg) {
-      tl.fromTo(
-        backdropImg,
-        { scale: 1.05, yPercent: -3 },
-        { scale: 1, yPercent: 3, ease: "none", duration: 1 },
-        0,
-      )
-    }
 
     // Keep statement comfortably centered for the primary reading zone (0.0 → 0.7)
     // Then gracefully ease upward as the section unlocks into the Marquee & Amenities
