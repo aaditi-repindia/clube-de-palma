@@ -45,25 +45,36 @@ export function initAmenities() {
   let startX = 0
   let startOffset = 0
 
-  const cardWidth = () => cards[0]?.getBoundingClientRect().width || 360
+  const cardWidth = () => cards[0]?.getBoundingClientRect().width || 420
 
   const gap = () => {
     const styles = getComputedStyle(track)
-    return Number.parseFloat(styles.columnGap || styles.gap || "36") || 36
+    return Number.parseFloat(styles.columnGap || styles.gap || "18") || 18
   }
 
   const cardStep = () => cardWidth() + gap()
 
   /**
-   * Horizontal inset so card 0 can sit fully centred at progress 0 and the last
-   * card can sit fully centred at progress 1 — no edge clipping on expand/tilt.
+   * Horizontal inset matching container margin so card 0 aligns with the section heading
+   * at progress 0, and the last card sits at the right margin at progress 1.
    */
+  const getSidePad = () => {
+    const intro = document.querySelector(".amenities__intro")
+    if (intro) {
+      const left = Math.round(intro.getBoundingClientRect().left)
+      if (left > 0) return left
+    }
+    const styles = getComputedStyle(document.documentElement)
+    const fallbackPad = Number.parseFloat(styles.getPropertyValue("--section-pad-x")) || 24
+    return fallbackPad
+  }
+
   const syncSidePad = () => {
-    const pad = Math.max(0, (root.clientWidth - cardWidth()) / 2)
+    const pad = getSidePad()
     track.style.setProperty("--amenities-side-pad", `${pad}px`)
   }
 
-  /** Travel from first-card-centred → last-card-centred. */
+  /** Travel from first-card-aligned → last-card-aligned. */
   const maxTravel = () => Math.max(0, track.scrollWidth - root.clientWidth)
 
   const clampX = (value) => gsap.utils.clamp(-maxTravel(), 0, value)
@@ -75,29 +86,22 @@ export function initAmenities() {
   }
 
   const progressForIndex = (index) => {
+    if (index <= 0) return 0
+    if (index >= cards.length - 1) return 1
     const travel = maxTravel()
     if (travel < 1) return 0
     return gsap.utils.clamp(0, 1, (index * cardStep()) / travel)
   }
 
-  /** Prefer the card closest to the viewport center; pin ends to first/last card. */
+  /** Prefer the card closest to the active scroll position; pin ends to first/last card. */
   const activeFromViewport = () => {
     const progress = tween?.scrollTrigger?.progress ?? 0
     if (progress <= 0.02) return 0
     if (progress >= 0.98) return cards.length - 1
 
-    const center = root.getBoundingClientRect().left + root.clientWidth / 2
-    let best = 0
-    let bestDist = Infinity
-    cards.forEach((card, i) => {
-      const rect = card.getBoundingClientRect()
-      const dist = Math.abs(rect.left + rect.width / 2 - center)
-      if (dist < bestDist) {
-        bestDist = dist
-        best = i
-      }
-    })
-    return best
+    const x = Math.abs(currentX())
+    const index = Math.round(x / Math.max(cardStep(), 1))
+    return gsap.utils.clamp(0, cards.length - 1, index)
   }
 
   const setActiveFromViewport = () => {
@@ -110,36 +114,15 @@ export function initAmenities() {
   const currentX = () => Number(gsap.getProperty(track, "x")) || 0
 
   const updateFolds = () => {
-    const viewportCenter = root.getBoundingClientRect().left + root.clientWidth / 2
-
     cards.forEach((card, index) => {
       const fold = folds[index]
       if (!fold) return
-      const rect = card.getBoundingClientRect()
-      const cardCenter = rect.left + rect.width / 2
-      const norm = (cardCenter - viewportCenter) / Math.max(cardWidth(), 1)
-      const clamped = Math.max(-1.6, Math.min(1.6, norm))
-      const abs = Math.abs(clamped)
-
-      if (reduced) {
-        gsap.set(fold, { rotateY: 0, scale: 1, x: 0, z: 0, opacity: 1 })
-        return
-      }
-
-      // Centre card stays flat and prominent; neighbours tilt like a coverflow.
-      const rotateY = clamped * -24
-      const scale = 1 - Math.min(0.1, abs * 0.055)
-      const z = (1 - Math.min(1, abs)) * 52
-      const opacity = 1 - Math.min(0.2, abs * 0.11)
-      const origin = clamped < -0.05 ? "right center" : clamped > 0.05 ? "left center" : "center center"
-
       gsap.set(fold, {
-        rotateY,
-        scale,
-        z,
-        opacity,
-        transformOrigin: origin,
-        force3D: true,
+        rotateY: 0,
+        scale: 1,
+        z: 0,
+        opacity: 1,
+        clearProps: "transformOrigin",
       })
     })
   }
@@ -262,10 +245,10 @@ export function initAmenities() {
 
   if (!reduced) {
     gsap.from(folds, {
-      rotateY: (i) => (i === 0 ? 0 : i % 2 === 0 ? 22 : -22),
-      opacity: 0.45,
-      duration: 0.95,
-      stagger: 0.045,
+      opacity: 0,
+      y: 40,
+      duration: 0.8,
+      stagger: 0.05,
       ease: "power3.out",
       onComplete: () => {
         updateFolds()
