@@ -6,6 +6,10 @@ export const journalItems = [
       "A reserved editorial gathering under the canopy — curated live acoustics, signature cocktails, and shared twilight moments.",
     image: "/assets/images/amenity-banquet.jpg",
     imageAlt: "Members evening gathering at Clube de Palma",
+    cta: {
+      label: "View Details",
+      href: "#contact",
+    },
   },
   {
     num: "02",
@@ -14,6 +18,10 @@ export const journalItems = [
       "An open invitation to gather poolside — light Mediterranean plates, relaxed conversation, and twilight breezes by the water.",
     image: "/assets/images/amenity-pool.jpg",
     imageAlt: "Courtyard pool gathering at Clube de Palma",
+    cta: {
+      label: "View Details",
+      href: "#contact",
+    },
   },
   {
     num: "03",
@@ -22,6 +30,10 @@ export const journalItems = [
       "Seasonal degustation menus paired with select vintages, celebrating artisanal Konkan produce and fine gastronomy.",
     image: "/assets/images/concept/concept-food.jpg",
     imageAlt: "Coastal culinary tastings at Clube de Palma",
+    cta: {
+      label: "View Details",
+      href: "#contact",
+    },
   },
   {
     num: "04",
@@ -30,5 +42,9 @@ export const journalItems = [
       "Restorative weekend sessions, sound immersions, and guided sunset meditations framed by the gentle rhythm of the coast.",
     image: "/assets/images/concept/concept-relaxing.jpg",
     imageAlt: "Wellness retreats and sunset relaxation at Clube de Palma",
+    cta: {
+      label: "View Details",
+      href: "#contact",
+    },
   },
 ]
