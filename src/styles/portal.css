@@ -94,6 +94,15 @@
   overflow: hidden;
 }
 
+/* Minimal subtle black overlay on the image */
+.hero__media-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.22);
+  pointer-events: none;
+  z-index: 1;
+}
+
 /* Full-viewport image under the arch clip — stays sharp and static as the portal expands */
 .hero__arch-media img {
   position: absolute;
@@ -135,16 +144,6 @@
   transform: translateY(32px);
 }
 
-.hero__copy::before {
-  content: "";
-  position: absolute;
-  inset: -2.5rem -3.5rem;
-  z-index: -1;
-  border-radius: 2.5rem;
-  background: radial-gradient(ellipse at center, rgba(5, 5, 5, 0.42) 0%, rgba(5, 5, 5, 0) 74%);
-  pointer-events: none;
-}
-
 /* Header gated initially until portal scroll opens the full banner */
 .site-header.is-portal-gated {
   opacity: 0;
@@ -166,8 +165,8 @@
   font-weight: 300;
   font-size: clamp(4.2rem, 14vw, 9.5rem);
   letter-spacing: 0.01em;
-  color: rgba(255, 255, 255, 0.96);
-  text-shadow: 0 12px 42px rgba(0, 0, 0, 0.28);
+  color: rgba(255, 255, 255, 0.98);
+  text-shadow: none;
   margin: 0;
 }
 
@@ -185,19 +184,22 @@
   letter-spacing: 0.02em;
   position: relative;
   z-index: 1;
+  text-shadow: none;
 }
 
 .hero__phrase {
-  display: flex;
-  justify-content: space-between;
-  gap: 1.5rem;
-  width: min(100%, 36rem);
-  margin-top: 0.6rem;
+  margin: 0.85rem auto 0;
+  max-width: min(92vw, 38rem);
+  text-align: center;
   font-family: var(--font-display);
-  font-size: clamp(0.85rem, 1.6vw, 1.2rem);
-  letter-spacing: 0.16em;
+  font-weight: 300;
+  font-size: clamp(0.95rem, 1.4vw, 1.35rem);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.96);
+  text-shadow: none;
+  line-height: 1.35;
+  text-wrap: balance;
 }
 
 .hero__cta {
