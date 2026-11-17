@@ -124,14 +124,12 @@
 
 .about__reel {
   position: relative;
-  width: min(300px, 72vw);
-  height: min(300px, 72vw);
+  width: 200px;
+  height: 200px;
   aspect-ratio: 1 / 1;
-  border-radius: var(--radius-soft, 1rem);
+  border-radius: 0;
   overflow: hidden;
-  box-shadow:
-    0 8px 24px rgba(5, 5, 5, 0.08),
-    0 22px 52px rgba(5, 5, 5, 0.12);
+  box-shadow: none;
   margin-bottom: 0.35rem;
   flex-shrink: 0;
   background: color-mix(in srgb, var(--color-base) 85%, #000);
@@ -177,7 +175,6 @@
   letter-spacing: 0.01em;
   text-transform: uppercase;
   color: var(--color-ink);
-  max-width: 25ch;
   text-wrap: balance;
 }
 
@@ -199,12 +196,8 @@
   }
 
   .about__reel {
-    width: min(240px, 68vw);
-    height: min(240px, 68vw);
-  }
-
-  .about__statement {
-    max-width: 18ch;
+    width: min(200px, 60vw);
+    height: min(200px, 60vw);
   }
 
   .about__content {
