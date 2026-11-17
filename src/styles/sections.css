@@ -113,10 +113,13 @@
   isolation: isolate;
   overflow: hidden;
   background: var(--color-cream);
-  min-height: min(100vh, 58rem);
+  height: 100vh;
+  height: 100dvh;
+  min-height: 38rem;
   display: grid;
   place-items: center;
-  padding-block: clamp(5.5rem, 12vw, 9.5rem);
+  padding-block: 0;
+  box-sizing: border-box;
 }
 
 .about__backdrop {
@@ -125,6 +128,7 @@
   z-index: 0;
   pointer-events: none;
   user-select: none;
+  overflow: hidden;
 }
 
 .about__backdrop img {
@@ -134,6 +138,8 @@
   object-position: center;
   max-width: none;
   opacity: 0.95;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .about__content {
@@ -146,6 +152,8 @@
   display: grid;
   justify-items: center;
   gap: clamp(1.25rem, 2.8vw, 2rem);
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .about__eyebrow {
@@ -182,8 +190,10 @@
 
 @media (max-width: 720px) {
   .section.about {
-    min-height: auto;
-    padding-block: clamp(4.5rem, 16vw, 6.5rem);
+    height: 100vh;
+    height: 100dvh;
+    min-height: 32rem;
+    padding-block: 0;
   }
 
   .about__statement {

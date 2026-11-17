@@ -78,8 +78,7 @@ export function initHeroPortal() {
       start: "top top",
       end: "+=170%",
       pin: true,
-      scrub: 0.5,
-      anticipatePin: 1,
+      scrub: 0.25,
       invalidateOnRefresh: true,
       pinSpacing: true,
     },
@@ -107,7 +106,7 @@ export function initHeroPortal() {
     0,
   )
 
-  // 3. Unround arch corners to full rectangular screen
+  // 3. Unround arch corners to full rectangular screen & soften drop shadow for unpinned transition
   if (archShape) {
     tl.to(
       archShape,
@@ -115,6 +114,17 @@ export function initHeroPortal() {
         borderRadius: "0px 0px 0px 0px",
         boxShadow: "0 0 0 0 rgba(0,0,0,0)",
         duration: 0.48,
+        ease: "power2.inOut",
+      },
+      0.04,
+    )
+  }
+  if (arch) {
+    tl.to(
+      arch,
+      {
+        filter: "drop-shadow(0 0px 0px rgba(0,0,0,0))",
+        duration: 0.4,
         ease: "power2.inOut",
       },
       0.04,

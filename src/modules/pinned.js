@@ -7,59 +7,43 @@ export function initPinnedStories() {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   if (reduced) return
 
-  // Hero parallax scrub — Era-like pinned scale on media
-  const hero = document.querySelector(".hero")
-  const heroMedia = document.querySelector(".hero__media")
-  if (hero && heroMedia) {
-    gsap.to(heroMedia, {
-      yPercent: 18,
-      ease: "none",
+  // About / Concept section: smooth pinned hold so it STAYS comfortably in view without friction or jumps
+  const about = document.querySelector(".section.about")
+  if (about) {
+    const backdropImg = about.querySelector(".about__backdrop img")
+    const content = about.querySelector(".about__content")
+    const isMobile = window.matchMedia("(max-width: 720px)").matches
+
+    const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: hero,
+        trigger: about,
         start: "top top",
-        end: "bottom top",
-        scrub: true,
+        end: () => (isMobile ? "+=75%" : "+=110%"),
+        pin: true,
+        pinSpacing: true,
+        scrub: 0.25,
+        invalidateOnRefresh: true,
       },
     })
-  }
 
-  // About: scrubbed layered imagery (parallax storytelling without hard pin collisions)
-  const about = document.querySelector(".about")
-  const front = document.querySelector(".about__frame--front img")
-  const back = document.querySelector(".about__frame--back img")
-  if (about && window.matchMedia("(min-width: 901px)").matches) {
-    if (front) {
-      gsap.fromTo(
-        front,
-        { yPercent: -8, scale: 1.1 },
-        {
-          yPercent: 8,
-          scale: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: about,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        },
+    // Flora backdrop: subtle smooth parallax depth without repaint glitches
+    if (backdropImg) {
+      tl.fromTo(
+        backdropImg,
+        { scale: 1.05, yPercent: -3 },
+        { scale: 1, yPercent: 3, ease: "none", duration: 1 },
+        0,
       )
     }
-    if (back) {
-      gsap.fromTo(
-        back,
-        { yPercent: 10, scale: 1.12 },
-        {
-          yPercent: -6,
-          scale: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: about,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        },
+
+    // Keep statement comfortably centered for the primary reading zone (0.0 → 0.7)
+    // Then gracefully ease upward as the section unlocks into the Marquee & Amenities
+    if (content) {
+      tl.fromTo(
+        content,
+        { y: 0 },
+        { y: -24, ease: "power1.inOut", duration: 0.3 },
+        0.7,
       )
     }
   }

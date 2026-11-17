@@ -15,7 +15,6 @@ export function initMotion() {
   initMagnetic()
   initMarquee()
   initReveals()
-  initPinnedStories()
   const hero = document.querySelector(".hero")
   requestAnimationFrame(() => hero?.classList.add("is-ready"))
 

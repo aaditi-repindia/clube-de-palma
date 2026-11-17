@@ -22,7 +22,7 @@ export function initSmoothScroll() {
   gsap.ticker.add((time) => {
     lenis?.raf(time * 1000)
   })
-  gsap.ticker.lagSmoothing(0)
+  gsap.ticker.lagSmoothing(1000, 16)
 
   document.documentElement.classList.add("has-smooth-scroll")
   return lenis
