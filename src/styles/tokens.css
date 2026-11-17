@@ -52,10 +52,11 @@
   --color-heading: #474747;
   --color-body: #3d3d3d;
   --color-muted: #767676;
-  --color-cream: #f8f7f3;
-  --color-soft: #fafafa;
-  --color-white: #fdfdfd;
-  --color-pure: #ffffff;
+  --color-base: #D3E4DD;
+  --color-cream: #D3E4DD;
+  --color-soft: #D3E4DD;
+  --color-white: #D3E4DD;
+  --color-pure: #ffffff; /* Only text can be white */
   --color-gold: #e0b252;
   --color-border: rgba(5, 5, 5, 0.1);
   --color-overlay: rgba(5, 5, 5, 0.42);

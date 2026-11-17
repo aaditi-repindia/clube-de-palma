@@ -20,7 +20,7 @@ body {
   font-size: var(--text-body);
   line-height: var(--leading-body);
   color: var(--color-body);
-  background: var(--color-cream);
+  background: var(--color-base);
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
 }

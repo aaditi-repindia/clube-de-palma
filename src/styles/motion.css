@@ -59,7 +59,7 @@ html.has-custom-cursor .journal-card__cta {
 .site-cursor[data-state="apply"] {
   width: 4.6rem;
   height: 4.6rem;
-  background: rgba(248, 247, 243, 0.92);
+  background: rgba(211, 228, 221, 0.92);
   mix-blend-mode: normal;
 }
 

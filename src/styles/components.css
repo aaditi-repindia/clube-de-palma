@@ -43,7 +43,7 @@
 }
 
 .btn--light {
-  --btn-bg: var(--color-pure);
+  --btn-bg: var(--color-base);
   --btn-fg: var(--color-ink);
 }
 
@@ -97,7 +97,7 @@
 }
 
 .site-header.is-solid {
-  background: rgba(248, 247, 243, 0.96);
+  background: rgba(211, 228, 221, 0.96);
   box-shadow: 0 1px 0 var(--color-border);
 }
 
@@ -256,7 +256,7 @@
     position: fixed;
     inset: 0;
     z-index: 4;
-    background: rgba(248, 247, 243, 0.98);
+    background: rgba(211, 228, 221, 0.98);
     flex-direction: column;
     justify-content: center;
     gap: 1.4rem;

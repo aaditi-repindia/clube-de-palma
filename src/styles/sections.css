@@ -559,7 +559,7 @@
 /* ——— Gallery ——— */
 .gallery {
   background:
-    linear-gradient(180deg, rgba(248, 247, 243, 0.92), rgba(248, 247, 243, 0.96)),
+    linear-gradient(180deg, rgba(211, 228, 221, 0.92), rgba(211, 228, 221, 0.96)),
     url("/assets/images/bg-pattern.jpg") center / cover;
 }
 
@@ -677,8 +677,7 @@
   flex-direction: column;
   box-sizing: border-box;
   overflow: hidden;
-  background:
-    linear-gradient(180deg, var(--color-cream) 0%, var(--color-soft) 100%);
+  background: var(--color-base);
 }
 
 .journal__shell {
@@ -821,7 +820,8 @@
   display: grid;
   /* Media flexes; body stays intrinsic so title/date/copy/CTA never clip */
   grid-template-rows: minmax(0, 1fr) auto;
-  background: var(--color-pure);
+  background: var(--color-base);
+  border: 1px solid var(--color-border);
   min-height: 0;
   min-width: 0;
   box-sizing: border-box;
