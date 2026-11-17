@@ -185,7 +185,7 @@
   color: var(--color-ink);
 }
 
-/* Keep primary CTA readable when the solid-header rule recolors nav links */
+/* Keep membership CTA readable when the solid-header rule recolors nav links */
 .site-header .nav a.nav__cta,
 .site-header.is-solid .nav a.nav__cta {
   background: var(--color-ink);

@@ -197,41 +197,43 @@
 
 /* ——— Amenities discovery ——— */
 .amenities {
+  --amenities-chrome: calc(var(--nav-h) + clamp(11.75rem, 22vh, 15.25rem));
   background: var(--color-cream);
-  padding-block: 0;
   overflow: visible;
+  padding-block: 0;
 }
 
-.amenities__stage {
-  /* JS sets --amenities-card-max-h from measured intro + padding */
-  --amenities-card-max-h: 28rem;
-  box-sizing: border-box;
+.amenities__frame {
+  position: relative;
   height: 100vh;
   height: 100dvh;
-  max-height: 100dvh;
+  min-height: 34rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top: calc(var(--nav-h) + clamp(0.85rem, 2vw, 1.35rem));
-  padding-bottom: clamp(1.1rem, 2.4vw, 1.75rem);
+  gap: 0;
+  padding-top: calc(var(--nav-h) + clamp(0.65rem, 1.6vh, 1.25rem));
+  padding-bottom: clamp(1.1rem, 2.2vh, 1.75rem);
+  box-sizing: border-box;
   background: var(--color-cream);
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: hidden;
 }
 
 .amenities__intro {
   display: flex;
   align-items: end;
   justify-content: space-between;
-  gap: clamp(1rem, 3vw, 2rem);
-  margin-bottom: clamp(1.35rem, 3.2vw, 2.35rem);
+  gap: 1.5rem;
   flex-shrink: 0;
+  margin-bottom: clamp(1.75rem, 4vh, 2.75rem);
 }
 
 .amenities__intro h2 {
-  font-size: clamp(2.05rem, 3.6vw, 3.65rem);
+  font-size: clamp(1.85rem, 4.2vw, 4.25rem);
   max-width: none;
   white-space: nowrap;
-  line-height: 1.05;
+  line-height: 1.08;
 }
 
 .amenities__controls {
@@ -267,15 +269,13 @@
   position: relative;
   width: 100%;
   flex: 1 1 auto;
+  min-height: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   perspective: 2200px;
   cursor: grab;
   user-select: none;
   touch-action: pan-y;
-  min-height: 0;
-  overflow-x: clip;
-  overflow-y: visible;
 }
 
 .amenities-carousel.is-dragging {
@@ -284,32 +284,28 @@
 
 .amenities-carousel__viewport {
   width: 100%;
-  height: 100%;
   overflow-x: clip;
   overflow-y: visible;
-  display: flex;
-  align-items: center;
-  padding-block: 0;
+  padding-block: 0.55rem 1.15rem;
 }
 
 .amenities-carousel__track {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: clamp(1.35rem, 2.8vw, 2.35rem);
   width: max-content;
   will-change: transform;
   transform-style: preserve-3d;
-  padding-inline: var(--section-pad-x);
+  /* Side pad is set in JS so the first/last cards can reach centre and expand fully */
+  padding-inline: var(--amenities-side-pad, var(--section-pad-x));
 }
 
 .amenity-card {
   position: relative;
   flex: 0 0 auto;
-  box-sizing: border-box;
-  width: min(72vw, 24rem, calc(var(--amenities-card-max-h) * 3 / 4.05));
+  width: min(70vw, 24rem, calc((100dvh - var(--amenities-chrome)) * 3 / 4.05));
   aspect-ratio: 3 / 4.05;
-  height: auto;
-  max-height: var(--amenities-card-max-h);
+  max-height: calc(100dvh - var(--amenities-chrome));
   transform-style: preserve-3d;
 }
 
@@ -355,14 +351,11 @@
   position: absolute;
   inset: auto 0 0;
   z-index: 2;
-  padding: 1.45rem 1.3rem 1.65rem;
+  padding: 1.45rem 1.3rem 1.55rem;
   color: var(--color-pure);
   display: grid;
   justify-items: start;
   gap: 0.55rem;
-  /* Keep title + rule (+ hover blurb) inside the card face */
-  box-sizing: border-box;
-  max-width: 100%;
 }
 
 .amenity-card__title {
@@ -410,7 +403,7 @@
 .amenity-card.is-open .amenity-card__blurb {
   opacity: 1;
   transform: translateY(0);
-  max-height: 7.5rem;
+  max-height: 8.5rem;
 }
 
 .amenity-card:hover .amenity-card__scrim,
@@ -420,27 +413,37 @@
 }
 
 @media (max-width: 900px) {
+  .amenities {
+    --amenities-chrome: calc(var(--nav-h) + clamp(12.5rem, 24vh, 16rem));
+  }
+
+  .amenities__frame {
+    min-height: 32rem;
+    padding-bottom: clamp(1rem, 2vh, 1.5rem);
+  }
+
   .amenities__intro {
     align-items: start;
     flex-direction: column;
+    margin-bottom: clamp(1.5rem, 3.5vh, 2.25rem);
   }
 
   .amenities__intro h2 {
-    font-size: clamp(1.85rem, 5.2vw, 2.85rem);
+    font-size: clamp(1.55rem, 6.8vw, 2.75rem);
   }
 
   .amenity-card {
-    max-width: min(78vw, 20rem);
+    width: min(76vw, 20rem, calc((100dvh - var(--amenities-chrome)) * 3 / 4.05));
   }
 }
 
 @media (max-width: 640px) {
-  .amenities__intro h2 {
-    font-size: clamp(1.7rem, 7vw, 2.25rem);
+  .amenities {
+    --amenities-chrome: calc(var(--nav-h) + clamp(13rem, 26vh, 16.5rem));
   }
 
   .amenity-card {
-    max-width: min(84vw, 18.5rem);
+    width: min(82vw, 18rem, calc((100dvh - var(--amenities-chrome)) * 3 / 4.05));
   }
 
   .amenities-carousel__track {
@@ -453,6 +456,93 @@
   .amenity-card__blurb,
   .amenity-card__media img {
     transition: none !important;
+  }
+}
+
+/* ——— Membership promo band ——— */
+.membership-promo {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: center;
+  /* Preserve the established compact band height after removing body copy */
+  min-height: clamp(18rem, 40vh, 22.25rem);
+  padding-block: clamp(1.75rem, 3.5vh, 2.5rem);
+  overflow: hidden;
+  color: var(--color-pure);
+}
+
+.membership-promo__media,
+.membership-promo__overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.membership-promo__media {
+  z-index: 0;
+  background:
+    url("/assets/images/membership-promo-courtyard.jpg") center / cover no-repeat;
+  transform: scale(1.02);
+}
+
+.membership-promo__overlay {
+  z-index: 1;
+  background: rgba(5, 5, 5, 0.52);
+}
+
+.membership-promo__content {
+  position: relative;
+  z-index: 2;
+  width: min(100% - (var(--section-pad-x) * 2), var(--content-max));
+  max-width: none;
+  margin-inline: auto;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 0.95rem;
+}
+
+.membership-promo h2 {
+  margin: 0;
+  color: var(--color-pure);
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.7rem, 3vw, 2.55rem);
+  line-height: var(--leading-tight);
+  max-width: 14ch;
+}
+
+.membership-promo__text {
+  margin: 0;
+  width: min(52rem, 78vw);
+  max-width: none;
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.membership-promo .btn {
+  margin-top: 0.35rem;
+}
+
+@media (max-width: 640px) {
+  .membership-promo {
+    min-height: 16.5rem;
+    padding-block: 1.75rem;
+  }
+
+  .membership-promo__content {
+    gap: 0.85rem;
+  }
+
+  .membership-promo h2 {
+    max-width: 12ch;
+  }
+
+  .membership-promo__text {
+    width: min(22rem, 92vw);
   }
 }
 
@@ -541,82 +631,6 @@
   }
 }
 
-/* ——— Events ——— */
-.events {
-  background: var(--color-cream);
-}
-
-.events__head {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.events__head h2 {
-  font-size: var(--text-display);
-}
-
-.events__rail {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(280px, 34%);
-  gap: 1.15rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 0.75rem;
-  scrollbar-width: thin;
-}
-
-.event-card {
-  scroll-snap-align: start;
-  background: var(--color-pure);
-  border: 1px solid var(--color-border);
-  min-height: 100%;
-  display: grid;
-  grid-template-rows: 210px 1fr;
-}
-
-.event-card__media {
-  overflow: hidden;
-  background: var(--color-ink-soft);
-}
-
-.event-card__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.7s var(--ease-out);
-}
-
-.event-card:hover .event-card__media img {
-  transform: scale(1.05);
-}
-
-.event-card__body {
-  padding: 1.25rem;
-  display: grid;
-  gap: 0.55rem;
-  align-content: start;
-}
-
-.event-card__meta {
-  font-size: var(--text-label);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--color-accent);
-}
-
-.event-card h3 {
-  font-size: 1.45rem;
-}
-
-.event-card p {
-  color: var(--color-muted);
-  font-size: var(--text-small);
-}
-
 .placeholder-tag {
   display: inline-flex;
   align-items: center;
@@ -627,94 +641,367 @@
   color: var(--color-muted);
   border: 1px dashed var(--color-border);
   padding: 0.25rem 0.5rem;
-  border-radius: var(--radius-pill);
+  border-radius: 0;
   width: fit-content;
 }
 
-/* ——— News ——— */
-.news {
-  background: var(--color-soft);
-}
-
-.news__head {
-  margin-bottom: 2rem;
-}
-
-.news__head h2 {
-  font-size: var(--text-display);
-}
-
-.news__layout {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 1.25rem;
-}
-
-.news-feature {
-  position: relative;
-  min-height: 28rem;
+/* ——— Life at the Clube journal ——— */
+.journal {
+  --journal-gap: clamp(1rem, 1.8vw, 1.35rem);
+  --journal-peek: 1.5;
+  --journal-card-scale: 0.8;
+  --journal-media-min: 7.5rem;
+  /* Match section[id] scroll-margin so the block fills the viewport under the nav */
+  --journal-section-h: calc(100dvh - var(--nav-h) - 1rem);
+  /* Shared left inset for heading + first card */
+  --journal-inline-start: max(
+    var(--section-pad-x),
+    calc((100vw - min(100vw - (var(--section-pad-x) * 2), var(--content-max))) / 2)
+  );
+  height: var(--journal-section-h);
+  min-height: var(--journal-section-h);
+  max-height: var(--journal-section-h);
+  /* Bottom inset only — top spacing comes from the centered header band */
+  padding-block: 0 clamp(1.1rem, 2.8vh, 1.85rem);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
   overflow: hidden;
-  color: var(--color-pure);
+  background:
+    linear-gradient(180deg, var(--color-cream) 0%, var(--color-soft) 100%);
 }
 
-.news-feature img {
-  position: absolute;
-  inset: 0;
+.journal__shell {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  padding-left: var(--journal-inline-start);
+  box-sizing: border-box;
+}
+
+.journal__intro {
+  /* Fills the band above the cards; heading + arrows sit in its vertical center */
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  width: min(calc(100vw - var(--journal-inline-start) - var(--section-pad-x)), var(--content-max));
+  max-width: 100%;
+  margin-bottom: 0;
+  min-height: 0;
+}
+
+.journal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem 1.5rem;
+  width: 100%;
+}
+
+.journal__rail {
+  flex: 2.15 1 0;
+  min-height: 0;
+  width: calc(100vw - var(--journal-inline-start));
+  margin-left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.journal__head h2 {
+  font-size: clamp(2.35rem, 5.2vw, 4.5rem);
+  margin-bottom: 0;
+  line-height: var(--leading-tight);
+}
+
+.journal__controls {
+  display: inline-flex;
+  gap: 0.55rem;
+  flex-shrink: 0;
+  padding-bottom: 0.1rem;
+}
+
+.journal__nav {
+  width: 2.45rem;
+  height: 2.45rem;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-ink);
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  transition:
+    background var(--dur-fast) var(--ease-soft),
+    color var(--dur-fast) var(--ease-soft),
+    border-color var(--dur-fast) var(--ease-soft),
+    opacity var(--dur-fast) var(--ease-soft);
+}
+
+.journal__nav:hover,
+.journal__nav:focus-visible {
+  background: var(--color-ink);
+  color: var(--color-pure);
+  border-color: var(--color-ink);
+}
+
+.journal__nav:disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+}
+
+.journal-carousel {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.journal-carousel.is-dragging {
+  cursor: grabbing;
+}
+
+.journal-carousel.is-single {
+  cursor: default;
+}
+
+.journal-carousel a,
+.journal-carousel button,
+.journal-card__cta {
+  cursor: pointer;
+}
+
+.journal-carousel__viewport {
+  container-type: inline-size;
+  container-name: journal;
+  overflow: hidden;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+}
+
+.journal-carousel__track {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--journal-gap);
+  width: max-content;
+  height: 100%;
+  will-change: transform;
+}
+
+.journal-card {
+  /*
+    Width is assigned in journal.js as ((viewport - gap) / peek) * scale
+    (~20% smaller than the full 1.5-card slot, aspect preserved via matching height).
+  */
+  flex: 0 0 var(--journal-card-width, calc(((100cqi - var(--journal-gap)) / var(--journal-peek)) * var(--journal-card-scale)));
+  width: var(--journal-card-width, calc(((100cqi - var(--journal-gap)) / var(--journal-peek)) * var(--journal-card-scale)));
+  max-width: var(--journal-card-width, calc(((100cqi - var(--journal-gap)) / var(--journal-peek)) * var(--journal-card-scale)));
+  height: calc(100% * var(--journal-card-scale));
+  max-height: calc(100% * var(--journal-card-scale));
+  display: grid;
+  /* Media flexes; body stays intrinsic so title/date/copy/CTA never clip */
+  grid-template-rows: minmax(0, 1fr) auto;
+  background: var(--color-pure);
+  min-height: 0;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow:
+    0 4px 14px rgba(5, 5, 5, 0.04),
+    0 16px 40px rgba(5, 5, 5, 0.08);
+}
+
+.journal-carousel.is-single .journal-card {
+  flex-basis: var(--journal-card-width, min(100cqi, 42rem));
+  width: var(--journal-card-width, min(100cqi, 42rem));
+  max-width: var(--journal-card-width, min(100cqi, 42rem));
+}
+
+.journal-card__media {
+  overflow: hidden;
+  min-height: 0;
+  height: 100%;
+  background: var(--color-ink-soft);
+}
+
+.journal-card__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transform: scale(1.02);
+  transition: transform 1s var(--ease-out);
+  pointer-events: none;
 }
 
-.news-feature__body {
-  position: absolute;
-  inset: auto 0 0;
-  padding: 1.75rem;
-  background: linear-gradient(180deg, transparent, rgba(5, 5, 5, 0.82));
+.journal-card:hover .journal-card__media img,
+.journal-card.is-active .journal-card__media img {
+  transform: scale(1.06);
+}
+
+.journal-card__body {
+  --journal-card-pad: clamp(1.1rem, 2.1vw, 1.4rem);
   display: grid;
   gap: 0.55rem;
+  justify-items: stretch;
+  align-content: start;
+  padding: var(--journal-card-pad);
+  min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.news-feature h3 {
-  color: var(--color-pure);
-  font-size: var(--text-h2);
+.journal-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.7rem;
+  width: 100%;
 }
 
-.news-side {
-  display: grid;
-  gap: 1rem;
+.journal-card__label {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-accent);
 }
 
-.news-item {
-  background: var(--color-pure);
-  border: 1px solid var(--color-border);
-  padding: 1.2rem;
-  display: grid;
-  gap: 0.45rem;
-}
-
-.news-item time {
+.journal-card__date {
+  font-family: var(--font-body);
   font-size: var(--text-label);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--color-muted);
 }
 
-.news-item h3 {
-  font-size: 1.25rem;
+.journal-card__title {
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.15rem, 1.8vw, 1.55rem);
+  line-height: 1.15;
+  color: var(--color-title);
+  text-wrap: balance;
 }
 
-.news-item p {
+.journal-card__copy {
+  margin: 0;
+  width: 100%;
+  max-width: none;
   color: var(--color-muted);
-  font-size: var(--text-small);
+  font-family: var(--font-body);
+  font-size: clamp(0.85rem, 0.95vw, 0.95rem);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
-@media (max-width: 900px) {
-  .news__layout {
-    grid-template-columns: 1fr;
+.journal-card__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: 0.4rem;
+  margin-top: 0.15rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+  transition: color var(--dur-fast) var(--ease-soft);
+}
+
+.journal-card__cta:hover,
+.journal-card__cta:focus-visible {
+  color: var(--color-accent);
+}
+
+.journal-card__cta .btn__arrow {
+  display: inline-block;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.journal-card__cta:hover .btn__arrow,
+.journal-card__cta:focus-visible .btn__arrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 720px) {
+  .journal {
+    --journal-gap: 0.9rem;
+    --journal-media-min: 6.5rem;
+    padding-block: 0 clamp(1rem, 2.6vh, 1.5rem);
   }
 
-  .news-feature {
-    min-height: 22rem;
+  .journal__rail {
+    flex: 2.4 1 0;
+  }
+
+  .journal__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .journal__head h2 {
+    font-size: clamp(2.1rem, 9vw, 3rem);
+    margin-bottom: 0;
+  }
+
+  .journal-card__title {
+    font-size: clamp(1.05rem, 4.8vw, 1.25rem);
+  }
+
+  .journal-card__copy {
+    -webkit-line-clamp: 2;
+    font-size: 0.84rem;
+    line-height: 1.35;
+  }
+
+  .journal-card__body {
+    --journal-card-pad: 1rem;
+    gap: 0.45rem;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 721px) {
+  .journal {
+    --journal-media-min: 6.25rem;
+    padding-block: 0 clamp(0.85rem, 2vh, 1.35rem);
+  }
+
+  .journal__rail {
+    flex: 2.4 1 0;
+  }
+
+  .journal__head h2 {
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    margin-bottom: 0;
+  }
+
+  .journal-card__body {
+    --journal-card-pad: 0.95rem;
+    gap: 0.4rem;
+  }
+
+  .journal-card__title {
+    font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  }
+
+  .journal-card__copy {
+    -webkit-line-clamp: 2;
+    line-height: 1.3;
   }
 }
 

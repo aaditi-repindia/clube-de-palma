@@ -90,10 +90,16 @@
         <nav class="nav" id="site-nav" aria-label="Primary">
           <a href="#about">About</a>
           <a href="#experiences">Experiences</a>
-          <a href="#events">Events</a>
+          <a href="#life">Life at the Clube</a>
           <a href="#contact">Contact</a>
-          <a class="btn nav__cta" href="#contact" data-magnetic>
-            <span data-magnetic-inner>Get in Touch</span>
+          <a
+            class="btn nav__cta"
+            href="https://dynamixclubedepalma.co.in/clubdepalma/membership/form"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-magnetic
+          >
+            <span data-magnetic-inner>Apply for Membership</span>
           </a>
         </nav>
       </div>
@@ -166,8 +172,8 @@
         </div>
       </div>
 
-      <section class="section amenities" id="experiences" aria-labelledby="experiences-title">
-        <div class="amenities__stage" data-amenities-stage>
+      <section class="section amenities" id="experiences" aria-labelledby="experiences-title" data-amenities-section>
+        <div class="amenities__frame" data-amenities-frame>
           <div class="container amenities__intro">
             <div data-reveal="ctn">
               <p class="eyebrow" data-reveal="p">Amenities &amp; experiences</p>
@@ -186,8 +192,8 @@
           <div
             class="amenities-carousel"
             data-amenities-carousel
-            data-cursor="scroll"
-            data-cursor-label="Scroll"
+            data-cursor="drag"
+            data-cursor-label="Drag"
           >
             <div class="amenities-carousel__viewport">
               <div class="amenities-carousel__track" data-amenities-track aria-live="polite">
@@ -198,96 +204,57 @@
         </div>
       </section>
 
-      <section class="section events" id="events" aria-labelledby="events-title">
-        <div class="container">
-          <div class="events__head">
-            <div>
-              <p class="eyebrow" data-reveal="p">Events journal</p>
-              <h2 id="events-title" data-reveal="h">What’s happening at the Clube</h2>
-            </div>
-            <span class="placeholder-tag" data-reveal="p">CMS placeholders — no verified upcoming events published</span>
-          </div>
-          <div class="events__rail" data-reveal="ctn" aria-label="Upcoming events">
-            <article class="event-card">
-              <div class="event-card__media">
-                <img src="/assets/images/amenity-banquet.jpg" alt="" />
-              </div>
-              <div class="event-card__body">
-                <span class="placeholder-tag">Placeholder</span>
-                <p class="event-card__meta">Featured · Date TBA</p>
-                <h3>Members’ evening under the palms</h3>
-                <p>Editorial slot for the next verified club gathering — social, cultural or sporting.</p>
-                <a class="btn btn--outline" href="#contact">Learn more</a>
-              </div>
-            </article>
-            <article class="event-card">
-              <div class="event-card__media">
-                <img src="/assets/images/amenity-badminton.jpg" alt="Badminton court at Clube de Palma" width="440" height="660" />
-              </div>
-              <div class="event-card__body">
-                <span class="placeholder-tag">Placeholder</span>
-                <p class="event-card__meta">Sport · Date TBA</p>
-                <h3>Racquet sports open play</h3>
-                <p>Reserve this card for scheduled badminton, squash, tennis or pickleball sessions.</p>
-                <a class="btn btn--outline" href="#contact">Learn more</a>
-              </div>
-            </article>
-            <article class="event-card">
-              <div class="event-card__media">
-                <img src="/assets/images/amenity-yoga.jpg" alt="" />
-              </div>
-              <div class="event-card__body">
-                <span class="placeholder-tag">Placeholder</span>
-                <p class="event-card__meta">Wellness · Date TBA</p>
-                <h3>Yoga garden morning</h3>
-                <p>Placeholder for instructor-led sessions once the club calendar is published.</p>
-                <a class="btn btn--outline" href="#contact">Learn more</a>
-              </div>
-            </article>
-          </div>
+      <section class="membership-promo" id="join-membership" aria-labelledby="membership-promo-title">
+        <div class="membership-promo__media" aria-hidden="true"></div>
+        <div class="membership-promo__overlay" aria-hidden="true"></div>
+        <div class="container membership-promo__content" data-reveal="ctn">
+          <h2 id="membership-promo-title" data-reveal="h">Join the Membership</h2>
+          <p class="membership-promo__text" data-reveal="p">
+            An exclusive world of premium leisure, refined recreation<br />
+            and meaningful connections — for privacy, community and coastal living at its finest.
+          </p>
+          <a
+            class="btn btn--light"
+            href="https://dynamixclubedepalma.co.in/clubdepalma/membership/form"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-magnetic
+          >
+            <span data-magnetic-inner>Explore Membership <span class="btn__arrow" aria-hidden="true">→</span></span>
+          </a>
         </div>
       </section>
 
-      <section class="section news" id="news" aria-labelledby="news-title">
-        <div class="container">
-          <div class="news__head">
-            <p class="eyebrow" data-reveal="p">Inside the community</p>
-            <h2 id="news-title" data-reveal="h">Club news</h2>
-            <p class="lead" data-reveal="p">Announcements, facility notes and member information — distinct from the events calendar.</p>
-          </div>
-          <div class="news__layout">
-            <article class="news-feature" data-reveal="slide">
-              <img src="/assets/images/aerial.jpg" alt="Aerial perspective of Clube de Palma" />
-              <div class="news-feature__body">
-                <span class="placeholder-tag">CMS placeholder</span>
-                <time datetime="2026-01-01">Awaiting publication</time>
-                <h3>Stay tuned for the updates</h3>
-                <p>Featured announcement space for club developments and important member information.</p>
-                <a class="btn btn--ghost" href="#contact">Read more</a>
+      <section class="section journal" id="life" aria-labelledby="life-title">
+        <div class="journal__shell">
+          <div class="journal__intro">
+            <div class="journal__head">
+              <div data-reveal="ctn">
+                <h2 id="life-title" data-reveal="h">Life at the Clube</h2>
               </div>
-            </article>
-            <div class="news-side" data-reveal="ctn">
-              <article class="news-item">
-                <span class="placeholder-tag">Placeholder</span>
-                <time datetime="2026-01-01">Facility update</time>
-                <h3>Campus notes</h3>
-                <p>Compact slot for verified facility or schedule updates.</p>
-                <a href="#contact">Read more →</a>
-              </article>
-              <article class="news-item">
-                <span class="placeholder-tag">Placeholder</span>
-                <time datetime="2026-01-01">Community</time>
-                <h3>Member highlights</h3>
-                <p>Space for approved community stories once content is supplied.</p>
-                <a href="#contact">Read more →</a>
-              </article>
-              <article class="news-item">
-                <span class="placeholder-tag">Placeholder</span>
-                <time datetime="2026-01-01">Important</time>
-                <h3>House notices</h3>
-                <p>Link through to rules, conduct and operational advisories.</p>
-                <a href="https://dynamixclubedepalma.co.in/rules-and-regulations/" target="_blank" rel="noopener noreferrer">Rules &amp; regulations →</a>
-              </article>
+              <div class="journal__controls" data-journal-controls data-reveal="ctn">
+                <button class="journal__nav journal__nav--prev" type="button" aria-label="Previous story" data-journal-prev>
+                  <span aria-hidden="true">←</span>
+                </button>
+                <button class="journal__nav journal__nav--next" type="button" aria-label="Next story" data-journal-next>
+                  <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="journal__rail">
+            <div
+              class="journal-carousel"
+              data-journal-carousel
+              data-cursor="drag"
+              data-cursor-label="Drag"
+            >
+              <div class="journal-carousel__viewport">
+                <div class="journal-carousel__track" data-journal-track aria-live="polite">
+                  <!-- Cards rendered by journal.js -->
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -307,7 +274,6 @@
             </address>
           </div>
           <div class="cta-row">
-            <a class="btn" href="mailto:vishal.roy@dynamixgroup.co.in">Email the Clube</a>
             <a class="btn btn--outline" href="https://dynamixclubedepalma.co.in/contact-us/" target="_blank" rel="noopener noreferrer">Contact page</a>
           </div>
         </div>
@@ -336,8 +302,7 @@
           <ul>
             <li><a href="#about">About Us</a></li>
             <li><a href="#experiences">Amenities</a></li>
-            <li><a href="#events">Events</a></li>
-            <li><a href="#news">Club News</a></li>
+            <li><a href="#life">Life at the Clube</a></li>
             <li><a href="#contact">Contact Us</a></li>
           </ul>
         </div>
@@ -355,7 +320,7 @@
           <ul>
             <li>Bambolim, Goa</li>
             <li><a href="tel:+919699751872">+91-96997 51872</a></li>
-            <li><a href="mailto:vishal.roy@dynamixgroup.co.in">Email the Clube</a></li>
+            <li><a href="mailto:vishal.roy@dynamixgroup.co.in">Email membership</a></li>
           </ul>
         </div>
       </div>

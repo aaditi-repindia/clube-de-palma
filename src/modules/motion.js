@@ -16,7 +16,6 @@ export function initMotion() {
   initMarquee()
   initReveals()
   initPinnedStories()
-  window.dispatchEvent(new CustomEvent("clube:motion-ready"))
   const hero = document.querySelector(".hero")
   requestAnimationFrame(() => hero?.classList.add("is-ready"))
 
