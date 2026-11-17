@@ -21,9 +21,9 @@ function initMembershipParallax() {
 
   gsap.fromTo(
     img,
-    { yPercent: -10 },
+    { yPercent: -8 },
     {
-      yPercent: 10,
+      yPercent: 8,
       ease: "none",
       scrollTrigger: {
         trigger: section,
