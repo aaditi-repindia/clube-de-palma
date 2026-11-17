@@ -653,6 +653,7 @@
   --journal-media-min: 7.5rem;
   /* Match section[id] scroll-margin so the block fills the viewport under the nav */
   --journal-section-h: calc(100dvh - var(--nav-h) - 1rem);
+  /* Shared left inset for heading + first card */
   --journal-inline-start: max(
     var(--section-pad-x),
     calc((100vw - min(100vw - (var(--section-pad-x) * 2), var(--content-max))) / 2)
@@ -669,8 +670,20 @@
     linear-gradient(180deg, var(--color-cream) 0%, var(--color-soft) 100%);
 }
 
+.journal__shell {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  padding-left: var(--journal-inline-start);
+  box-sizing: border-box;
+}
+
 .journal__intro {
   flex: 0 0 auto;
+  width: min(calc(100vw - var(--journal-inline-start) - var(--section-pad-x)), var(--content-max));
+  max-width: 100%;
   margin-bottom: clamp(1rem, 2.4vh, 1.5rem);
 }
 
@@ -685,9 +698,10 @@
   flex: 1 1 auto;
   min-height: 0;
   width: calc(100vw - var(--journal-inline-start));
-  margin-left: var(--journal-inline-start);
+  margin-left: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .journal__head h2 {
@@ -771,7 +785,7 @@
 
 .journal-carousel__track {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--journal-gap);
   width: max-content;
   height: 100%;

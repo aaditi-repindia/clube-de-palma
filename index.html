@@ -226,32 +226,34 @@
       </section>
 
       <section class="section journal" id="life" aria-labelledby="life-title">
-        <div class="container journal__intro">
-          <div class="journal__head">
-            <div data-reveal="ctn">
-              <h2 id="life-title" data-reveal="h">Life at the Clube</h2>
-            </div>
-            <div class="journal__controls" data-journal-controls data-reveal="ctn">
-              <button class="journal__nav journal__nav--prev" type="button" aria-label="Previous story" data-journal-prev>
-                <span aria-hidden="true">←</span>
-              </button>
-              <button class="journal__nav journal__nav--next" type="button" aria-label="Next story" data-journal-next>
-                <span aria-hidden="true">→</span>
-              </button>
+        <div class="journal__shell">
+          <div class="journal__intro">
+            <div class="journal__head">
+              <div data-reveal="ctn">
+                <h2 id="life-title" data-reveal="h">Life at the Clube</h2>
+              </div>
+              <div class="journal__controls" data-journal-controls data-reveal="ctn">
+                <button class="journal__nav journal__nav--prev" type="button" aria-label="Previous story" data-journal-prev>
+                  <span aria-hidden="true">←</span>
+                </button>
+                <button class="journal__nav journal__nav--next" type="button" aria-label="Next story" data-journal-next>
+                  <span aria-hidden="true">→</span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="journal__rail">
-          <div
-            class="journal-carousel"
-            data-journal-carousel
-            data-cursor="drag"
-            data-cursor-label="Drag"
-          >
-            <div class="journal-carousel__viewport">
-              <div class="journal-carousel__track" data-journal-track aria-live="polite">
-                <!-- Cards rendered by journal.js -->
+          <div class="journal__rail">
+            <div
+              class="journal-carousel"
+              data-journal-carousel
+              data-cursor="drag"
+              data-cursor-label="Drag"
+            >
+              <div class="journal-carousel__viewport">
+                <div class="journal-carousel__track" data-journal-track aria-live="polite">
+                  <!-- Cards rendered by journal.js -->
+                </div>
               </div>
             </div>
           </div>
