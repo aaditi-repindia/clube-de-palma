@@ -20,8 +20,12 @@
   display: block;
 }
 
+/* Never let a display rule override the hidden state */
+.splash[hidden],
 .splash.is-done {
-  pointer-events: none;
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
 }
 
 .splash__skip {

@@ -16,7 +16,7 @@
 */
 @font-face {
   font-family: "TFarrow Light";
-  src: url("/assets/fonts/TFarrow-Light.woff2") format("woff2");
+  src: url("/assets/fonts/TFArrow-Light.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -24,9 +24,19 @@
 
 @font-face {
   font-family: "Optima";
-  src: url("/assets/fonts/Optima.woff2") format("woff2");
+  src:
+    url("/assets/fonts/Optima.ttf") format("truetype"),
+    url("/assets/fonts/Optima-Medium.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Optima";
+  src: url("/assets/fonts/Optima-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
   font-display: swap;
 }
 
