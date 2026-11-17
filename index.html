@@ -343,134 +343,82 @@
           </div>
         </div>
       </section>
-
-      <section class="section contact" id="contact" aria-labelledby="contact-title">
-        <div class="container">
-          <div class="contact__panel" data-reveal="ctn">
-            <div class="contact__grid">
-              <div class="contact__intro">
-                <div class="contact__mark" aria-hidden="true">
-                  <span class="contact__mark-orbit"></span>
-                  <span class="contact__mark-core"></span>
-                </div>
-                <h2 id="contact-title" class="contact__title">
-                  <span>Let’s</span>
-                  <span>get</span>
-                  <span>in touch</span>
-                </h2>
-              </div>
-
-              <div class="contact__aside">
-                <form class="contact-form" data-contact-form novalidate>
-                  <div class="contact-form__field">
-                    <label for="contact-name">Full name</label>
-                    <div class="contact-form__control">
-                      <input id="contact-name" name="name" type="text" autocomplete="name" placeholder=" " required />
-                      <span class="contact-form__req" aria-hidden="true">*</span>
-                    </div>
-                  </div>
-
-                  <div class="contact-form__row">
-                    <div class="contact-form__field">
-                      <label for="contact-email">Email</label>
-                      <div class="contact-form__control">
-                        <input id="contact-email" name="email" type="email" autocomplete="email" placeholder=" " required />
-                        <span class="contact-form__req" aria-hidden="true">*</span>
-                      </div>
-                    </div>
-                    <div class="contact-form__field">
-                      <label for="contact-phone">Phone</label>
-                      <div class="contact-form__control">
-                        <input id="contact-phone" name="phone" type="tel" autocomplete="tel" placeholder=" " required />
-                        <span class="contact-form__req" aria-hidden="true">*</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="contact-form__field">
-                    <label for="contact-message">Message</label>
-                    <div class="contact-form__control">
-                      <input id="contact-message" name="message" type="text" placeholder=" " required />
-                      <span class="contact-form__req" aria-hidden="true">*</span>
-                    </div>
-                  </div>
-
-                  <div class="contact-form__actions">
-                    <p class="contact-form__status" data-contact-status role="status" aria-live="polite"></p>
-                    <button class="contact-form__submit" type="submit" aria-label="Send message" data-magnetic>
-                      <span data-magnetic-inner aria-hidden="true">→</span>
-                    </button>
-                  </div>
-                </form>
-
-                <div class="contact__places">
-                  <address class="contact__place">
-                    <strong>Bambolim</strong>
-                    <span>H. No. ADG/15/PH/II, Near Phase II Gate,<br />Aldeia de Goa, Bambolim, Goa</span>
-                    <a href="tel:+919699751872">+91-96997 51872</a>
-                    <a href="tel:+918301826935">+91-83018 26935</a>
-                  </address>
-                  <div class="contact__place">
-                    <strong>Membership</strong>
-                    <a href="mailto:vishal.roy@dynamixgroup.co.in">vishal.roy@dynamixgroup.co.in</a>
-                    <a href="https://dynamixclubedepalma.co.in/contact-us/" target="_blank" rel="noopener noreferrer">Official contact page</a>
-                    <a href="https://dynamixclubedepalma.co.in/clubdepalma/membership/form" target="_blank" rel="noopener noreferrer">Apply for membership</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
 
-    <footer class="footer">
-      <div class="container footer__grid">
-        <div class="footer__brand">
-          <img src="/assets/logos/cdp-logo-transparent.png" alt="Clube de Palma" />
-          <p>A Dynamix Club de Palma experience — private recreation, social connection and coastal belonging.</p>
-          <div class="footer__social" aria-label="Social media">
-            <a href="https://www.facebook.com/thedynamixgroup" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-              <img src="/assets/icons/facebook.png" alt="" />
-            </a>
-            <a href="https://www.instagram.com/dynamixgroup/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <img src="/assets/icons/instagram.png" alt="" />
-            </a>
-            <a href="https://www.linkedin.com/company/14441348/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <img src="/assets/icons/linkedin.png" alt="" />
-            </a>
+    <footer class="footer" id="contact">
+      <div class="footer__main">
+        <div class="container footer__inner">
+          <div class="footer__content">
+            <div class="footer__content-left">
+              <div class="footer__sign" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
+                  <circle cx="20" cy="19" r="16" stroke="currentColor" stroke-opacity="0.75" stroke-width="1.3"></circle>
+                  <circle cx="17" cy="17" r="16" stroke="currentColor" stroke-opacity="0.75" stroke-width="0.7"></circle>
+                </svg>
+              </div>
+              <p class="footer__tagline">A Coastal Sanctuary. Stay Connected</p>
+              <form class="footer__subscribe" data-newsletter-form novalidate>
+                <input
+                  type="email"
+                  class="footer__subscribe-input"
+                  placeholder="Enter your email"
+                  aria-label="Enter your email"
+                  required
+                />
+                <button class="footer__subscribe-btn" type="submit">Subscribe</button>
+              </form>
+              <p class="footer__subscribe-feedback" data-subscribe-feedback role="status" aria-live="polite"></p>
+
+              <nav class="footer__nav-left" aria-label="Footer navigation">
+                <ul class="footer__nav-list">
+                  <li><a href="#experiences" class="footer__nav-link">Private Travel Planning</a></li>
+                  <li><a href="#experiences" class="footer__nav-link">Concierge Services</a></li>
+                  <li><a href="#experiences" class="footer__nav-link">Celebrations &amp; Special Occasions</a></li>
+                  <li><a href="#life" class="footer__nav-link">Signature Experiences</a></li>
+                </ul>
+                <ul class="footer__nav-list">
+                  <li><a href="#about" class="footer__nav-link">Travel Magazine</a></li>
+                  <li><a href="#experiences" class="footer__nav-link">Perspective</a></li>
+                  <li><a href="#life" class="footer__nav-link">About</a></li>
+                  <li><a href="#contact" class="footer__nav-link">Contact</a></li>
+                </ul>
+              </nav>
+            </div>
+
+            <div class="footer__content-right">
+              <div class="footer__contact-links">
+                <a href="tel:+919699751872" class="footer__contact-link">
+                  <span>+91 96997 51872</span>
+                  <span class="footer__contact-line" aria-hidden="true"></span>
+                </a>
+                <a href="tel:+918301826935" class="footer__contact-link">
+                  <span>+91 83018 26935</span>
+                  <span class="footer__contact-line" aria-hidden="true"></span>
+                </a>
+                <a href="mailto:info@dynamixclubedepalma.co.in" class="footer__contact-link">
+                  <span>info@dynamixclubedepalma.co.in</span>
+                  <span class="footer__contact-line" aria-hidden="true"></span>
+                </a>
+              </div>
+
+              <ul class="footer__nav-list footer__nav-list--socials">
+                <li><a href="https://www.instagram.com/dynamixgroup/" target="_blank" rel="noopener noreferrer" class="footer__nav-link">Instagram</a></li>
+                <li><a href="https://www.facebook.com/thedynamixgroup" target="_blank" rel="noopener noreferrer" class="footer__nav-link">Facebook</a></li>
+                <li><a href="https://www.linkedin.com/company/14441348/" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a></li>
+                <li><a href="https://wa.me/919699751872" target="_blank" rel="noopener noreferrer" class="footer__nav-link">Whats App</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer__meta">
+            <p class="footer__meta-copy">Dynamix Clube de Palma © <span id="year"></span> All Rights Reserved.</p>
+            <a href="https://dynamixclubedepalma.co.in/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer__meta-copy">Privacy &amp; Cookies Policy</a>
           </div>
         </div>
-        <div>
-          <h3>Quick links</h3>
-          <ul>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#experiences">Amenities</a></li>
-            <li><a href="#life">Life at the Clube</a></li>
-            <li><a href="#contact">Contact Us</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Legal</h3>
-          <ul>
-            <li><a href="https://dynamixclubedepalma.co.in/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
-            <li><a href="https://dynamixclubedepalma.co.in/code-of-conduct/" target="_blank" rel="noopener noreferrer">Disclaimer / Code of Conduct</a></li>
-            <li><a href="https://dynamixclubedepalma.co.in/rules-and-regulations/" target="_blank" rel="noopener noreferrer">Rules &amp; Regulations</a></li>
-            <li><a href="https://dynamixclubedepalma.co.in/cancellation-and-refund/" target="_blank" rel="noopener noreferrer">Cancellation &amp; Refund</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Visit</h3>
-          <ul>
-            <li>Bambolim, Goa</li>
-            <li><a href="tel:+919699751872">+91-96997 51872</a></li>
-            <li><a href="mailto:vishal.roy@dynamixgroup.co.in">Email membership</a></li>
-          </ul>
-        </div>
       </div>
-      <div class="container footer__bottom">
-        <p>© <span id="year"></span> Dynamix Club de Palma. All rights reserved.</p>
-        <button class="back-to-top" type="button" id="back-to-top">Back to top ↑</button>
+
+      <div class="footer__wordmark" aria-hidden="true">
+        <span class="footer__wordmark-text">CLUBE DE PALMA</span>
       </div>
     </footer>
 
