@@ -1,12 +1,13 @@
 /* Arched portal hero
-   Solid #a25d50 terracotta canvas with smooth semi-circular arch curve.
-   The gate starts almost smallest and zooms into full-bleed view on scroll. */
+   Inspired by Era Residence: Architectural arched window framing the pool,
+   expanding smoothly into full-bleed on scroll. Zero artificial preloader. */
 
 :root {
-  --portal-frame: #a25d50;
+  --portal-frame: #a25d50; /* solid terracotta */
   --portal-frame-deep: #a25d50;
   --portal-line: #a25d50;
-  --portal-arch-w: min(38vw, 420px);
+  --portal-glow: transparent;
+  --portal-arch-w: min(38vw, 400px);
   --portal-arch-h: min(76vh, 760px);
 }
 
@@ -27,9 +28,9 @@
   display: grid;
   place-items: center;
   overflow: hidden;
+  background: #a25d50;
 }
 
-/* Solid terracotta background — no gradient or mud color */
 .hero__veil {
   position: absolute;
   inset: 0;
@@ -71,46 +72,51 @@
   width: var(--portal-arch-w);
   height: var(--portal-arch-h);
   transform-origin: center center;
-  will-change: transform, opacity;
-  filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.35));
+  will-change: transform;
+  filter: drop-shadow(0 22px 50px rgba(0, 0, 0, 0.35));
 }
 
 .hero__arch-shape {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  /* Mathematically smooth semi-circular dome arch top */
-  border-radius: 9999px 9999px 20px 20px;
+  /* Smooth continuous architectural arch curve */
+  border-radius: 9999px 9999px 1.25rem 1.25rem;
   box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(255, 255, 255, 0.3),
-    0 0 0 8px rgba(162, 93, 80, 0.4);
+    0 0 0 1px rgba(255, 255, 255, 0.45),
+    0 0 0 8px rgba(0, 0, 0, 0.06),
+    0 0 0 9px rgba(255, 255, 255, 0.18);
 }
 
 .hero__arch-media {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background: #1a1412;
 }
 
-/* Pool courtyard photo framed smoothly inside the arch */
+/* Full-viewport image under the arch clip — stays sharp and static as the portal expands */
 .hero__arch-media img {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
   object-fit: cover;
   object-position: center 45%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  will-change: transform;
   image-rendering: auto;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
-/* Outer decorative arch ring */
 .hero__arch-ring {
   position: absolute;
-  inset: -12px;
-  border-radius: 9999px 9999px 28px 28px;
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  inset: -14px;
+  border-radius: 9999px 9999px 1.6rem 1.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
   pointer-events: none;
 }
 
@@ -121,7 +127,7 @@
   text-align: center;
   display: grid;
   justify-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   margin-top: clamp(0.5rem, 1.5vh, 1.5rem);
 }
 
@@ -138,8 +144,8 @@
   font-weight: 300;
   font-size: clamp(4.2rem, 14vw, 9.5rem);
   letter-spacing: 0.01em;
-  color: #ffffff;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  color: rgba(255, 255, 255, 0.96);
+  text-shadow: 0 12px 42px rgba(0, 0, 0, 0.28);
   margin: 0;
 }
 
@@ -151,13 +157,12 @@
   font-family: var(--font-body);
   font-style: italic;
   font-size: clamp(2.1rem, 5.8vw, 4rem);
-  color: #7fd4c2;
+  color: var(--color-accent);
   margin-top: -0.62em;
   margin-bottom: -0.05em;
   letter-spacing: 0.02em;
   position: relative;
   z-index: 1;
-  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .hero__phrase {
@@ -170,7 +175,7 @@
   font-size: clamp(0.85rem, 1.6vw, 1.2rem);
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .hero__cta {
@@ -178,7 +183,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.85rem;
-  margin-top: 1.4rem;
+  margin-top: 1.2rem;
   z-index: 4;
 }
 
@@ -191,7 +196,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.4rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.72);
   font-family: var(--font-body);
   font-size: var(--text-small);
   letter-spacing: 0.16em;
@@ -202,14 +207,14 @@
 }
 
 .hero--portal .hero__scroll:hover {
-  color: #ffffff;
+  color: var(--color-pure);
 }
 
 .hero--portal .hero__scroll-line {
   display: block;
   width: 1px;
   height: 1.75rem;
-  background: linear-gradient(180deg, #ffffff, transparent);
+  background: linear-gradient(180deg, var(--color-accent), transparent);
   animation: heroScrollPulse 2s infinite ease-in-out;
 }
 
@@ -228,7 +233,7 @@
 
 @media (max-width: 700px) {
   :root {
-    --portal-arch-w: min(72vw, 300px);
+    --portal-arch-w: min(72vw, 290px);
     --portal-arch-h: min(62vh, 540px);
   }
 
@@ -248,6 +253,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero__arch,
+  .hero__arch-media img,
   .hero__scroll-line {
     transition: none !important;
     animation: none !important;
