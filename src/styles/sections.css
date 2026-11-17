@@ -661,7 +661,8 @@
   height: var(--journal-section-h);
   min-height: var(--journal-section-h);
   max-height: var(--journal-section-h);
-  padding-block: clamp(1.1rem, 2.8vh, 1.85rem);
+  /* Bottom inset only — top spacing comes from the centered header band */
+  padding-block: 0 clamp(1.1rem, 2.8vh, 1.85rem);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -681,27 +682,32 @@
 }
 
 .journal__intro {
-  flex: 0 0 auto;
+  /* Fills the band above the cards; heading + arrows sit in its vertical center */
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
   width: min(calc(100vw - var(--journal-inline-start) - var(--section-pad-x)), var(--content-max));
   max-width: 100%;
-  margin-bottom: clamp(1rem, 2.4vh, 1.5rem);
+  margin-bottom: 0;
+  min-height: 0;
 }
 
 .journal__head {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 0.85rem 1.5rem;
+  width: 100%;
 }
 
 .journal__rail {
-  flex: 1 1 auto;
+  flex: 2.15 1 0;
   min-height: 0;
   width: calc(100vw - var(--journal-inline-start));
   margin-left: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .journal__head h2 {
@@ -785,7 +791,7 @@
 
 .journal-carousel__track {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--journal-gap);
   width: max-content;
   height: 100%;
@@ -933,11 +939,11 @@
   .journal {
     --journal-gap: 0.9rem;
     --journal-media-min: 6.5rem;
-    padding-block: clamp(1rem, 2.6vh, 1.5rem);
+    padding-block: 0 clamp(1rem, 2.6vh, 1.5rem);
   }
 
-  .journal__intro {
-    margin-bottom: 0.9rem;
+  .journal__rail {
+    flex: 2.4 1 0;
   }
 
   .journal__head {
@@ -969,11 +975,11 @@
 @media (max-height: 760px) and (min-width: 721px) {
   .journal {
     --journal-media-min: 6.25rem;
-    padding-block: clamp(0.85rem, 2vh, 1.35rem);
+    padding-block: 0 clamp(0.85rem, 2vh, 1.35rem);
   }
 
-  .journal__intro {
-    margin-bottom: 0.75rem;
+  .journal__rail {
+    flex: 2.4 1 0;
   }
 
   .journal__head h2 {
