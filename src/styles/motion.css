@@ -20,6 +20,13 @@ html.has-custom-cursor .amenity-card {
   cursor: none;
 }
 
+/* Native pointer on carousel CTAs so links never inherit the grab/drag cursor */
+html.has-custom-cursor .journal-carousel a,
+html.has-custom-cursor .journal-carousel button,
+html.has-custom-cursor .journal-card__cta {
+  cursor: pointer;
+}
+
 .site-cursor {
   position: fixed;
   top: 0;

@@ -647,64 +647,71 @@
 
 /* ——— Life at the Clube journal ——— */
 .journal {
-  --journal-gap: clamp(1rem, 2vw, 1.5rem);
+  --journal-gap: clamp(0.75rem, 1.6vw, 1.25rem);
   --journal-peek: 1.5;
-  /* Image capped in vh so head + card stay within the viewport under the nav */
-  --journal-media-h: clamp(10rem, 26vh, 16rem);
-  /* Match .container inset so the rail aligns with the heading */
+  --journal-media-min: 7.5rem;
+  /* Match section[id] scroll-margin so the block fills the viewport under the nav */
+  --journal-section-h: calc(100dvh - var(--nav-h) - 1rem);
   --journal-inline-start: max(
     var(--section-pad-x),
     calc((100vw - min(100vw - (var(--section-pad-x) * 2), var(--content-max))) / 2)
   );
-  padding-block: clamp(1.35rem, 3.2vh, 2.5rem);
+  height: var(--journal-section-h);
+  min-height: var(--journal-section-h);
+  max-height: var(--journal-section-h);
+  padding-block: clamp(0.85rem, 2.2vh, 1.65rem);
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
-  overflow-x: clip;
+  overflow: hidden;
   background:
     linear-gradient(180deg, var(--color-cream) 0%, var(--color-soft) 100%);
 }
 
 .journal__intro {
-  margin-bottom: clamp(0.85rem, 2vh, 1.35rem);
+  flex: 0 0 auto;
+  margin-bottom: clamp(0.55rem, 1.5vh, 1rem);
 }
 
 .journal__head {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 1rem 1.75rem;
+  gap: 0.75rem 1.5rem;
 }
 
 .journal__rail {
-  /* Full-bleed to the right so 1.5 cards can breathe; left aligns with container */
+  flex: 1 1 auto;
+  min-height: 0;
   width: calc(100vw - var(--journal-inline-start));
   margin-left: var(--journal-inline-start);
-  padding-right: 0;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .journal__head h2 {
-  font-size: clamp(1.85rem, 3.6vw, 3.1rem);
-  margin-bottom: 0.4rem;
+  font-size: clamp(1.7rem, 3.2vw, 2.85rem);
+  margin-bottom: 0.3rem;
 }
 
 .journal__lede {
   margin: 0;
   max-width: 36ch;
   color: var(--color-heading);
-  font-size: clamp(0.95rem, 1.15vw, 1.08rem);
-  line-height: 1.45;
+  font-size: clamp(0.92rem, 1.1vw, 1.05rem);
+  line-height: 1.4;
 }
 
 .journal__controls {
   display: inline-flex;
-  gap: 0.65rem;
+  gap: 0.55rem;
   flex-shrink: 0;
-  padding-bottom: 0.15rem;
+  padding-bottom: 0.1rem;
 }
 
 .journal__nav {
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 2.45rem;
+  height: 2.45rem;
   border: 1px solid var(--color-border);
   border-radius: 50%;
   background: transparent;
@@ -734,6 +741,11 @@
 
 .journal-carousel {
   position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   cursor: grab;
   user-select: none;
   touch-action: pan-y;
@@ -747,11 +759,20 @@
   cursor: default;
 }
 
+.journal-carousel a,
+.journal-carousel button,
+.journal-card__cta {
+  cursor: pointer;
+}
+
 .journal-carousel__viewport {
   container-type: inline-size;
   container-name: journal;
   overflow: hidden;
   width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
 }
 
 .journal-carousel__track {
@@ -759,6 +780,7 @@
   align-items: stretch;
   gap: var(--journal-gap);
   width: max-content;
+  height: 100%;
   will-change: transform;
 }
 
@@ -766,13 +788,13 @@
   /*
     Width is assigned in journal.js as (viewport - gap) / peek
     so each card gets the exact pixel size for a 1.5-card layout.
-    CSS fallback keeps the same ratio before JS runs.
   */
   flex: 0 0 var(--journal-card-width, calc((100cqi - var(--journal-gap)) / var(--journal-peek)));
   width: var(--journal-card-width, calc((100cqi - var(--journal-gap)) / var(--journal-peek)));
   max-width: var(--journal-card-width, calc((100cqi - var(--journal-gap)) / var(--journal-peek)));
+  height: 100%;
   display: grid;
-  grid-template-rows: var(--journal-media-h) minmax(0, auto);
+  grid-template-rows: minmax(var(--journal-media-min), 1fr) auto;
   background: var(--color-pure);
   min-height: 0;
   min-width: 0;
@@ -787,7 +809,8 @@
 
 .journal-card__media {
   overflow: hidden;
-  height: var(--journal-media-h);
+  min-height: var(--journal-media-min);
+  height: 100%;
   background: var(--color-ink-soft);
 }
 
@@ -807,10 +830,10 @@
 
 .journal-card__body {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.35rem;
   justify-items: start;
   align-content: start;
-  padding: clamp(0.85rem, 1.8vh, 1.25rem) clamp(1rem, 2vw, 1.4rem) clamp(0.95rem, 2vh, 1.35rem);
+  padding: clamp(0.65rem, 1.4vh, 1.05rem) clamp(0.85rem, 1.8vw, 1.25rem) clamp(0.7rem, 1.5vh, 1.1rem);
   min-height: 0;
 }
 
@@ -818,7 +841,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.4rem 0.75rem;
+  gap: 0.35rem 0.65rem;
 }
 
 .journal-card__label {
@@ -841,19 +864,19 @@
   margin: 0;
   font-family: var(--font-display);
   font-weight: 300;
-  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  font-size: clamp(1.15rem, 1.8vw, 1.55rem);
   line-height: 1.12;
   color: var(--color-title);
-  max-width: 20ch;
+  max-width: 22ch;
 }
 
 .journal-card__copy {
   margin: 0;
   color: var(--color-muted);
   font-family: var(--font-body);
-  font-size: clamp(0.88rem, 1vw, 0.98rem);
-  line-height: 1.45;
-  max-width: 44ch;
+  font-size: clamp(0.85rem, 0.95vw, 0.95rem);
+  line-height: 1.4;
+  max-width: 46ch;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -864,9 +887,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  margin-top: 0.2rem;
+  margin-top: 0.15rem;
   font-family: var(--font-body);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   letter-spacing: 0.04em;
   color: var(--color-ink);
   transition: color var(--dur-fast) var(--ease-soft);
@@ -889,13 +912,13 @@
 
 @media (max-width: 720px) {
   .journal {
-    --journal-gap: 0.85rem;
-    --journal-media-h: clamp(8rem, 20vh, 11.5rem);
-    padding-block: clamp(1.35rem, 3.5vh, 2rem);
+    --journal-gap: 0.75rem;
+    --journal-media-min: 6.5rem;
+    padding-block: clamp(0.9rem, 2.4vh, 1.35rem);
   }
 
   .journal__intro {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.55rem;
   }
 
   .journal__head {
@@ -904,65 +927,65 @@
   }
 
   .journal__head h2 {
-    font-size: clamp(1.7rem, 8vw, 2.35rem);
-    margin-bottom: 0.3rem;
+    font-size: clamp(1.55rem, 7vw, 2.1rem);
+    margin-bottom: 0.22rem;
   }
 
   .journal__lede {
-    font-size: 0.95rem;
-    line-height: 1.4;
+    font-size: 0.9rem;
+    line-height: 1.35;
   }
 
   .journal-card__title {
-    font-size: clamp(1.1rem, 5vw, 1.3rem);
+    font-size: clamp(1.05rem, 4.8vw, 1.25rem);
     max-width: none;
   }
 
   .journal-card__copy {
     max-width: none;
-    -webkit-line-clamp: 3;
-    font-size: 0.88rem;
-    line-height: 1.4;
+    -webkit-line-clamp: 2;
+    font-size: 0.84rem;
+    line-height: 1.35;
   }
 
   .journal-card__body {
-    gap: 0.35rem;
-    padding: 0.75rem 0.8rem 0.9rem;
+    gap: 0.28rem;
+    padding: 0.6rem 0.7rem 0.75rem;
   }
 }
 
 @media (max-height: 760px) and (min-width: 721px) {
   .journal {
-    --journal-media-h: clamp(8rem, 20vh, 12rem);
-    padding-block: clamp(1.1rem, 2.6vh, 1.75rem);
+    --journal-media-min: 6.25rem;
+    padding-block: clamp(0.65rem, 1.6vh, 1.15rem);
   }
 
-  .journal__head {
-    margin-bottom: 0.65rem;
+  .journal__intro {
+    margin-bottom: 0.45rem;
   }
 
   .journal__head h2 {
-    font-size: clamp(1.6rem, 2.8vw, 2.35rem);
-    margin-bottom: 0.28rem;
+    font-size: clamp(1.45rem, 2.6vw, 2.15rem);
+    margin-bottom: 0.2rem;
   }
 
   .journal__lede {
-    font-size: 0.92rem;
-    line-height: 1.35;
+    font-size: 0.9rem;
+    line-height: 1.3;
   }
 
   .journal-card__body {
-    gap: 0.35rem;
-    padding: 0.7rem 1rem 0.85rem;
+    gap: 0.28rem;
+    padding: 0.55rem 0.85rem 0.7rem;
   }
 
   .journal-card__title {
-    font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+    font-size: clamp(1.05rem, 1.6vw, 1.3rem);
   }
 
   .journal-card__copy {
     -webkit-line-clamp: 2;
-    line-height: 1.35;
+    line-height: 1.3;
   }
 }
 

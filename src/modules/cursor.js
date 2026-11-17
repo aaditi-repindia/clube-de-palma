@@ -32,10 +32,25 @@ export function initCursor() {
     if (label) label.textContent = text
   }
 
+  const isInteractive = (target) =>
+    Boolean(target?.closest?.("a, button, input, select, textarea, label, [role='button']"))
+
   document.querySelectorAll("[data-cursor]").forEach((el) => {
-    el.addEventListener("pointerenter", () => {
+    const apply = (target) => {
+      if (isInteractive(target)) {
+        setState("", "")
+        cursor.hidden = true
+        return
+      }
+      cursor.hidden = false
       setState(el.dataset.cursor, el.dataset.cursorLabel || "")
+    }
+
+    el.addEventListener("pointerenter", (event) => apply(event.target))
+    el.addEventListener("pointermove", (event) => apply(event.target))
+    el.addEventListener("pointerleave", () => {
+      cursor.hidden = false
+      setState("", "")
     })
-    el.addEventListener("pointerleave", () => setState("", ""))
   })
 }
