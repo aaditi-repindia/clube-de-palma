@@ -649,6 +649,7 @@
 .journal {
   --journal-gap: clamp(0.75rem, 1.6vw, 1.25rem);
   --journal-peek: 1.5;
+  --journal-card-scale: 0.8;
   --journal-media-min: 7.5rem;
   /* Match section[id] scroll-margin so the block fills the viewport under the nav */
   --journal-section-h: calc(100dvh - var(--nav-h) - 1rem);
@@ -770,7 +771,7 @@
 
 .journal-carousel__track {
   display: flex;
-  align-items: stretch;
+  align-items: flex-start;
   gap: var(--journal-gap);
   width: max-content;
   height: 100%;
@@ -779,13 +780,14 @@
 
 .journal-card {
   /*
-    Width is assigned in journal.js as (viewport - gap) / peek
-    so each card gets the exact pixel size for a 1.5-card layout.
+    Width is assigned in journal.js as ((viewport - gap) / peek) * scale
+    (~20% smaller than the full 1.5-card slot, aspect preserved via matching height).
   */
-  flex: 0 0 var(--journal-card-width, calc((100cqi - var(--journal-gap)) / var(--journal-peek)));
-  width: var(--journal-card-width, calc((100cqi - var(--journal-gap)) / var(--journal-peek)));
-  max-width: var(--journal-card-width, calc((100cqi - var(--journal-gap)) / var(--journal-peek)));
-  height: 100%;
+  flex: 0 0 var(--journal-card-width, calc(((100cqi - var(--journal-gap)) / var(--journal-peek)) * var(--journal-card-scale)));
+  width: var(--journal-card-width, calc(((100cqi - var(--journal-gap)) / var(--journal-peek)) * var(--journal-card-scale)));
+  max-width: var(--journal-card-width, calc(((100cqi - var(--journal-gap)) / var(--journal-peek)) * var(--journal-card-scale)));
+  height: calc(100% * var(--journal-card-scale));
+  max-height: calc(100% * var(--journal-card-scale));
   display: grid;
   /* Media flexes; body stays intrinsic so title/date/copy/CTA never clip */
   grid-template-rows: minmax(0, 1fr) auto;

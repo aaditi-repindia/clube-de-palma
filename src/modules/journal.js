@@ -94,13 +94,18 @@ export function initJournal() {
     return Number.isFinite(value) && value > 0 ? value : 1.5
   }
 
-  /** Width that fits exactly `peek` cards in the viewport: (viewport - gap) / peek */
+  const cardScale = () => {
+    const value = Number.parseFloat(getComputedStyle(section).getPropertyValue("--journal-card-scale"))
+    return Number.isFinite(value) && value > 0 ? value : 0.8
+  }
+
+  /** Full 1.5-slot width, then scaled (~20% smaller) to keep proportions */
   const targetCardWidth = () => {
     if (!viewport) return 0
     if (cards.length <= 1) {
-      return Math.min(viewport.clientWidth, 42 * 16)
+      return Math.min(viewport.clientWidth, 42 * 16) * cardScale()
     }
-    return Math.max(0, (viewport.clientWidth - gap()) / peek())
+    return Math.max(0, ((viewport.clientWidth - gap()) / peek()) * cardScale())
   }
 
   const syncCardWidths = () => {
