@@ -9,11 +9,11 @@ export function initNav() {
 
   const setSolid = () => {
     if (!header) return
-    const hero = document.getElementById("top")
-    const leaveHero = hero
-      ? window.scrollY > Math.max(48, hero.offsetHeight * 0.12)
-      : window.scrollY > 48
-    header.classList.toggle("is-solid", leaveHero)
+    const about = document.getElementById("about")
+    const reachedAbout = about
+      ? about.getBoundingClientRect().top <= (header.offsetHeight || 80)
+      : window.scrollY > (window.innerHeight || 700)
+    header.classList.toggle("is-solid", reachedAbout)
   }
 
   setSolid()
