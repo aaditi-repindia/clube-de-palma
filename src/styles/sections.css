@@ -767,363 +767,201 @@
   width: fit-content;
 }
 
-/* ——— Life at the Clube journal ——— */
+/* ——— Life at the Clube — Editorial 4-Column Grid ——— */
 .journal {
-  --journal-gap: clamp(1rem, 1.8vw, 1.35rem);
-  --journal-peek: 1.5;
-  --journal-card-scale: 0.8;
-  --journal-media-min: 7.5rem;
-  /* Match section[id] scroll-margin so the block fills the viewport under the nav */
-  --journal-section-h: calc(100dvh - var(--nav-h) - 1rem);
-  /* Shared left inset for heading + first card */
-  --journal-inline-start: max(
-    var(--section-pad-x),
-    calc((100vw - min(100vw - (var(--section-pad-x) * 2), var(--content-max))) / 2)
-  );
-  height: var(--journal-section-h);
-  min-height: var(--journal-section-h);
-  max-height: var(--journal-section-h);
-  /* Bottom inset only — top spacing comes from the centered header band */
-  padding-block: 0 clamp(1.1rem, 2.8vh, 1.85rem);
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  overflow: hidden;
   background: var(--color-base);
-}
-
-.journal__shell {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 0;
-  height: 100%;
-  padding-left: var(--journal-inline-start);
-  box-sizing: border-box;
+  padding-block: clamp(4.5rem, 8vh, 7.5rem);
+  overflow: hidden;
 }
 
 .journal__intro {
-  /* Fills the band above the cards; heading + arrows sit in its vertical center */
-  flex: 1 1 0;
   display: flex;
-  align-items: center;
-  width: min(calc(100vw - var(--journal-inline-start) - var(--section-pad-x)), var(--content-max));
-  max-width: 100%;
-  margin-bottom: 0;
-  min-height: 0;
-}
-
-.journal__head {
-  display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 0.85rem 1.5rem;
-  width: 100%;
+  gap: 2rem;
+  margin-bottom: clamp(2.5rem, 5vh, 4rem);
 }
 
-.journal__rail {
-  flex: 2.15 1 0;
-  min-height: 0;
-  width: calc(100vw - var(--journal-inline-start));
-  margin-left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+.journal__copy {
+  max-width: 48rem;
 }
 
-.journal__head h2 {
-  font-size: clamp(2.35rem, 5.2vw, 4.5rem);
-  margin-bottom: 0;
+.journal__heading {
+  margin: 0.35rem 0 0 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.2rem, 4.2vw, 3.85rem);
   line-height: var(--leading-tight);
+  color: var(--color-title);
 }
 
-.journal__controls {
-  display: inline-flex;
-  gap: 0.55rem;
+.journal__subheading {
+  margin: 0.75rem 0 0 0;
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.1vw, 1.08rem);
+  line-height: 1.6;
+  color: var(--color-muted);
+  max-width: 48ch;
+}
+
+.journal__action {
   flex-shrink: 0;
-  padding-bottom: 0.1rem;
+  padding-bottom: 0.25rem;
 }
 
-.journal__nav {
-  width: 2.45rem;
-  height: 2.45rem;
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  background: transparent;
-  color: var(--color-ink);
-  cursor: pointer;
-  display: inline-grid;
-  place-items: center;
-  transition:
-    background var(--dur-fast) var(--ease-soft),
-    color var(--dur-fast) var(--ease-soft),
-    border-color var(--dur-fast) var(--ease-soft),
-    opacity var(--dur-fast) var(--ease-soft);
-}
-
-.journal__nav:hover,
-.journal__nav:focus-visible {
-  background: var(--color-ink);
-  color: var(--color-pure);
-  border-color: var(--color-ink);
-}
-
-.journal__nav:disabled {
-  opacity: 0.35;
-  cursor: default;
-  pointer-events: none;
-}
-
-.journal-carousel {
-  position: relative;
-  flex: 1 1 auto;
-  min-height: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  cursor: grab;
-  user-select: none;
-  touch-action: pan-y;
-}
-
-.journal-carousel.is-dragging {
-  cursor: grabbing;
-}
-
-.journal-carousel.is-single {
-  cursor: default;
-}
-
-.journal-carousel a,
-.journal-carousel button,
-.journal-card__cta {
-  cursor: pointer;
-}
-
-.journal-carousel__viewport {
-  container-type: inline-size;
-  container-name: journal;
-  overflow: hidden;
+.journal__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
   width: 100%;
-  flex: 1 1 auto;
-  min-height: 0;
-  height: 100%;
-}
-
-.journal-carousel__track {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--journal-gap);
-  width: max-content;
-  height: 100%;
-  will-change: transform;
+  background: var(--color-base);
 }
 
 .journal-card {
-  /*
-    Width is assigned in journal.js as ((viewport - gap) / peek) * scale
-    (~20% smaller than the full 1.5-card slot, aspect preserved via matching height).
-  */
-  flex: 0 0 var(--journal-card-width, calc(((100cqi - var(--journal-gap)) / var(--journal-peek)) * var(--journal-card-scale)));
-  width: var(--journal-card-width, calc(((100cqi - var(--journal-gap)) / var(--journal-peek)) * var(--journal-card-scale)));
-  max-width: var(--journal-card-width, calc(((100cqi - var(--journal-gap)) / var(--journal-peek)) * var(--journal-card-scale)));
-  height: calc(100% * var(--journal-card-scale));
-  max-height: calc(100% * var(--journal-card-scale));
-  display: grid;
-  /* Media flexes; body stays intrinsic so title/date/copy/CTA never clip */
-  grid-template-rows: minmax(0, 1fr) auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(2rem, 3.5vh, 2.75rem) clamp(1.25rem, 1.6vw, 1.85rem) clamp(1.5rem, 2.5vh, 2.25rem);
+  border-right: 1px solid var(--color-border);
   background: var(--color-base);
-  border: 1px solid var(--color-border);
-  min-height: 0;
-  min-width: 0;
   box-sizing: border-box;
-  overflow: hidden;
-  box-shadow:
-    0 4px 14px rgba(5, 5, 5, 0.04),
-    0 16px 40px rgba(5, 5, 5, 0.08);
+  min-height: clamp(34rem, 62vh, 42rem);
+  transition: background var(--dur-fast) var(--ease-soft);
 }
 
-.journal-carousel.is-single .journal-card {
-  flex-basis: var(--journal-card-width, min(100cqi, 42rem));
-  width: var(--journal-card-width, min(100cqi, 42rem));
-  max-width: var(--journal-card-width, min(100cqi, 42rem));
+.journal-card:first-child {
+  border-left: 1px solid var(--color-border);
+}
+
+.journal-card:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.journal-card__top {
+  display: flex;
+  flex-direction: column;
+}
+
+.journal-card__num {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 3.2vw, 3.1rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--color-title);
+  margin-bottom: clamp(1rem, 1.8vh, 1.35rem);
+  letter-spacing: -0.01em;
+}
+
+.journal-card__title {
+  margin: 0 0 0.65rem 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.35vw, 1.45rem);
+  line-height: 1.22;
+  color: var(--color-title);
+  text-wrap: balance;
+}
+
+.journal-card__desc {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(0.82rem, 0.9vw, 0.88rem);
+  line-height: 1.6;
+  color: var(--color-muted);
 }
 
 .journal-card__media {
+  position: relative;
+  width: 100%;
   overflow: hidden;
-  min-height: 0;
-  height: 100%;
   background: var(--color-ink-soft);
+  margin-top: clamp(1.5rem, 2.5vh, 2.25rem);
+}
+
+.journal-card__media--1 {
+  height: clamp(13rem, 19vw, 16.5rem);
+}
+
+.journal-card__media--2 {
+  height: clamp(17.5rem, 25vw, 22.5rem);
+}
+
+.journal-card__media--3 {
+  height: clamp(10.5rem, 15vw, 13.5rem);
+}
+
+.journal-card__media--4 {
+  height: clamp(21rem, 30vw, 27rem);
 }
 
 .journal-card__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  display: block;
   transform: scale(1.02);
-  transition: transform 1s var(--ease-out);
-  pointer-events: none;
+  transition: transform 0.8s var(--ease-out);
 }
 
-.journal-card:hover .journal-card__media img,
-.journal-card.is-active .journal-card__media img {
+.journal-card:hover .journal-card__media img {
   transform: scale(1.06);
 }
 
-.journal-card__body {
-  --journal-card-pad: clamp(1.1rem, 2.1vw, 1.4rem);
-  display: grid;
-  gap: 0.55rem;
-  justify-items: stretch;
-  align-content: start;
-  padding: var(--journal-card-pad);
-  min-height: 0;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.journal-card__meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.4rem 0.7rem;
-  width: 100%;
-}
-
-.journal-card__label {
-  font-family: var(--font-body);
-  font-size: var(--text-label);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--color-accent);
-}
-
-.journal-card__date {
-  font-family: var(--font-body);
-  font-size: var(--text-label);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--color-muted);
-}
-
-.journal-card__title {
-  margin: 0;
-  width: 100%;
-  max-width: none;
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: clamp(1.15rem, 1.8vw, 1.55rem);
-  line-height: 1.15;
-  color: var(--color-title);
-  text-wrap: balance;
-}
-
-.journal-card__copy {
-  margin: 0;
-  width: 100%;
-  max-width: none;
-  color: var(--color-muted);
-  font-family: var(--font-body);
-  font-size: clamp(0.85rem, 0.95vw, 0.95rem);
-  line-height: 1.45;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-}
-
-.journal-card__cta {
-  display: inline-flex;
-  align-items: center;
-  justify-self: start;
-  gap: 0.4rem;
-  margin-top: 0.15rem;
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  letter-spacing: 0.04em;
-  color: var(--color-ink);
-  transition: color var(--dur-fast) var(--ease-soft);
-}
-
-.journal-card__cta:hover,
-.journal-card__cta:focus-visible {
-  color: var(--color-accent);
-}
-
-.journal-card__cta .btn__arrow {
-  display: inline-block;
-  transition: transform var(--dur-fast) var(--ease-out);
-}
-
-.journal-card__cta:hover .btn__arrow,
-.journal-card__cta:focus-visible .btn__arrow {
-  transform: translateX(4px);
-}
-
-@media (max-width: 720px) {
-  .journal {
-    --journal-gap: 0.9rem;
-    --journal-media-min: 6.5rem;
-    padding-block: 0 clamp(1rem, 2.6vh, 1.5rem);
-  }
-
-  .journal__rail {
-    flex: 2.4 1 0;
-  }
-
-  .journal__head {
+@media (max-width: 1024px) {
+  .journal__intro {
     flex-direction: column;
     align-items: flex-start;
+    gap: 1.25rem;
   }
 
-  .journal__head h2 {
-    font-size: clamp(2.1rem, 9vw, 3rem);
-    margin-bottom: 0;
+  .journal__grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .journal-card__title {
-    font-size: clamp(1.05rem, 4.8vw, 1.25rem);
+  .journal-card:nth-child(2) {
+    border-right: 1px solid var(--color-border);
   }
 
-  .journal-card__copy {
-    -webkit-line-clamp: 2;
-    font-size: 0.84rem;
-    line-height: 1.35;
+  .journal-card:nth-child(3) {
+    border-left: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-border);
   }
 
-  .journal-card__body {
-    --journal-card-pad: 1rem;
-    gap: 0.45rem;
+  .journal-card:nth-child(4) {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .journal-card {
+    min-height: 28rem;
+    padding-bottom: 1.5rem;
   }
 }
 
-@media (max-height: 760px) and (min-width: 721px) {
-  .journal {
-    --journal-media-min: 6.25rem;
-    padding-block: 0 clamp(0.85rem, 2vh, 1.35rem);
+@media (max-width: 640px) {
+  .journal__grid {
+    grid-template-columns: 1fr;
   }
 
-  .journal__rail {
-    flex: 2.4 1 0;
+  .journal-card {
+    border-left: 1px solid var(--color-border) !important;
+    border-right: 1px solid var(--color-border) !important;
+    border-top: 1px solid var(--color-border) !important;
+    min-height: auto;
+    padding-bottom: 1.5rem;
   }
 
-  .journal__head h2 {
-    font-size: clamp(2rem, 4vw, 3.25rem);
-    margin-bottom: 0;
+  .journal-card:first-child {
+    border-top: none !important;
   }
 
-  .journal-card__body {
-    --journal-card-pad: 0.95rem;
-    gap: 0.4rem;
-  }
-
-  .journal-card__title {
-    font-size: clamp(1.05rem, 1.6vw, 1.3rem);
-  }
-
-  .journal-card__copy {
-    -webkit-line-clamp: 2;
-    line-height: 1.3;
+  .journal-card__media--1,
+  .journal-card__media--2,
+  .journal-card__media--3,
+  .journal-card__media--4 {
+    height: clamp(14rem, 45vh, 18rem);
   }
 }
 

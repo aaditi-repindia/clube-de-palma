@@ -232,36 +232,102 @@
       </section>
 
       <section class="section journal" id="life" aria-labelledby="life-title">
-        <div class="journal__shell">
-          <div class="journal__intro">
-            <div class="journal__head">
-              <div data-reveal="ctn">
-                <h2 id="life-title" data-reveal="h">Life at the Clube</h2>
-              </div>
-              <div class="journal__controls" data-journal-controls data-reveal="ctn">
-                <button class="journal__nav journal__nav--prev" type="button" aria-label="Previous story" data-journal-prev>
-                  <span aria-hidden="true">←</span>
-                </button>
-                <button class="journal__nav journal__nav--next" type="button" aria-label="Next story" data-journal-next>
-                  <span aria-hidden="true">→</span>
-                </button>
-              </div>
+        <div class="container">
+          <div class="journal__intro" data-reveal="ctn">
+            <div class="journal__copy">
+              <p class="eyebrow" data-reveal="p">Curated Gatherings</p>
+              <h2 id="life-title" class="journal__heading" data-reveal="h">Life at the Clube</h2>
+              <p class="journal__subheading" data-reveal="p">
+                An ongoing calendar of curated gatherings, intimate dining, and shared coastal moments for members.
+              </p>
+            </div>
+            <div class="journal__action" data-reveal="p">
+              <a class="btn btn--outline" href="#contact" data-magnetic>
+                <span data-magnetic-inner>View All Events <span class="btn__arrow" aria-hidden="true">→</span></span>
+              </a>
             </div>
           </div>
 
-          <div class="journal__rail">
-            <div
-              class="journal-carousel"
-              data-journal-carousel
-              data-cursor="drag"
-              data-cursor-label="Drag"
-            >
-              <div class="journal-carousel__viewport">
-                <div class="journal-carousel__track" data-journal-track aria-live="polite">
-                  <!-- Cards rendered by journal.js -->
-                </div>
+          <div class="journal__grid" data-reveal="ctn">
+            <article class="journal-card" data-reveal="p">
+              <div class="journal-card__top">
+                <span class="journal-card__num">01</span>
+                <h3 class="journal-card__title">Members’ Evening under the Palms</h3>
+                <p class="journal-card__desc">
+                  A reserved editorial gathering under the canopy — curated live acoustics, signature cocktails, and shared twilight moments.
+                </p>
               </div>
-            </div>
+              <div class="journal-card__media journal-card__media--1">
+                <img
+                  src="/assets/images/amenity-banquet.jpg"
+                  alt="Members evening gathering at Clube de Palma"
+                  loading="lazy"
+                  decoding="async"
+                  width="440"
+                  height="660"
+                />
+              </div>
+            </article>
+
+            <article class="journal-card" data-reveal="p">
+              <div class="journal-card__top">
+                <span class="journal-card__num">02</span>
+                <h3 class="journal-card__title">Courtyard Social by the Pool</h3>
+                <p class="journal-card__desc">
+                  An open invitation to gather poolside — light Mediterranean plates, relaxed conversation, and twilight breezes by the water.
+                </p>
+              </div>
+              <div class="journal-card__media journal-card__media--2">
+                <img
+                  src="/assets/images/amenity-pool.jpg"
+                  alt="Courtyard pool gathering at Clube de Palma"
+                  loading="lazy"
+                  decoding="async"
+                  width="440"
+                  height="660"
+                />
+              </div>
+            </article>
+
+            <article class="journal-card" data-reveal="p">
+              <div class="journal-card__top">
+                <span class="journal-card__num">03</span>
+                <h3 class="journal-card__title">Curated Tastings &amp; Coastal Dining</h3>
+                <p class="journal-card__desc">
+                  Seasonal degustation menus paired with select vintages, celebrating artisanal Konkan produce and fine gastronomy.
+                </p>
+              </div>
+              <div class="journal-card__media journal-card__media--3">
+                <img
+                  src="/assets/images/concept/concept-food.jpg"
+                  alt="Coastal culinary tastings at Clube de Palma"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="600"
+                />
+              </div>
+            </article>
+
+            <article class="journal-card" data-reveal="p">
+              <div class="journal-card__top">
+                <span class="journal-card__num">04</span>
+                <h3 class="journal-card__title">Sunset Sound &amp; Wellness Retreats</h3>
+                <p class="journal-card__desc">
+                  Restorative weekend sessions, sound immersions, and guided sunset meditations framed by the gentle rhythm of the coast.
+                </p>
+              </div>
+              <div class="journal-card__media journal-card__media--4">
+                <img
+                  src="/assets/images/concept/concept-relaxing.jpg"
+                  alt="Wellness retreats and sunset relaxation at Clube de Palma"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="600"
+                />
+              </div>
+            </article>
           </div>
         </div>
       </section>

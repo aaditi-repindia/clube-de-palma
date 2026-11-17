@@ -1,48 +1,34 @@
-/** Curated Life at the Clube journal entries.
- *  Only include verified or explicitly labelled placeholder items — never pad with empty cards.
- */
 export const journalItems = [
   {
-    id: "members-evening",
-    category: "upcoming-events",
-    label: "Upcoming Events",
-    title: "Members’ evening under the palms",
+    num: "01",
+    title: "Members’ Evening under the Palms",
     description:
-      "A reserved editorial space for the next verified club gathering — social evenings, celebrations and shared moments under the canopy.",
+      "A reserved editorial gathering under the canopy — curated live acoustics, signature cocktails, and shared twilight moments.",
     image: "/assets/images/amenity-banquet.jpg",
-    imageAlt: "Banquet and gathering space at Clube de Palma",
-    dateLabel: null,
-    placeholder: false,
-    cta: { label: "Discover Event", href: "#contact" },
+    imageAlt: "Members evening gathering at Clube de Palma",
   },
   {
-    id: "courtyard-social",
-    category: "upcoming-events",
-    label: "Upcoming Events",
-    title: "Courtyard social by the pool",
+    num: "02",
+    title: "Courtyard Social by the Pool",
     description:
-      "An open invitation for members to gather poolside — light conversation, shared plates and an easy evening in the courtyard air.",
+      "An open invitation to gather poolside — light Mediterranean plates, relaxed conversation, and twilight breezes by the water.",
     image: "/assets/images/amenity-pool.jpg",
-    imageAlt: "Swimming pool courtyard at Clube de Palma",
-    dateLabel: null,
-    placeholder: false,
-    cta: { label: "Discover Event", href: "#contact" },
+    imageAlt: "Courtyard pool gathering at Clube de Palma",
   },
   {
-    id: "house-notices",
-    category: "clube-announcements",
-    label: "Clube Announcements",
-    title: "House notices & club rules",
+    num: "03",
+    title: "Curated Tastings & Coastal Dining",
     description:
-      "Important member information, facility advisories and the rules that keep Clube de Palma refined, welcoming and well run.",
-    image: "/assets/images/aerial.jpg",
-    imageAlt: "Aerial view of Clube de Palma campus",
-    dateLabel: null,
-    placeholder: false,
-    cta: {
-      label: "Read More",
-      href: "https://dynamixclubedepalma.co.in/rules-and-regulations/",
-      external: true,
-    },
+      "Seasonal degustation menus paired with select vintages, celebrating artisanal Konkan produce and fine gastronomy.",
+    image: "/assets/images/concept/concept-food.jpg",
+    imageAlt: "Coastal culinary tastings at Clube de Palma",
+  },
+  {
+    num: "04",
+    title: "Sunset Sound & Wellness Retreats",
+    description:
+      "Restorative weekend sessions, sound immersions, and guided sunset meditations framed by the gentle rhythm of the coast.",
+    image: "/assets/images/concept/concept-relaxing.jpg",
+    imageAlt: "Wellness retreats and sunset relaxation at Clube de Palma",
   },
 ]
