@@ -16,6 +16,19 @@ export const journalItems = [
     cta: { label: "Discover Event", href: "#contact" },
   },
   {
+    id: "courtyard-social",
+    category: "upcoming-events",
+    label: "Upcoming Events",
+    title: "Courtyard social by the pool",
+    description:
+      "An open invitation for members to gather poolside — light conversation, shared plates and an easy evening in the courtyard air.",
+    image: "/assets/images/amenity-pool.jpg",
+    imageAlt: "Swimming pool courtyard at Clube de Palma",
+    dateLabel: null,
+    placeholder: false,
+    cta: { label: "Discover Event", href: "#contact" },
+  },
+  {
     id: "house-notices",
     category: "clube-announcements",
     label: "Clube Announcements",
