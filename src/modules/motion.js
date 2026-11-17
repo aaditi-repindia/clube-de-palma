@@ -9,12 +9,39 @@ import { initMarquee } from "./marquee.js"
 
 gsap.registerPlugin(ScrollTrigger)
 
+function initMembershipParallax() {
+  const section = document.querySelector(".membership-promo")
+  const img = document.querySelector(".membership-promo__img")
+  if (!section || !img) return
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    gsap.set(img, { yPercent: 0 })
+    return
+  }
+
+  gsap.fromTo(
+    img,
+    { yPercent: -10 },
+    {
+      yPercent: 10,
+      ease: "none",
+      scrollTrigger: {
+        trigger: section,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      },
+    },
+  )
+}
+
 export function initMotion() {
   initSmoothScroll()
   initCursor()
   initMagnetic()
   initMarquee()
   initReveals()
+  initMembershipParallax()
   const hero = document.querySelector(".hero")
   requestAnimationFrame(() => hero?.classList.add("is-ready"))
 
