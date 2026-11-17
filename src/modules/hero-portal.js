@@ -15,6 +15,7 @@ export function initHeroPortal() {
   const watermark = hero.querySelector(".hero__watermark")
   const scrollIndicator = hero.querySelector("[data-portal-scroll]")
   const heroCopy = hero.querySelector("[data-portal-copy]")
+  const badge = hero.querySelector("[data-portal-badge]")
   const header = document.getElementById("site-header")
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -27,6 +28,9 @@ export function initHeroPortal() {
     }
     if (heroCopy) {
       gsap.set(heroCopy, { autoAlpha: 1, y: 0, clearProps: "all" })
+    }
+    if (badge) {
+      gsap.set(badge, { autoAlpha: 0 })
     }
     return
   }
@@ -84,9 +88,12 @@ export function initHeroPortal() {
     },
   })
 
-  // 1. Fade out scroll prompt and decorative ring early as user starts scrolling
+  // 1. Fade out scroll prompt, center logo, and decorative ring early as user starts scrolling
   if (scrollIndicator) {
     tl.to(scrollIndicator, { autoAlpha: 0, y: -12, duration: 0.18, ease: "power1.out" }, 0)
+  }
+  if (badge) {
+    tl.to(badge, { autoAlpha: 0, scale: 0.88, duration: 0.24, ease: "power1.out" }, 0.02)
   }
   if (ring) {
     tl.to(ring, { autoAlpha: 0, duration: 0.3, ease: "power1.out" }, 0.04)
@@ -106,7 +113,7 @@ export function initHeroPortal() {
     0,
   )
 
-  // 3. Unround arch corners to full rectangular screen & soften drop shadow for unpinned transition
+  // 3. Unround arch corners to full rectangular screen
   if (archShape) {
     tl.to(
       archShape,
@@ -114,17 +121,6 @@ export function initHeroPortal() {
         borderRadius: "0px 0px 0px 0px",
         boxShadow: "0 0 0 0 rgba(0,0,0,0)",
         duration: 0.48,
-        ease: "power2.inOut",
-      },
-      0.04,
-    )
-  }
-  if (arch) {
-    tl.to(
-      arch,
-      {
-        filter: "drop-shadow(0 0px 0px rgba(0,0,0,0))",
-        duration: 0.4,
         ease: "power2.inOut",
       },
       0.04,
