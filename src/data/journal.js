@@ -11,8 +11,8 @@ export const journalItems = [
       "A reserved editorial space for the next verified club gathering — social evenings, celebrations and shared moments under the canopy.",
     image: "/assets/images/amenity-banquet.jpg",
     imageAlt: "Banquet and gathering space at Clube de Palma",
-    dateLabel: "Date TBA",
-    placeholder: true,
+    dateLabel: null,
+    placeholder: false,
     cta: { label: "Discover Event", href: "#contact" },
   },
   {
