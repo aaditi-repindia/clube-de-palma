@@ -794,11 +794,13 @@
   max-width: var(--journal-card-width, calc((100cqi - var(--journal-gap)) / var(--journal-peek)));
   height: 100%;
   display: grid;
-  grid-template-rows: minmax(var(--journal-media-min), 1fr) auto;
+  /* Media flexes; body stays intrinsic so title/date/copy/CTA never clip */
+  grid-template-rows: minmax(0, 1fr) auto;
   background: var(--color-pure);
   min-height: 0;
   min-width: 0;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .journal-carousel.is-single .journal-card {
@@ -809,7 +811,7 @@
 
 .journal-card__media {
   overflow: hidden;
-  min-height: var(--journal-media-min);
+  min-height: 0;
   height: 100%;
   background: var(--color-ink-soft);
 }
