@@ -43,34 +43,66 @@ function initFooterReveal() {
   if (!wrapper || !reveal) return
 
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    reveal.style.display = "flex"
     reveal.style.position = "relative"
     reveal.style.clipPath = "none"
     reveal.style.pointerEvents = "auto"
     return
   }
 
-  ScrollTrigger.create({
-    trigger: wrapper,
-    start: "top bottom",
-    end: "bottom bottom",
-    scrub: true,
-    onUpdate: (self) => {
-      const p = self.progress
-      const inset = (1 - p) * 100
-      reveal.style.clipPath = `inset(${inset}% 0% 0% 0%)`
-      reveal.style.pointerEvents = p > 0.05 ? "auto" : "none"
+  const update = () => {
+    const rect = wrapper.getBoundingClientRect()
+    const vh = window.innerHeight
+
+    if (rect.top >= vh) {
+      // Wrapper is completely below viewport — MUST be hidden so it never overlays other sections
+      reveal.style.display = "none"
+      reveal.style.pointerEvents = "none"
+      reveal.style.clipPath = "inset(100% 0 0 0)"
+    } else if (rect.top > 0) {
+      // Wrapper is entering the viewport: show and reveal via clip-path
+      const r = 1 - rect.top / vh
+      reveal.style.display = "flex"
+      reveal.style.position = "fixed"
+      reveal.style.top = "0"
+      reveal.style.left = "0"
+      reveal.style.right = "0"
+      reveal.style.bottom = "0"
+      reveal.style.clipPath = `inset(${(1 - r) * 100}% 0 0 0)`
+      reveal.style.pointerEvents = r > 0.05 ? "auto" : "none"
+
       if (bg) {
-        gsap.set(bg, { scale: 1.08 - p * 0.08 })
+        bg.style.transform = `scale(${1.08 - r * 0.08})`
       }
       if (content) {
-        gsap.set(content, { y: (1 - p) * 35, opacity: 0.5 + p * 0.5 })
+        content.style.transform = `translateY(${(1 - r) * 35}px)`
+        content.style.opacity = `${0.5 + r * 0.5}`
       }
-    },
-    onLeaveBack: () => {
-      reveal.style.clipPath = "inset(100% 0% 0% 0%)"
-      reveal.style.pointerEvents = "none"
-    },
-  })
+    } else {
+      // Wrapper is fully occupying viewport at document bottom
+      reveal.style.display = "flex"
+      reveal.style.position = "absolute"
+      reveal.style.top = "0"
+      reveal.style.left = "0"
+      reveal.style.right = "0"
+      reveal.style.bottom = "0"
+      reveal.style.clipPath = "none"
+      reveal.style.pointerEvents = "auto"
+      if (bg) bg.style.transform = "scale(1)"
+      if (content) {
+        content.style.transform = "translateY(0)"
+        content.style.opacity = "1"
+      }
+    }
+  }
+
+  // Initial check
+  update()
+
+  // Listen to standard scroll, resize, and Lenis/ScrollTrigger updates
+  window.addEventListener("scroll", update, { passive: true })
+  window.addEventListener("resize", update, { passive: true })
+  ScrollTrigger.addEventListener("refresh", update)
 }
 
 export function initMotion() {
