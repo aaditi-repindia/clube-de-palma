@@ -1040,17 +1040,23 @@
   flex: 1;
 }
 
-.footer__sign {
-  width: 38px;
-  height: 38px;
-  color: #ffffff;
-  margin-bottom: 0.15rem;
+.footer__logo-wrap {
+  display: inline-block;
+  width: clamp(140px, 14vw, 185px);
+  height: auto;
+  line-height: 0;
+  transition: opacity var(--dur-fast) var(--ease-soft);
 }
 
-.footer__sign svg {
+.footer__logo-wrap:hover {
+  opacity: 0.85;
+}
+
+.footer__logo {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
+  object-fit: contain;
 }
 
 .footer__tagline {
