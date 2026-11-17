@@ -9,7 +9,6 @@ export function initHeroPortal() {
 
   const arch = hero.querySelector("[data-portal-arch]")
   const archShape = hero.querySelector("[data-portal-shape]")
-  const portalImage = hero.querySelector("[data-portal-image]")
   const ring = hero.querySelector(".hero__arch-ring")
   const veil = hero.querySelector(".hero__veil")
   const watermark = hero.querySelector(".hero__watermark")
@@ -20,28 +19,29 @@ export function initHeroPortal() {
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
-  // Gentle initial entrance on first paint (no blocking, no loader)
+  // Initial state: gate is almost smallest (disappeared)
+  const START_SCALE = 0.05
+  gsap.set(arch, {
+    scale: START_SCALE,
+    autoAlpha: 0.15,
+    transformOrigin: "center center",
+    force3D: true,
+  })
+
+  // Subtle initial entrance for typography on load
   if (!reduced) {
     gsap.fromTo(
       [brandLockup, phrase, cta, scrollIndicator].filter(Boolean),
-      { autoAlpha: 0, y: 20 },
+      { autoAlpha: 0, y: 16 },
       {
         autoAlpha: 1,
         y: 0,
-        duration: 0.9,
-        stagger: 0.08,
+        duration: 0.85,
+        stagger: 0.06,
         ease: "power3.out",
-        delay: 0.1,
+        delay: 0.05,
       },
     )
-
-    if (arch) {
-      gsap.fromTo(
-        arch,
-        { scale: 0.94 },
-        { scale: 1, duration: 1.1, ease: "power2.out" },
-      )
-    }
   }
 
   if (reduced || !arch) return
@@ -49,19 +49,19 @@ export function initHeroPortal() {
   const calcTargetScale = () => {
     const target = archShape || arch
     const rect = target.getBoundingClientRect()
-    const w = Math.max(rect.width || 0, 1)
-    const h = Math.max(rect.height || 0, 1)
-    const scale = Math.max((window.innerWidth * 1.25) / w, (window.innerHeight * 1.25) / h)
+    const w = Math.max(rect.width / (gsap.getProperty(arch, "scale") || START_SCALE), 1)
+    const h = Math.max(rect.height / (gsap.getProperty(arch, "scale") || START_SCALE), 1)
+    const scale = Math.max((window.innerWidth * 1.35) / w, (window.innerHeight * 1.35) / h)
     if (!Number.isFinite(scale) || scale <= 0) return 6
     return Math.min(scale, 35)
   }
 
-  // ScrollTrigger scrub: smoothly expands arch into full-bleed view on scroll
+  // ScrollTrigger scrub: zooms the small gate up into full-bleed view on scroll
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: hero,
       start: "top top",
-      end: "+=120%",
+      end: "+=130%",
       pin: true,
       scrub: 0.5,
       anticipatePin: 1,
@@ -70,19 +70,30 @@ export function initHeroPortal() {
     },
   })
 
-  // 1. Fade peripheral accents early
+  // 1. As soon as scroll starts, gate fades in to full opacity and starts zooming
   tl.to(
-    [phrase, scrollIndicator, watermark, ring].filter(Boolean),
+    arch,
+    {
+      autoAlpha: 1,
+      duration: 0.12,
+      ease: "power1.out",
+    },
+    0,
+  )
+
+  // 2. Peripheral text and scroll prompt fade out
+  tl.to(
+    [phrase, scrollIndicator, watermark].filter(Boolean),
     {
       autoAlpha: 0,
-      y: -18,
-      duration: 0.35,
+      y: -14,
+      duration: 0.25,
       ease: "power2.inOut",
     },
     0,
   )
 
-  // 2. Expand arch to fill screen
+  // 3. Zoom the gate from almost smallest to full viewport coverage
   tl.to(
     arch,
     {
@@ -90,60 +101,60 @@ export function initHeroPortal() {
       duration: 1,
       ease: "power2.inOut",
     },
-    0.04,
+    0,
   )
 
-  // 3. Unround arch corners to full rectangle
+  // 4. Smooth arch corners interpolate to 0px rectangle as it nears full screen
   if (archShape) {
     tl.to(
       archShape,
       {
-        borderRadius: "0% 0% 0% 0% / 0% 0% 0% 0%",
+        borderRadius: "0px 0px 0px 0px",
         boxShadow: "0 0 0 0 rgba(0,0,0,0)",
-        duration: 0.85,
-        ease: "power2.inOut",
-      },
-      0.08,
-    )
-  }
-
-  // 4. Counter-scale image so it stays 100vw/100vh without distortion
-  if (portalImage) {
-    tl.to(
-      portalImage,
-      {
-        scale: () => 1 / calcTargetScale(),
-        duration: 1,
-        ease: "power2.inOut",
-      },
-      0.04,
-    )
-  }
-
-  // 5. Fade out terracotta backdrop to reveal full scene
-  if (veil) {
-    tl.to(
-      veil,
-      {
-        autoAlpha: 0,
-        duration: 0.85,
+        duration: 0.8,
         ease: "power2.inOut",
       },
       0.15,
     )
   }
 
-  // 6. Transition CTA and lockup as page scrolls into next section
+  // 5. Outer ring fades out as the gate expands
+  if (ring) {
+    tl.to(
+      ring,
+      {
+        autoAlpha: 0,
+        duration: 0.35,
+        ease: "power2.inOut",
+      },
+      0.2,
+    )
+  }
+
+  // 6. Solid terracotta veil dissolves to reveal the full-bleed pool courtyard
+  if (veil) {
+    tl.to(
+      veil,
+      {
+        autoAlpha: 0,
+        duration: 0.8,
+        ease: "power2.inOut",
+      },
+      0.2,
+    )
+  }
+
+  // 7. Typography and CTAs fade cleanly as the courtyard photograph takes over
   if (cta) {
     tl.to(
       cta,
       {
         autoAlpha: 0,
-        y: 24,
-        duration: 0.45,
+        y: 20,
+        duration: 0.35,
         ease: "power1.inOut",
       },
-      0.45,
+      0.15,
     )
   }
 
@@ -151,11 +162,12 @@ export function initHeroPortal() {
     tl.to(
       brandLockup,
       {
-        y: -30,
-        duration: 0.6,
+        autoAlpha: 0,
+        y: -24,
+        duration: 0.45,
         ease: "power1.inOut",
       },
-      0.4,
+      0.18,
     )
   }
 }
