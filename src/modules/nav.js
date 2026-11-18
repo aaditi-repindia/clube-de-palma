@@ -2,13 +2,18 @@ export function initNav() {
   const header = document.getElementById("site-header")
   const toggle = document.getElementById("nav-toggle")
   const nav = document.getElementById("site-nav")
-  const links = [...document.querySelectorAll("#site-nav a[href^='#']")]
-  const sections = links
+  const isHome = (document.body.dataset.page || "home") === "home"
+  const hashLinks = [...document.querySelectorAll("#site-nav a[href^='#']")]
+  const sections = hashLinks
     .map((link) => document.querySelector(link.getAttribute("href")))
     .filter(Boolean)
 
   const setSolid = () => {
     if (!header) return
+    if (!isHome) {
+      header.classList.add("is-solid")
+      return
+    }
     const about = document.getElementById("about")
     const reachedAbout = about
       ? about.getBoundingClientRect().top <= (header.offsetHeight || 80)
@@ -16,7 +21,31 @@ export function initNav() {
     header.classList.toggle("is-solid", reachedAbout)
   }
 
+  const markCurrentPage = () => {
+    const current = location.pathname.replace(/\/+$/, "") || "/"
+    nav?.querySelectorAll("a[href]").forEach((link) => {
+      const href = link.getAttribute("href")
+      if (
+        !href ||
+        href.startsWith("#") ||
+        href.startsWith("http") ||
+        href.startsWith("mailto:") ||
+        href.startsWith("tel:")
+      ) {
+        return
+      }
+      const path = new URL(href, location.href).pathname.replace(/\/+$/, "") || "/"
+      const matches =
+        current === path ||
+        current.endsWith(path) ||
+        (path.endsWith(".html") && current.endsWith(path.replace(/\.html$/, "")))
+      if (matches) link.setAttribute("aria-current", "page")
+      else link.removeAttribute("aria-current")
+    })
+  }
+
   setSolid()
+  markCurrentPage()
   window.addEventListener("scroll", setSolid, { passive: true })
   window.addEventListener("resize", setSolid, { passive: true })
 
@@ -42,20 +71,21 @@ export function initNav() {
     link.addEventListener("click", () => setNavOpen(false))
   })
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return
-        const id = `#${entry.target.id}`
-        links.forEach((link) => {
-          link.toggleAttribute("aria-current", link.getAttribute("href") === id)
+  if (isHome && sections.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          const id = `#${entry.target.id}`
+          hashLinks.forEach((link) => {
+            link.toggleAttribute("aria-current", link.getAttribute("href") === id)
+          })
         })
-      })
-    },
-    { rootMargin: "-40% 0px -50% 0px", threshold: 0.01 },
-  )
-
-  sections.forEach((section) => observer.observe(section))
+      },
+      { rootMargin: "-40% 0px -50% 0px", threshold: 0.01 },
+    )
+    sections.forEach((section) => observer.observe(section))
+  }
 
   document.getElementById("back-to-top")?.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" })

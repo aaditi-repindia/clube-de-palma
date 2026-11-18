@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Experiences — Dynamix Club de Palma</title>
-    <meta name="description" content="Experiences and amenities at Dynamix Club de Palma in Bambolim, Goa." />
+    <title>Amenities — Dynamix Club de Palma</title>
+    <meta name="description" content="Amenities at Dynamix Club de Palma in Bambolim, Goa." />
     <link rel="icon" type="image/png" href="/assets/logos/favicon.png" />
   </head>
-  <body data-page="experiences">
+  <body data-page="amenities">
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header is-solid" id="site-header">
@@ -22,8 +22,8 @@
         </button>
         <nav class="nav" id="site-nav" aria-label="Primary">
           <a href="/about.html">About</a>
-          <a href="/experiences.html" aria-current="page">Experiences</a>
-          <a href="/life.html">Life at the Clube</a>
+          <a href="/amenities.html" aria-current="page">Amenities</a>
+          <a href="/events.html">Events</a>
           <a href="/contact.html">Contact</a>
           <a class="btn nav__cta" href="/membership.html" data-magnetic>
             <span data-magnetic-inner>Apply for Membership</span>
@@ -32,12 +32,20 @@
       </div>
     </header>
 
-    <main id="main" class="page-shell">
-      <div class="container page-shell__inner">
-        <p class="eyebrow">Experiences</p>
-        <h1>Experiences</h1>
-        <p>Dedicated Experiences page structure is in place. Design and content will follow.</p>
-      </div>
+    <main id="main">
+      <section class="amenities-editorial" data-amenities-accordion aria-labelledby="amenities-title">
+        <div class="amenities-editorial__pin" data-amenities-pin>
+          <header class="amenities-editorial__heading">
+            <h1 id="amenities-title" class="amenities-editorial__title">Our Amenities</h1>
+          </header>
+
+          <div class="amenities-editorial__stage" data-amenities-stage>
+            <div class="amenities-slot amenities-slot--prev" data-slot="prev" aria-hidden="true"></div>
+            <div class="amenities-slot amenities-slot--active" data-slot="active" aria-live="polite"></div>
+            <div class="amenities-slot amenities-slot--next" data-slot="next" aria-hidden="true"></div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
