@@ -10,15 +10,23 @@ export function initNav() {
 
   const setSolid = () => {
     if (!header) return
-    if (!isHome) {
-      header.classList.add("is-solid")
+    if (isHome) {
+      const about = document.getElementById("about")
+      const reachedAbout = about
+        ? about.getBoundingClientRect().top <= (header.offsetHeight || 80)
+        : window.scrollY > (window.innerHeight || 700)
+      header.classList.toggle("is-solid", reachedAbout)
       return
     }
-    const about = document.getElementById("about")
-    const reachedAbout = about
-      ? about.getBoundingClientRect().top <= (header.offsetHeight || 80)
-      : window.scrollY > (window.innerHeight || 700)
-    header.classList.toggle("is-solid", reachedAbout)
+
+    const pageHero = document.querySelector(".about-hero, .page-hero")
+    if (pageHero) {
+      const reachedPastHero = pageHero.getBoundingClientRect().bottom <= (header.offsetHeight || 80)
+      header.classList.toggle("is-solid", reachedPastHero)
+      return
+    }
+
+    header.classList.add("is-solid")
   }
 
   const markCurrentPage = () => {
