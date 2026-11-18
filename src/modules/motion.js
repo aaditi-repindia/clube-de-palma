@@ -35,7 +35,7 @@ function initMembershipParallax() {
   )
 }
 
-function initFooterReveal() {
+export function initFooterReveal() {
   const wrapper = document.querySelector("[data-footer-reveal-wrapper]")
   const reveal = document.querySelector("[data-footer-reveal]")
   const bg = document.querySelector("[data-footer-reveal-bg]")

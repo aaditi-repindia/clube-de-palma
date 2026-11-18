@@ -1001,6 +1001,193 @@
   }
 }
 
+/* ——— Events page (sticky intro + scrolling trail) ——— */
+.events-page {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--color-cream) 92%, #fff) 0%, var(--color-cream) 100%);
+  padding:
+    calc(var(--nav-h) + clamp(2.25rem, 4.5vw, 3.75rem))
+    0
+    clamp(4rem, 8vw, 6.5rem);
+}
+
+.events-page__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.events-page__intro {
+  position: sticky;
+  top: calc(var(--nav-h) + clamp(1.25rem, 2.5vw, 2rem));
+  align-self: start;
+  max-width: 28rem;
+  padding-top: 0.35rem;
+  padding-bottom: 1rem;
+}
+
+.events-page__intro .eyebrow {
+  margin-bottom: 0.75rem;
+}
+
+.events-page__intro h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.2rem, 4.4vw, 3.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--color-title);
+  text-wrap: balance;
+}
+
+.events-page__lead {
+  margin: 1.15rem 0 0;
+  max-width: 34ch;
+  font-size: clamp(1rem, 1.15vw, 1.1rem);
+  line-height: 1.65;
+  color: var(--color-body);
+}
+
+.events-timeline {
+  position: relative;
+  display: grid;
+  gap: clamp(2.75rem, 5.5vw, 4.75rem);
+  padding-left: clamp(1.35rem, 2.2vw, 2rem);
+  border-left: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
+}
+
+.events-card {
+  position: relative;
+  display: grid;
+  gap: clamp(0.95rem, 1.8vw, 1.35rem);
+  width: 100%;
+}
+
+.events-card::before {
+  content: "";
+  position: absolute;
+  top: 1.15rem;
+  left: calc(-1 * clamp(1.35rem, 2.2vw, 2rem) - 1px);
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--color-cream);
+  border: 1px solid color-mix(in srgb, var(--color-terracotta) 75%, var(--color-ink));
+  box-shadow: 0 0 0 4px var(--color-cream);
+  transform: translateX(-50%);
+}
+
+.events-card__media {
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-ink-soft);
+  aspect-ratio: 4 / 3;
+}
+
+.events-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 1.1s var(--ease-out);
+}
+
+.events-card:hover .events-card__media img {
+  transform: scale(1.03);
+}
+
+.events-card__copy {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.events-card__when {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-terracotta);
+}
+
+.events-card__sep {
+  color: color-mix(in srgb, var(--color-terracotta) 55%, transparent);
+}
+
+.events-card__meta {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(0.85rem, 2vw, 1.5rem);
+  align-items: start;
+}
+
+.events-card__heading {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.events-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.55rem, 2.3vw, 2.15rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-title);
+  text-wrap: balance;
+}
+
+.events-card__place {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.events-card__desc {
+  margin: 0;
+  font-size: clamp(0.92rem, 1.05vw, 1.02rem);
+  line-height: 1.65;
+  color: var(--color-body);
+}
+
+@media (max-width: 980px) {
+  .events-page__inner {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 5vw, 3rem);
+  }
+
+  .events-page__intro {
+    position: static;
+    max-width: 36rem;
+  }
+
+  .events-card__meta {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .events-card__media img {
+    transition: none;
+  }
+
+  .events-card:hover .events-card__media img {
+    transform: none;
+  }
+}
+
 /* ——— Supreme-style Luxury Editorial Footer (Dark Mode) ——— */
 /* ——— Contact page ——— */
 .contact-page {

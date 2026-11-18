@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About — Dynamix Club de Palma</title>
+    <meta name="description" content="About Dynamix Club de Palma — a private recreational and social club in Bambolim, Goa." />
+    <link rel="icon" type="image/png" href="/assets/logos/favicon.png" />
+  </head>
+  <body data-page="about">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header is-solid" id="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="/" aria-label="Clube de Palma home">
+          <img class="brand__mark brand__mark--light" src="/assets/logos/cdp-logo-white.png" alt="Clube de Palma" width="411" height="212" />
+          <img class="brand__mark brand__mark--dark" src="/assets/logos/cdp-logo-transparent.png" alt="" width="411" height="212" aria-hidden="true" />
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+          <span class="sr-only">Menu</span>
+        </button>
+        <nav class="nav" id="site-nav" aria-label="Primary">
+          <a href="/about.html" aria-current="page">About</a>
+          <a href="/amenities.html">Amenities</a>
+          <a href="/events.html">Events</a>
+          <a href="/contact.html">Contact</a>
+          <a class="btn nav__cta" href="/membership.html" data-magnetic>
+            <span data-magnetic-inner>Apply for Membership</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="about-hero" aria-labelledby="about-title">
+        <div class="about-hero__media" aria-hidden="true">
+          <video
+            class="about-hero__video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="/assets/images/hero-pool.jpg"
+          >
+            <source src="/assets/videos/about-hero.mp4" type="video/mp4" />
+          </video>
+          <div class="about-hero__veil"></div>
+        </div>
+
+        <div class="container about-hero__inner">
+          <div class="about-hero__copy">
+            <h1 id="about-title">Discover the Clube de Palma story</h1>
+            <p>
+              A private member’s club on the Konkan Coast — recreation, belonging and timeless coastal living,
+              inspired by Goa’s easy elegance.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="about-story" aria-labelledby="about-story-title">
+        <div class="container about-story__inner">
+          <header class="about-story__intro">
+            <img class="about-story__mark" src="/assets/images/leaves.svg" alt="" width="40" height="40" aria-hidden="true" />
+            <h2 id="about-story-title">
+              <span>The timeless story of</span>
+              <span>Clube de Palma on the Konkan Coast</span>
+            </h2>
+            <p>
+              The revered sanctity of a Member’s Club lies in the unspoken relationships forged within its walls;
+              the shared experiences blossoming into lasting bonds. It is the growing familiarity between two polite
+              smiles, the fierce competition volleyed over a net, or the plate of chips shared after a swim. Amidst
+              the sway of palms and the cool sea breeze, Clube de Palma is a promise of 40,000 sq.ft. of recreational
+              bliss, welcoming individuals to build a beautiful community in the shade and vibrance of the Konkan Coast.
+            </p>
+          </header>
+
+          <div class="about-story__grid">
+            <article class="about-story__card">
+              <figure class="about-story__media">
+                <img
+                  src="/assets/images/about-story-entrance.jpg"
+                  alt="Sunlit tennis court at Clube de Palma with the clubhouse beyond the palms"
+                  width="1200"
+                  height="1500"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <h3>Spirit across the net</h3>
+              <p>
+                Fierce competition volleyed over a net under Goan light — then the easy walk back toward shared
+                tables, where sport softens into friendship.
+              </p>
+            </article>
+
+            <article class="about-story__card about-story__card--raised">
+              <figure class="about-story__media">
+                <img
+                  src="/assets/images/about-story-pool.jpg"
+                  alt="Sunlit view from the Clube de Palma pavilion toward the clubhouse, courtyard and pool"
+                  width="1200"
+                  height="1500"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <h3>The heart of the Clube</h3>
+              <p>
+                From the pavilion, 40,000 sq.ft. of recreational bliss unfolds — terracotta roofs, still water and
+                palm shade framing a sanctuary built for belonging on the Konkan Coast.
+              </p>
+            </article>
+
+            <article class="about-story__card">
+              <figure class="about-story__media">
+                <img
+                  src="/assets/images/about-story-wellness.jpg"
+                  alt="Members sharing a sunlit poolside conversation at Clube de Palma"
+                  width="1200"
+                  height="1500"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <h3>Hours that linger</h3>
+              <p>
+                Unspoken bonds blossom by the water — a raised glass, an easy conversation, the growing familiarity
+                between two polite smiles that becomes the soul of club life.
+              </p>
+            </article>
+          </div>
+
+          <p class="about-story__closing">
+            With an array of activities, amenities, and services at one’s fingertips, Clube de Palma will be one of
+            Goa’s largest, and most expansive club experiences yet.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <div data-site-footer></div>
+
+    <script type="module" src="/src/page.js"></script>
+  </body>
+</html>

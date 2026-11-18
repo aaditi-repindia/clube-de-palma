@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Events — Dynamix Club de Palma</title>
-    <meta name="description" content="Events at Dynamix Club de Palma in Bambolim, Goa." />
+    <meta name="description" content="Social calendar and experiences at Dynamix Club de Palma in Bambolim, Goa." />
     <link rel="icon" type="image/png" href="/assets/logos/favicon.png" />
   </head>
   <body data-page="events">
@@ -32,20 +32,24 @@
       </div>
     </header>
 
-    <main id="main" class="page-shell">
-      <div class="container page-shell__inner">
-        <p class="eyebrow">Events</p>
-        <h1>Events</h1>
-        <p>Dedicated Events page structure is in place. Design and content will follow.</p>
-      </div>
+    <main id="main">
+      <section class="events-page" aria-labelledby="events-title">
+        <div class="container events-page__inner">
+          <header class="events-page__intro">
+            <p class="eyebrow">Social calendar</p>
+            <h1 id="events-title">Events by the courtyard</h1>
+            <p class="events-page__lead">
+              A handpicked rhythm of evenings and gatherings — from O Bar Azul and Sabores to courts,
+              banquet light and shared coastal moments at Clube de Palma.
+            </p>
+          </header>
+
+          <div class="events-timeline" data-events-timeline aria-label="Upcoming events"></div>
+        </div>
+      </section>
     </main>
 
-    <footer class="footer">
-      <div class="container footer__bottom">
-        <p>© <span id="year"></span> Dynamix Club de Palma. All rights reserved.</p>
-        <a href="/">Back to home</a>
-      </div>
-    </footer>
+    <div data-site-footer></div>
 
     <script type="module" src="/src/page.js"></script>
   </body>

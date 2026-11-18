@@ -1,0 +1,15 @@
+﻿Clube de Palma — restored session backup (20261118-181801)
+
+Restored after merge-conflict reset. Includes:
+- Events sticky two-column timeline page + CSS/JS/data
+- Contact page (map + Get in Touch + form) + background
+- Global footer via site-footer.js on all pages
+- Amenities scroll module
+- About / multi-page nav wiring files present in this snapshot
+
+Key entry points:
+- events.html
+- contact.html
+- src/page.js
+- src/modules/site-footer.js
+- src/data/events.js
