@@ -97,7 +97,7 @@
 }
 
 .site-header.is-solid {
-  background: rgba(226, 240, 234, 0.96);
+  background: var(--color-cream);
   box-shadow: 0 1px 0 var(--color-border);
 }
 
@@ -275,7 +275,7 @@
     position: fixed;
     inset: 0;
     z-index: 4;
-    background: rgba(226, 240, 234, 0.98);
+    background: var(--color-cream);
     flex-direction: column;
     justify-content: center;
     gap: 1.4rem;
