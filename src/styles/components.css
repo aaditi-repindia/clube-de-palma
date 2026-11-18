@@ -185,12 +185,24 @@
   color: var(--color-ink);
 }
 
-/* Keep membership CTA readable when the solid-header rule recolors nav links */
+/* Keep membership CTA readable when the solid-header rule recolors nav links.
+   Explicit :link/:visited blocks browser blue/purple visited defaults. */
 .site-header .nav a.nav__cta,
-.site-header.is-solid .nav a.nav__cta {
+.site-header .nav a.nav__cta:link,
+.site-header .nav a.nav__cta:visited,
+.site-header.is-solid .nav a.nav__cta,
+.site-header.is-solid .nav a.nav__cta:link,
+.site-header.is-solid .nav a.nav__cta:visited {
   background: var(--color-ink);
   color: var(--color-pure);
   border-color: transparent;
+}
+
+.site-header .nav a.nav__cta:link span,
+.site-header .nav a.nav__cta:visited span,
+.site-header.is-solid .nav a.nav__cta:link span,
+.site-header.is-solid .nav a.nav__cta:visited span {
+  color: var(--color-pure);
 }
 
 .site-header .nav a.nav__cta:hover,
@@ -199,6 +211,13 @@
 .site-header.is-solid .nav a.nav__cta:focus-visible {
   background: var(--color-accent);
   color: var(--color-ink);
+}
+
+.site-header .nav a.nav__cta:hover span,
+.site-header .nav a.nav__cta:focus-visible span,
+.site-header.is-solid .nav a.nav__cta:hover span,
+.site-header.is-solid .nav a.nav__cta:focus-visible span {
+  color: inherit;
 }
 
 .nav a::after {
