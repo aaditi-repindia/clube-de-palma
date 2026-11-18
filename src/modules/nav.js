@@ -19,7 +19,7 @@ export function initNav() {
       return
     }
 
-    const pageHero = document.querySelector(".about-hero, .page-hero")
+    const pageHero = document.querySelector(".about-hero, .contact-page, .page-hero")
     if (pageHero) {
       const reachedPastHero = pageHero.getBoundingClientRect().bottom <= (header.offsetHeight || 80)
       header.classList.toggle("is-solid", reachedPastHero)
