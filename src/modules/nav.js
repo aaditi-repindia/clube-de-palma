@@ -2,7 +2,10 @@ export function initNav() {
   const header = document.getElementById("site-header")
   const toggle = document.getElementById("nav-toggle")
   const nav = document.getElementById("site-nav")
-  const isHome = (document.body.dataset.page || "home") === "home"
+  const page = document.body.dataset.page || "home"
+  const isHome = page === "home"
+  const isAbout = page === "about"
+  const isContact = page === "contact"
   const hashLinks = [...document.querySelectorAll("#site-nav a[href^='#']")]
   const sections = hashLinks
     .map((link) => document.querySelector(link.getAttribute("href")))
@@ -10,15 +13,42 @@ export function initNav() {
 
   const setSolid = () => {
     if (!header) return
-    if (!isHome) {
-      header.classList.add("is-solid")
+    const scrollY = window.scrollY || document.documentElement.scrollTop || 0
+
+    if (isHome) {
+      const about = document.getElementById("about")
+      const reachedAbout = about
+        ? about.getBoundingClientRect().top <= (header.offsetHeight || 80)
+        : scrollY > (window.innerHeight || 700)
+      header.classList.toggle("is-solid", reachedAbout)
       return
     }
-    const about = document.getElementById("about")
-    const reachedAbout = about
-      ? about.getBoundingClientRect().top <= (header.offsetHeight || 80)
-      : window.scrollY > (window.innerHeight || 700)
-    header.classList.toggle("is-solid", reachedAbout)
+
+    if (isContact) {
+      const contactFrame = document.querySelector(".contact-page__frame")
+      const frameTop = contactFrame ? contactFrame.getBoundingClientRect().top : 999
+      const shouldBeSolid = scrollY > 20 || frameTop <= (header.offsetHeight || 80)
+      header.classList.toggle("is-solid", Boolean(shouldBeSolid))
+      return
+    }
+
+    if (isAbout) {
+      const aboutHero = document.querySelector(".about-hero")
+      const reachedPastHero = aboutHero
+        ? aboutHero.getBoundingClientRect().bottom <= (header.offsetHeight || 80)
+        : scrollY > 400
+      header.classList.toggle("is-solid", reachedPastHero)
+      return
+    }
+
+    const pageHero = document.querySelector(".page-hero, .hero")
+    if (pageHero) {
+      const reachedPastHero = pageHero.getBoundingClientRect().bottom <= (header.offsetHeight || 80)
+      header.classList.toggle("is-solid", reachedPastHero)
+      return
+    }
+
+    header.classList.add("is-solid")
   }
 
   const markCurrentPage = () => {
@@ -48,6 +78,11 @@ export function initNav() {
   markCurrentPage()
   window.addEventListener("scroll", setSolid, { passive: true })
   window.addEventListener("resize", setSolid, { passive: true })
+  window.addEventListener("wheel", () => requestAnimationFrame(setSolid), { passive: true })
+  window.addEventListener("touchmove", () => requestAnimationFrame(setSolid), { passive: true })
+  if (typeof ScrollTrigger !== "undefined") {
+    ScrollTrigger.addEventListener("scroll", setSolid)
+  }
 
   const setNavOpen = (open) => {
     nav?.classList.toggle("is-open", open)

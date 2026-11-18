@@ -102,7 +102,9 @@ export function initFooterReveal() {
   // Listen to standard scroll, resize, and Lenis/ScrollTrigger updates
   window.addEventListener("scroll", update, { passive: true })
   window.addEventListener("resize", update, { passive: true })
-  ScrollTrigger.addEventListener("refresh", update)
+  if (typeof ScrollTrigger !== "undefined") {
+    ScrollTrigger.addEventListener("refresh", update)
+  }
 }
 
 export function initMotion() {
