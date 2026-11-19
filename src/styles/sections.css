@@ -1013,8 +1013,8 @@
 
 .events-page__inner {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 4.5rem);
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(1.75rem, 3.5vw, 3.5rem);
   align-items: start;
 }
 
@@ -1022,7 +1022,7 @@
   position: sticky;
   top: calc(var(--nav-h) + clamp(1.25rem, 2.5vw, 2rem));
   align-self: start;
-  max-width: 28rem;
+  max-width: 32rem;
   padding-top: 0.35rem;
   padding-bottom: 1rem;
 }
@@ -1051,11 +1051,16 @@
   color: var(--color-body);
 }
 
+.events-page__cta {
+  margin-top: clamp(1.25rem, 2.2vw, 1.75rem);
+}
+
 .events-timeline {
+  --timeline-pad: clamp(1.5rem, 2.5vw, 2.5rem);
   position: relative;
   display: grid;
-  gap: clamp(2.75rem, 5.5vw, 4.75rem);
-  padding-left: clamp(1.35rem, 2.2vw, 2rem);
+  gap: clamp(3rem, 6vw, 5rem);
+  padding-left: var(--timeline-pad);
   border-left: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
 }
 
@@ -1070,7 +1075,7 @@
   content: "";
   position: absolute;
   top: 1.15rem;
-  left: calc(-1 * clamp(1.35rem, 2.2vw, 2rem) - 1px);
+  left: calc(-1 * var(--timeline-pad) - 1px);
   width: 0.55rem;
   height: 0.55rem;
   border-radius: 50%;
@@ -1085,6 +1090,7 @@
   overflow: hidden;
   background: var(--color-ink-soft);
   aspect-ratio: 4 / 3;
+  border-radius: 2px;
 }
 
 .events-card__media img {
@@ -1154,11 +1160,38 @@
   color: var(--color-muted);
 }
 
+.events-card__body {
+  display: grid;
+  gap: 0.65rem;
+}
+
 .events-card__desc {
   margin: 0;
   font-size: clamp(0.92rem, 1.05vw, 1.02rem);
   line-height: 1.65;
   color: var(--color-body);
+}
+
+.events-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-ink);
+  text-decoration: none;
+  width: fit-content;
+  margin-top: 0.25rem;
+  transition: color var(--dur-fast) var(--ease-soft), transform var(--dur-fast) var(--ease-soft);
+}
+
+.events-card__cta:hover,
+.events-card__cta:focus-visible {
+  color: var(--color-accent);
+  transform: translateX(3px);
 }
 
 @media (max-width: 980px) {
