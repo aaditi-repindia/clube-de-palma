@@ -16,6 +16,7 @@ export function initHeroPortal() {
   const scrollIndicator = hero.querySelector("[data-portal-scroll]")
   const heroCopy = hero.querySelector("[data-portal-copy]")
   const badge = hero.querySelector("[data-portal-badge]")
+  const portalTop = hero.querySelector("[data-portal-top]")
   const header = document.getElementById("site-header")
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -28,6 +29,9 @@ export function initHeroPortal() {
     }
     if (heroCopy) {
       gsap.set(heroCopy, { autoAlpha: 1, y: 0, clearProps: "all" })
+    }
+    if (portalTop) {
+      gsap.set(portalTop, { autoAlpha: 0 })
     }
     if (badge) {
       gsap.set(badge, { autoAlpha: 0 })
@@ -46,12 +50,52 @@ export function initHeroPortal() {
     heroCopy.style.pointerEvents = "none"
   }
 
+  const calcTargetScale = () => {
+    const target = arch || archShape
+    const w = Math.max(target ? target.offsetWidth : 0, 1)
+    const h = Math.max(target ? target.offsetHeight : 0, 1)
+    const scale = Math.max((window.innerWidth * 1.35) / w, (window.innerHeight * 1.35) / h)
+    if (!Number.isFinite(scale) || scale <= 0) return 8
+    return Math.min(scale, 35)
+  }
+
+  let tl = null
+
+  // Synchronous counter-scale:
+  // Instead of an independent tween that multiplies scales into a 250%+ zoom spike,
+  // we compute the exact reciprocal counter-scale synchronously on every frame of the timeline.
+  // Effective screen scale = currentArchScale * portalImageScale = desiredGlobalScale (1.00 -> 1.02).
+  const updatePortalImageScale = () => {
+    if (!portalImage || !arch) return
+    const currentArchScale = gsap.getProperty(arch, "scale") || 1
+    const progress = tl ? tl.progress() : 0
+    // Arch expansion phase runs from progress 0 to 0.54
+    const p = Math.min(Math.max(progress / 0.54, 0), 1)
+    // Desired global scale: subtle, imperceptible 2% natural camera perspective (1.00 -> 1.02),
+    // giving the immersive sensation of stepping through the arch into the resort without blowing up the scene.
+    const desiredGlobalScale = 1.0 + p * 0.02
+    const counterScale = desiredGlobalScale / Math.max(currentArchScale, 0.001)
+
+    gsap.set(portalImage, {
+      scale: counterScale,
+      xPercent: -50,
+      yPercent: -50,
+      force3D: true,
+    })
+  }
+
   // Gentle initial entrance of the arch window on first load
   if (arch) {
     gsap.fromTo(
       arch,
       { scale: 0.94, opacity: 0.8 },
-      { scale: 1, opacity: 1, duration: 1.1, ease: "power2.out" },
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 1.1,
+        ease: "power2.out",
+        onUpdate: updatePortalImageScale,
+      },
     )
   }
   if (scrollIndicator) {
@@ -61,22 +105,19 @@ export function initHeroPortal() {
       { autoAlpha: 1, y: 0, duration: 0.8, delay: 0.35, ease: "power2.out" },
     )
   }
-
-  const calcTargetScale = () => {
-    const target = archShape || arch
-    const rect = target.getBoundingClientRect()
-    const w = Math.max(rect.width || 0, 1)
-    const h = Math.max(rect.height || 0, 1)
-    const scale = Math.max((window.innerWidth * 1.25) / w, (window.innerHeight * 1.25) / h)
-    if (!Number.isFinite(scale) || scale <= 0) return 6
-    return Math.min(scale, 35)
+  if (portalTop) {
+    gsap.fromTo(
+      portalTop,
+      { autoAlpha: 0, y: -10 },
+      { autoAlpha: 1, y: 0, duration: 0.8, delay: 0.2, ease: "power2.out" },
+    )
   }
 
   // ScrollTrigger scrub:
   // Phase 1 (0.0 → 0.52): Curve expands, flattens out, full banner image fills screen.
   // Phase 2 (0.50 → 0.75): Once curve has disappeared, Header (logo) and Banner headings/copies/CTAs smoothly reveal.
   // Phase 3 (0.75 → 1.0): Full banner is showcased, then transitions cleanly into About.
-  const tl = gsap.timeline({
+  tl = gsap.timeline({
     scrollTrigger: {
       trigger: hero,
       start: "top top",
@@ -86,11 +127,15 @@ export function initHeroPortal() {
       invalidateOnRefresh: true,
       pinSpacing: true,
     },
+    onUpdate: updatePortalImageScale,
   })
 
-  // 1. Fade out scroll prompt, center logo, and decorative ring early as user starts scrolling
+  // 1. Fade out scroll prompt, top corner logos, center logo, and decorative ring early as user starts scrolling
   if (scrollIndicator) {
     tl.to(scrollIndicator, { autoAlpha: 0, y: -12, duration: 0.18, ease: "power1.out" }, 0)
+  }
+  if (portalTop) {
+    tl.to(portalTop, { autoAlpha: 0, y: -14, duration: 0.22, ease: "power1.out" }, 0.02)
   }
   if (badge) {
     tl.to(badge, { autoAlpha: 0, scale: 0.88, duration: 0.24, ease: "power1.out" }, 0.02)
@@ -127,20 +172,7 @@ export function initHeroPortal() {
     )
   }
 
-  // 4. Counter-scale image so it stays 100vw/100vh without distortion
-  if (portalImage) {
-    tl.to(
-      portalImage,
-      {
-        scale: () => 1 / calcTargetScale(),
-        duration: 0.54,
-        ease: "power2.inOut",
-      },
-      0,
-    )
-  }
-
-  // 5. Fade out terracotta backdrop to reveal the full panoramic banner
+  // 4. Fade out terracotta backdrop to reveal the full panoramic banner
   if (veil) {
     tl.to(
       veil,
@@ -153,7 +185,7 @@ export function initHeroPortal() {
     )
   }
 
-  // 6. ONCE SCROLLED AND CURVE DISAPPEARED: Reveal header (logo + nav + CTA)
+  // 5. ONCE SCROLLED AND CURVE DISAPPEARED: Reveal header (logo + nav + CTA)
   if (header) {
     tl.to(
       header,
@@ -195,4 +227,8 @@ export function initHeroPortal() {
 
   // Hold the full banner with all headings and CTAs for remaining scroll before gliding into About
   tl.to({}, { duration: 0.28 }, 0.72)
+
+  // Initialize scale position and keep updated on resize/refresh
+  updatePortalImageScale()
+  ScrollTrigger.addEventListener("refresh", updatePortalImageScale)
 }

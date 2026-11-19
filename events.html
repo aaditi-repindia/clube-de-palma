@@ -36,12 +36,23 @@
       <section class="events-page" aria-labelledby="events-title">
         <div class="container events-page__inner">
           <header class="events-page__intro">
-            <p class="eyebrow">Social calendar</p>
+            <nav class="breadcrumbs" aria-label="Breadcrumbs">
+              <ol class="breadcrumbs__list">
+                <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+                <li class="breadcrumbs__separator" aria-hidden="true">/</li>
+                <li class="breadcrumbs__item"><span class="breadcrumbs__current" aria-current="page">Events</span></li>
+              </ol>
+            </nav>
             <h1 id="events-title">Events by the courtyard</h1>
             <p class="events-page__lead">
               A handpicked rhythm of evenings and gatherings — from O Bar Azul and Sabores to courts,
               banquet light and shared coastal moments at Clube de Palma.
             </p>
+            <div class="events-page__cta">
+              <a class="btn" href="/contact.html" data-magnetic>
+                <span data-magnetic-inner>Book Now <span class="btn__arrow" aria-hidden="true">→</span></span>
+              </a>
+            </div>
           </header>
 
           <div class="events-timeline" data-events-timeline aria-label="Upcoming events"></div>
