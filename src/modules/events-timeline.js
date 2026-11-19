@@ -29,7 +29,13 @@ export function initEventsTimeline() {
                 <h2 class="events-card__title">${event.title}</h2>
                 <p class="events-card__place">${event.place}</p>
               </div>
-              <p class="events-card__desc">${event.description}</p>
+              <div class="events-card__body">
+                <p class="events-card__desc">${event.description}</p>
+                <a class="events-card__cta" href="/contact.html" aria-label="Book for ${event.title}">
+                  <span>Book Now</span>
+                  <span class="btn__arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
             </div>
           </div>
         </article>
