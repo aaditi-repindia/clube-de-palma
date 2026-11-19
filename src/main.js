@@ -8,6 +8,9 @@ import { initAmenities } from "./modules/amenities.js"
 import { initJournal } from "./modules/journal.js"
 import { initContact } from "./modules/contact.js"
 import { initNav } from "./modules/nav.js"
+import { mountSiteFooter } from "./modules/site-footer.js"
+
+mountSiteFooter()
 
 // 1. Core interaction, Lenis smooth scroll, cursor & magnetic
 initMotion()

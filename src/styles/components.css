@@ -97,7 +97,7 @@
 }
 
 .site-header.is-solid {
-  background: rgba(226, 240, 234, 0.96);
+  background: var(--color-cream);
   box-shadow: 0 1px 0 var(--color-border);
 }
 
@@ -189,7 +189,12 @@
    Explicit :link/:visited blocks browser blue/purple visited defaults. */
 .site-header .nav a.nav__cta,
 .site-header .nav a.nav__cta:link,
-.site-header .nav a.nav__cta:visited,
+.site-header .nav a.nav__cta:visited {
+  background: var(--color-ink);
+  color: var(--color-pure);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
 .site-header.is-solid .nav a.nav__cta,
 .site-header.is-solid .nav a.nav__cta:link,
 .site-header.is-solid .nav a.nav__cta:visited {
@@ -234,7 +239,8 @@
 }
 
 .nav a:hover::after,
-.nav a[aria-current="true"]::after {
+.nav a[aria-current="true"]::after,
+.nav a[aria-current="page"]::after {
   transform: scaleX(1);
 }
 
@@ -275,7 +281,7 @@
     position: fixed;
     inset: 0;
     z-index: 4;
-    background: rgba(226, 240, 234, 0.98);
+    background: var(--color-cream);
     flex-direction: column;
     justify-content: center;
     gap: 1.4rem;
