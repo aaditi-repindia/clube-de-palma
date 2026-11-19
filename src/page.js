@@ -1,6 +1,6 @@
 import "./style.css"
 import { initNav } from "./modules/nav.js"
-import { initAmenitiesScroll } from "./modules/amenities-scroll.js"
+import { initAmenitiesTabs } from "./modules/amenities-tabs.js"
 import { initEventsTimeline } from "./modules/events-timeline.js"
 import { initContact } from "./modules/contact.js"
 import { initFooterReveal } from "./modules/motion.js"
@@ -8,7 +8,7 @@ import { mountSiteFooter } from "./modules/site-footer.js"
 
 mountSiteFooter()
 initNav()
-initAmenitiesScroll()
+initAmenitiesTabs()
 initEventsTimeline()
 initContact()
 initFooterReveal()
