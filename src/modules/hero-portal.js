@@ -16,6 +16,7 @@ export function initHeroPortal() {
   const scrollIndicator = hero.querySelector("[data-portal-scroll]")
   const heroCopy = hero.querySelector("[data-portal-copy]")
   const badge = hero.querySelector("[data-portal-badge]")
+  const portalTop = hero.querySelector("[data-portal-top]")
   const header = document.getElementById("site-header")
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -28,6 +29,9 @@ export function initHeroPortal() {
     }
     if (heroCopy) {
       gsap.set(heroCopy, { autoAlpha: 1, y: 0, clearProps: "all" })
+    }
+    if (portalTop) {
+      gsap.set(portalTop, { autoAlpha: 0 })
     }
     if (badge) {
       gsap.set(badge, { autoAlpha: 0 })
@@ -101,6 +105,13 @@ export function initHeroPortal() {
       { autoAlpha: 1, y: 0, duration: 0.8, delay: 0.35, ease: "power2.out" },
     )
   }
+  if (portalTop) {
+    gsap.fromTo(
+      portalTop,
+      { autoAlpha: 0, y: -10 },
+      { autoAlpha: 1, y: 0, duration: 0.8, delay: 0.2, ease: "power2.out" },
+    )
+  }
 
   // ScrollTrigger scrub:
   // Phase 1 (0.0 → 0.52): Curve expands, flattens out, full banner image fills screen.
@@ -119,9 +130,12 @@ export function initHeroPortal() {
     onUpdate: updatePortalImageScale,
   })
 
-  // 1. Fade out scroll prompt, center logo, and decorative ring early as user starts scrolling
+  // 1. Fade out scroll prompt, top corner logos, center logo, and decorative ring early as user starts scrolling
   if (scrollIndicator) {
     tl.to(scrollIndicator, { autoAlpha: 0, y: -12, duration: 0.18, ease: "power1.out" }, 0)
+  }
+  if (portalTop) {
+    tl.to(portalTop, { autoAlpha: 0, y: -14, duration: 0.22, ease: "power1.out" }, 0.02)
   }
   if (badge) {
     tl.to(badge, { autoAlpha: 0, scale: 0.88, duration: 0.24, ease: "power1.out" }, 0.02)
