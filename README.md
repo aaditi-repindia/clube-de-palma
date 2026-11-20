@@ -1,8 +1,37 @@
 # Dynamix Club de Palma — Membership Experience Prototype
 
-Immersive homepage redesign for **Dynamix Club de Palma** (Clube de Palma, Bambolim, Goa). This is a frontend visual prototype that preserves the existing brand system extracted from [dynamixclubedepalma.co.in](https://dynamixclubedepalma.co.in/).
+Immersive homepage redesign for **Dynamix Club de Palma** (Clube de Palma, Bambolim, Goa).
 
-It is **not** a replacement for the live WordPress site and does not include backend membership processing.
+This is a **static HTML / CSS / JS** site. No npm, Vite, or build step is required for production.
+
+## Run / deploy (no build tools)
+
+Upload or copy this whole folder to any static host (Apache, Nginx, IIS, cPanel, S3, Netlify, etc.) and open `index.html`.
+
+### Local preview (pick one)
+
+Any static file server works. Examples:
+
+```bash
+# Python
+python -m http.server 3847
+
+# PHP
+php -S localhost:3847
+```
+
+Then open `http://localhost:3847`.
+
+> ES modules need HTTP. Opening files via `file://` will not load the scripts.
+
+### Folder layout
+
+```
+index.html, about.html, amenities.html, events.html, contact.html, membership.html
+assets/     images, fonts, logos, video
+src/        site CSS + JS modules
+vendor/     GSAP + Lenis (already included — no install needed)
+```
 
 ## What you can explore
 
@@ -19,20 +48,6 @@ It is **not** a replacement for the live WordPress site and does not include bac
 
 Interaction patterns are inspired by [Era Residence](https://www.era-residence.com/) (Lenis smooth scroll, GSAP ScrollTrigger, magnetic CTAs, reveal masks, pinned/horizontal scrub). Visual identity stays Dynamix only.
 
-## Run locally
-
-```bash
-npm install
-npm run dev
-```
-
-Open the URL Vite prints (default port **3847**).
-
-```bash
-npm run build
-npm run preview
-```
-
 ## Brand system notes
 
 See `docs/BRAND-AUDIT.md` for the full live-site audit.
@@ -44,16 +59,9 @@ See `docs/BRAND-AUDIT.md` for the full live-site audit.
 - Cream surface `#F8F7F3`
 - Soft white `#FAFAFA`
 
-### Typography dependency
+### Typography
 
-Brief requires **TFarrow Light** (headings) and **Optima** (body/UI).
-
-Those licensed files are **not** in this repository and are **not** served by the live site today (live headings use **Seasons**). Place files here when available:
-
-- `public/assets/fonts/TFarrow-Light.woff2`
-- `public/assets/fonts/Optima.woff2`
-
-Until then the CSS declares the required families and falls back to Seasons + the Optima system stack.
+Brief requires **TFarrow Light** (headings) and **Optima** (body/UI). Files live under `assets/fonts/`.
 
 ## Membership flow
 

@@ -135,10 +135,10 @@ html.has-custom-cursor .journal-card__cta {
   width: clamp(1.25rem, 1.8vw, 1.65rem);
   height: clamp(1.25rem, 1.8vw, 1.65rem);
   flex-shrink: 0;
-  background: url("/assets/images/leaves.svg") no-repeat center / contain;
+  background: url("../../assets/images/leaves.svg") no-repeat center / contain;
   background-color: var(--color-accent);
-  -webkit-mask: url("/assets/images/leaves.svg") no-repeat center / contain;
-  mask: url("/assets/images/leaves.svg") no-repeat center / contain;
+  -webkit-mask: url("../../assets/images/leaves.svg") no-repeat center / contain;
+  mask: url("../../assets/images/leaves.svg") no-repeat center / contain;
 }
 
 /* Horizontal scrub gallery shell */

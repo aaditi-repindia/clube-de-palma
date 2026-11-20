@@ -1,4 +1,3 @@
-import "./style.css"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { initMotion } from "./modules/motion.js"
 import { initHeroPortal } from "./modules/hero-portal.js"

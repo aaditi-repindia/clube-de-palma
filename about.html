@@ -5,27 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About — Dynamix Club de Palma</title>
     <meta name="description" content="About Dynamix Club de Palma — a private recreational and social club in Bambolim, Goa." />
-    <link rel="icon" type="image/png" href="/assets/logos/favicon.png" />
+    <link rel="icon" type="image/png" href="assets/logos/favicon.png" />
+      <link rel="stylesheet" href="src/style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "gsap": "./vendor/gsap/index.js",
+          "gsap/ScrollTrigger": "./vendor/gsap/ScrollTrigger.js",
+          "lenis": "./vendor/lenis/lenis.mjs"
+        }
+      }
+    </script>
   </head>
   <body data-page="about">
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header" id="site-header">
       <div class="site-header__inner">
-        <a class="brand" href="/" aria-label="Clube de Palma home">
-          <img class="brand__mark brand__mark--light" src="/assets/logos/cdp-logo-white.png" alt="Clube de Palma" width="411" height="212" />
-          <img class="brand__mark brand__mark--dark" src="/assets/logos/cdp-logo-transparent.png" alt="" width="411" height="212" aria-hidden="true" />
+        <a class="brand" href="index.html" aria-label="Clube de Palma home">
+          <img class="brand__mark brand__mark--light" src="assets/logos/cdp-logo-white.png" alt="Clube de Palma" width="411" height="212" />
+          <img class="brand__mark brand__mark--dark" src="assets/logos/cdp-logo-transparent.png" alt="" width="411" height="212" aria-hidden="true" />
         </a>
         <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
           <span></span><span></span><span></span>
           <span class="sr-only">Menu</span>
         </button>
         <nav class="nav" id="site-nav" aria-label="Primary">
-          <a href="/about.html" aria-current="page">About</a>
-          <a href="/amenities.html">Amenities</a>
-          <a href="/events.html">Events</a>
-          <a href="/contact.html">Contact</a>
-          <a class="btn nav__cta" href="/membership.html" data-magnetic>
+          <a href="about.html" aria-current="page">About</a>
+          <a href="amenities.html">Amenities</a>
+          <a href="events.html">Events</a>
+          <a href="contact.html">Contact</a>
+          <a class="btn nav__cta" href="membership.html" data-magnetic>
             <span data-magnetic-inner>Apply for Membership</span>
           </a>
         </nav>
@@ -42,9 +52,9 @@
             loop
             playsinline
             preload="metadata"
-            poster="/assets/images/hero-pool.jpg"
+            poster="assets/images/hero-pool.jpg"
           >
-            <source src="/assets/videos/about-hero.mp4" type="video/mp4" />
+            <source src="assets/videos/about-hero.mp4" type="video/mp4" />
           </video>
           <div class="about-hero__veil"></div>
         </div>
@@ -53,7 +63,7 @@
           <div class="about-hero__copy">
             <nav class="breadcrumbs breadcrumbs--light" aria-label="Breadcrumbs">
               <ol class="breadcrumbs__list">
-                <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Home</a></li>
+                <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="index.html">Home</a></li>
                 <li class="breadcrumbs__separator" aria-hidden="true">/</li>
                 <li class="breadcrumbs__item"><span class="breadcrumbs__current" aria-current="page">About</span></li>
               </ol>
@@ -70,7 +80,7 @@
       <section class="about-story" aria-labelledby="about-story-title">
         <div class="container about-story__inner">
           <header class="about-story__intro">
-            <img class="about-story__mark" src="/assets/images/leaves.svg" alt="" width="40" height="40" aria-hidden="true" />
+            <img class="about-story__mark" src="assets/images/leaves.svg" alt="" width="40" height="40" aria-hidden="true" />
             <h2 id="about-story-title">
               <span>The timeless story of</span>
               <span>Clube de Palma on the Konkan Coast</span>
@@ -88,7 +98,7 @@
             <article class="about-story__card">
               <figure class="about-story__media">
                 <img
-                  src="/assets/images/about-story-entrance.jpg"
+                  src="assets/images/about-story-entrance.jpg"
                   alt="Sunlit tennis court at Clube de Palma with the clubhouse beyond the palms"
                   width="1200"
                   height="1500"
@@ -106,7 +116,7 @@
             <article class="about-story__card about-story__card--raised">
               <figure class="about-story__media">
                 <img
-                  src="/assets/images/about-story-pool.jpg"
+                  src="assets/images/about-story-pool.jpg"
                   alt="Sunlit view from the Clube de Palma pavilion toward the clubhouse, courtyard and pool"
                   width="1200"
                   height="1500"
@@ -124,7 +134,7 @@
             <article class="about-story__card">
               <figure class="about-story__media">
                 <img
-                  src="/assets/images/about-story-wellness.jpg"
+                  src="assets/images/about-story-wellness.jpg"
                   alt="Members sharing a sunlit poolside conversation at Clube de Palma"
                   width="1200"
                   height="1500"
@@ -171,7 +181,7 @@
               <a class="footer__logo-wrap" href="#top" aria-label="Clube de Palma home">
                 <img
                   class="footer__logo"
-                  src="/assets/logos/cdp-logo-white.png"
+                  src="assets/logos/cdp-logo-white.png"
                   alt="Clube de Palma"
                   width="411"
                   height="212"
@@ -194,10 +204,10 @@
 
               <nav class="footer__nav-left" aria-label="Footer navigation">
                 <ul class="footer__nav-list">
-                  <li><a href="/about.html" class="footer__nav-link">About Us</a></li>
-                  <li><a href="/amenities.html" class="footer__nav-link">Amenities</a></li>
-                  <li><a href="/events.html" class="footer__nav-link">Events</a></li>
-                  <li><a href="/contact.html" class="footer__nav-link">Contact Us</a></li>
+                  <li><a href="about.html" class="footer__nav-link">About Us</a></li>
+                  <li><a href="amenities.html" class="footer__nav-link">Amenities</a></li>
+                  <li><a href="events.html" class="footer__nav-link">Events</a></li>
+                  <li><a href="contact.html" class="footer__nav-link">Contact Us</a></li>
                   <li><a href="https://dynamixclubedepalma.co.in/clubdepalma/membership/form" target="_blank" rel="noopener noreferrer" class="footer__nav-link">Apply for membership</a></li>
                 </ul>
               </nav>
@@ -270,6 +280,6 @@
       </div>
     </footer>
 
-    <script type="module" src="/src/page.js"></script>
+    <script type="module" src="src/page.js"></script>
   </body>
 </html>

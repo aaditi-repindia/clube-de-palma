@@ -1,4 +1,3 @@
-import "./style.css"
 import { initNav } from "./modules/nav.js"
 import { initAmenitiesTabs } from "./modules/amenities-tabs.js"
 import { initEventsTimeline } from "./modules/events-timeline.js"

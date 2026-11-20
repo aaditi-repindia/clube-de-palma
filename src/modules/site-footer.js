@@ -4,10 +4,10 @@ const FOOTER_HTML = `
     <div class="container footer__inner">
       <div class="footer__content">
         <div class="footer__content-left">
-          <a class="footer__logo-wrap" href="/" aria-label="Clube de Palma home">
+          <a class="footer__logo-wrap" href="index.html" aria-label="Clube de Palma home">
             <img
               class="footer__logo"
-              src="/assets/logos/cdp-logo-white.png"
+              src="assets/logos/cdp-logo-white.png"
               alt="Clube de Palma"
               width="411"
               height="212"
@@ -30,10 +30,10 @@ const FOOTER_HTML = `
 
           <nav class="footer__nav-left" aria-label="Footer navigation">
             <ul class="footer__nav-list">
-              <li><a href="/about.html" class="footer__nav-link">About Us</a></li>
-              <li><a href="/amenities.html" class="footer__nav-link">Amenities</a></li>
-              <li><a href="/events.html" class="footer__nav-link">Events</a></li>
-              <li><a href="/contact.html" class="footer__nav-link">Contact Us</a></li>
+              <li><a href="about.html" class="footer__nav-link">About Us</a></li>
+              <li><a href="amenities.html" class="footer__nav-link">Amenities</a></li>
+              <li><a href="events.html" class="footer__nav-link">Events</a></li>
+              <li><a href="contact.html" class="footer__nav-link">Contact Us</a></li>
               <li><a href="https://dynamixclubedepalma.co.in/clubdepalma/membership/form" target="_blank" rel="noopener noreferrer" class="footer__nav-link">Apply for membership</a></li>
             </ul>
           </nav>

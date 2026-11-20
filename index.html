@@ -8,13 +8,23 @@
       name="description"
       content="Clube de Palma is a private recreational and social club in Bambolim, Goa — 40,000 sq.ft of community, sport, wellness, dining and family experiences."
     />
-    <link rel="icon" type="image/png" href="/assets/logos/favicon.png" />
+    <link rel="icon" type="image/png" href="assets/logos/favicon.png" />
     <meta property="og:title" content="Dynamix Club de Palma" />
     <meta
       property="og:description"
       content="A private world of recreation, connection and belonging on the Konkan Coast."
     />
-    <meta property="og:image" content="/assets/images/hero-pool-2x.jpg" />
+    <meta property="og:image" content="assets/images/hero-pool-2x.jpg" />
+      <link rel="stylesheet" href="src/style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "gsap": "./vendor/gsap/index.js",
+          "gsap/ScrollTrigger": "./vendor/gsap/ScrollTrigger.js",
+          "lenis": "./vendor/lenis/lenis.mjs"
+        }
+      }
+    </script>
   </head>
   <body data-page="home">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -23,17 +33,17 @@
 
     <header class="site-header is-portal-gated" id="site-header">
       <div class="site-header__inner">
-        <a class="brand" href="/" aria-label="Clube de Palma home">
+        <a class="brand" href="index.html" aria-label="Clube de Palma home">
           <img
             class="brand__mark brand__mark--light"
-            src="/assets/logos/cdp-logo-white.png"
+            src="assets/logos/cdp-logo-white.png"
             alt="Clube de Palma"
             width="411"
             height="212"
           />
           <img
             class="brand__mark brand__mark--dark"
-            src="/assets/logos/cdp-logo-transparent.png"
+            src="assets/logos/cdp-logo-transparent.png"
             alt=""
             width="411"
             height="212"
@@ -45,11 +55,11 @@
           <span class="sr-only">Menu</span>
         </button>
         <nav class="nav" id="site-nav" aria-label="Primary">
-          <a href="/about.html">About</a>
-          <a href="/amenities.html">Amenities</a>
-          <a href="/events.html">Events</a>
-          <a href="/contact.html">Contact</a>
-          <a class="btn nav__cta" href="/membership.html" data-magnetic>
+          <a href="about.html">About</a>
+          <a href="amenities.html">Amenities</a>
+          <a href="events.html">Events</a>
+          <a href="contact.html">Contact</a>
+          <a class="btn nav__cta" href="membership.html" data-magnetic>
             <span data-magnetic-inner>Apply for Membership</span>
           </a>
         </nav>
@@ -66,15 +76,15 @@
           <div class="hero__portal-top" data-portal-top>
             <a class="hero__portal-brand hero__portal-brand--dynamix" href="https://dynamixgroup.co.in" target="_blank" rel="noopener noreferrer" aria-label="Dynamix">
               <img
-                src="/assets/logos/dynamix-logo-white.svg"
+                src="assets/logos/dynamix-logo-white.svg"
                 alt="Dynamix"
                 width="80"
                 height="53"
               />
             </a>
-            <a class="hero__portal-brand hero__portal-brand--cdp" href="/" aria-label="Clube de Palma">
+            <a class="hero__portal-brand hero__portal-brand--cdp" href="index.html" aria-label="Clube de Palma">
               <img
-                src="/assets/logos/cdp-logo-white.png"
+                src="assets/logos/cdp-logo-white.png"
                 alt="Clube de Palma"
                 width="140"
                 height="72"
@@ -88,8 +98,8 @@
               <div class="hero__arch-shape" data-portal-shape>
                 <div class="hero__arch-media" data-portal-media>
                   <img
-                    src="/assets/images/hero-pool-2x.jpg"
-                    srcset="/assets/images/hero-pool.jpg 1672w, /assets/images/hero-pool-2x.jpg 1672w"
+                    src="assets/images/hero-pool-2x.jpg"
+                    srcset="assets/images/hero-pool.jpg 1672w, /assets/images/hero-pool-2x.jpg 1672w"
                     sizes="100vw"
                     alt="Clube de Palma swimming pool and clubhouse illuminated at dusk"
                     width="1672"
@@ -126,12 +136,12 @@
       <section class="section about" id="about" aria-labelledby="about-heading">
         <div class="about__content">
           <div class="about__reel" data-concept-reel aria-label="Moments at Clube de Palma">
-            <img class="about__reel-img is-active" src="/assets/images/concept/concept-beach.jpg" alt="Coastal tropical beach" width="200" height="200" />
-            <img class="about__reel-img" src="/assets/images/concept/concept-hotel.jpg" alt="Luxury resort courtyard and pool" width="200" height="200" />
-            <img class="about__reel-img" src="/assets/images/concept/concept-villa.jpg" alt="Private coastal villa architecture" width="200" height="200" />
-            <img class="about__reel-img" src="/assets/images/concept/concept-food.jpg" alt="Coastal gourmet dining" width="200" height="200" />
-            <img class="about__reel-img" src="/assets/images/concept/concept-relaxing.jpg" alt="Serene wellness and relaxation" width="200" height="200" />
-            <img class="about__reel-img" src="/assets/images/concept/concept-bar.jpg" alt="Sunset cocktail bar lounge" width="200" height="200" />
+            <img class="about__reel-img is-active" src="assets/images/concept/concept-beach.jpg" alt="Coastal tropical beach" width="200" height="200" />
+            <img class="about__reel-img" src="assets/images/concept/concept-hotel.jpg" alt="Luxury resort courtyard and pool" width="200" height="200" />
+            <img class="about__reel-img" src="assets/images/concept/concept-villa.jpg" alt="Private coastal villa architecture" width="200" height="200" />
+            <img class="about__reel-img" src="assets/images/concept/concept-food.jpg" alt="Coastal gourmet dining" width="200" height="200" />
+            <img class="about__reel-img" src="assets/images/concept/concept-relaxing.jpg" alt="Serene wellness and relaxation" width="200" height="200" />
+            <img class="about__reel-img" src="assets/images/concept/concept-bar.jpg" alt="Sunset cocktail bar lounge" width="200" height="200" />
           </div>
           <h2 id="about-heading" class="about__statement">
             Clube de Palma is a private member’s club on the Konkan Coast,
@@ -233,7 +243,7 @@
           <div class="membership-promo__panel membership-promo__panel--media">
             <img
               class="membership-promo__img"
-              src="/assets/images/membership-1.jpg"
+              src="assets/images/membership-1.jpg"
               alt="Clube de Palma private members lifestyle"
               loading="lazy"
               decoding="async"
@@ -276,7 +286,7 @@
               </div>
               <div class="journal-card__media journal-card__media--1">
                 <img
-                  src="/assets/images/amenity-banquet.jpg"
+                  src="assets/images/amenity-banquet.jpg"
                   alt="Members evening gathering at Clube de Palma"
                   loading="lazy"
                   decoding="async"
@@ -299,7 +309,7 @@
               </div>
               <div class="journal-card__media journal-card__media--2">
                 <img
-                  src="/assets/images/amenity-pool.jpg"
+                  src="assets/images/amenity-pool.jpg"
                   alt="Courtyard pool gathering at Clube de Palma"
                   loading="lazy"
                   decoding="async"
@@ -322,7 +332,7 @@
               </div>
               <div class="journal-card__media journal-card__media--3">
                 <img
-                  src="/assets/images/concept/concept-food.jpg"
+                  src="assets/images/concept/concept-food.jpg"
                   alt="Coastal culinary tastings at Clube de Palma"
                   loading="lazy"
                   decoding="async"
@@ -345,7 +355,7 @@
               </div>
               <div class="journal-card__media journal-card__media--4">
                 <img
-                  src="/assets/images/concept/concept-relaxing.jpg"
+                  src="assets/images/concept/concept-relaxing.jpg"
                   alt="Wellness retreats and sunset relaxation at Clube de Palma"
                   loading="lazy"
                   decoding="async"
@@ -367,7 +377,7 @@
               <a class="footer__logo-wrap" href="#top" aria-label="Clube de Palma home">
                 <img
                   class="footer__logo"
-                  src="/assets/logos/cdp-logo-white.png"
+                  src="assets/logos/cdp-logo-white.png"
                   alt="Clube de Palma"
                   width="411"
                   height="212"
@@ -470,6 +480,6 @@
       <span class="site-cursor__label"></span>
     </div>
 
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="src/main.js"></script>
   </body>
 </html>
