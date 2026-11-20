@@ -58,7 +58,6 @@ const FOOTER_HTML = `
           <ul class="footer__nav-list footer__nav-list--socials">
             <li><a href="https://www.instagram.com/dynamixgroup/" target="_blank" rel="noopener noreferrer" class="footer__nav-link">Instagram</a></li>
             <li><a href="https://www.facebook.com/thedynamixgroup" target="_blank" rel="noopener noreferrer" class="footer__nav-link">Facebook</a></li>
-            <li><a href="https://www.linkedin.com/company/14441348/" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a></li>
             <li><a href="https://wa.me/919699751872" target="_blank" rel="noopener noreferrer" class="footer__nav-link">Whats App</a></li>
           </ul>
         </div>

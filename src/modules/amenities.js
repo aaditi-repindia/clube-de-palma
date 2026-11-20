@@ -19,7 +19,10 @@ export function initAmenities() {
 
   track.innerHTML = amenities
     .map(
-      (item, index) => `
+      (item, index) => {
+        const isDining = index < 3 || ["o bar azul", "sabores", "café verde", "cafe verde"].includes(item.name.toLowerCase())
+        const ctaLabel = isDining ? "Reserve a Table" : "Book Now"
+        return `
       <article class="amenity-card" data-amenity-card data-index="${index}">
         <div class="amenity-card__fold" data-amenity-fold>
           <div class="amenity-card__media">
@@ -29,10 +32,17 @@ export function initAmenities() {
           <div class="amenity-card__content">
             <h3 class="amenity-card__title">${item.name}</h3>
             <span class="amenity-card__rule" aria-hidden="true"></span>
-            <p class="amenity-card__blurb">${item.blurb}</p>
+            <div class="amenity-card__drawer">
+              <p class="amenity-card__blurb">${item.blurb}</p>
+              <a class="amenity-card__cta" href="contact.html" aria-label="${ctaLabel} for ${item.name}">
+                <span>${ctaLabel}</span>
+                <span class="btn__arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
           </div>
         </div>
-      </article>`,
+      </article>`
+      },
     )
     .join("")
 
@@ -178,7 +188,8 @@ export function initAmenities() {
 
   if (!canHover) {
     cards.forEach((card) => {
-      card.addEventListener("click", () => {
+      card.addEventListener("click", (e) => {
+        if (e.target.closest("a, button")) return
         const index = Number(card.dataset.index)
         if (index !== active) {
           scrollToProgress(progressForIndex(index))

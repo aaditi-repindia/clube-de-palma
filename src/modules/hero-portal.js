@@ -21,8 +21,12 @@ export function initHeroPortal() {
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
+  // Initial state: arch has not opened yet
+  window.__archOpened = false
+
   // If user prefers reduced motion, show full banner content immediately
   if (reduced) {
+    window.__archOpened = true
     if (header) {
       header.classList.remove("is-portal-gated")
       gsap.set(header, { autoAlpha: 1, y: 0, clearProps: "all" })
@@ -69,6 +73,16 @@ export function initHeroPortal() {
     if (!portalImage || !arch) return
     const currentArchScale = gsap.getProperty(arch, "scale") || 1
     const progress = tl ? tl.progress() : 0
+
+    // Broadcast arch state: arch is opened once scrub progress reaches 0.52
+    const isArchOpened = progress >= 0.52
+    if (window.__archOpened !== isArchOpened) {
+      window.__archOpened = isArchOpened
+      window.dispatchEvent(
+        new CustomEvent("arch-state-change", { detail: { opened: isArchOpened } })
+      )
+    }
+
     // Arch expansion phase runs from progress 0 to 0.54
     const p = Math.min(Math.max(progress / 0.54, 0), 1)
     // Desired global scale: subtle, imperceptible 2% natural camera perspective (1.00 -> 1.02),
@@ -126,6 +140,15 @@ export function initHeroPortal() {
       scrub: 0.25,
       invalidateOnRefresh: true,
       pinSpacing: true,
+      onUpdate: (self) => {
+        const isArchOpened = self.progress >= 0.48
+        if (window.__archOpened !== isArchOpened) {
+          window.__archOpened = isArchOpened
+          window.dispatchEvent(
+            new CustomEvent("arch-state-change", { detail: { opened: isArchOpened } })
+          )
+        }
+      },
     },
     onUpdate: updatePortalImageScale,
   })
@@ -196,9 +219,13 @@ export function initHeroPortal() {
         ease: "power2.out",
         onStart: () => {
           header.style.pointerEvents = "auto"
+          window.__archOpened = true
+          window.dispatchEvent(new CustomEvent("arch-state-change", { detail: { opened: true } }))
         },
         onReverseComplete: () => {
           header.style.pointerEvents = "none"
+          window.__archOpened = false
+          window.dispatchEvent(new CustomEvent("arch-state-change", { detail: { opened: false } }))
         },
       },
       0.52,

@@ -1,4 +1,6 @@
 /* Dynamix Club de Palma — design tokens extracted from live brand */
+@import url("https://use.typekit.net/pff5hht.css");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 @font-face {
   font-family: "Seasons";
@@ -9,14 +11,13 @@
 }
 
 /*
-  REQUIRED BRAND FONTS (files not supplied in repo):
-  - TFarrow Light → place as assets/fonts/TFarrow-Light.woff2
-  - Optima → place as assets/fonts/Optima.woff2
-  Until then: Seasons (live display) + Optima system stack.
+  BRAND FONTS:
+  - The Seasons (Adobe Typekit): headings / display
+  - Open Sans (Google Fonts): body / UI
 */
 @font-face {
   font-family: "TFarrow Light";
-  src: url("../../assets/fonts/TFArrow-Light.ttf") format("truetype");
+  src: local("the-seasons");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -24,19 +25,7 @@
 
 @font-face {
   font-family: "Optima";
-  src:
-    url("../../assets/fonts/Optima.ttf") format("truetype"),
-    url("../../assets/fonts/Optima-Medium.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Optima";
-  src: url("../../assets/fonts/Optima-Italic.ttf") format("truetype");
-  font-weight: 400;
-  font-style: italic;
+  src: local("Open Sans"), local("Open-sans");
   font-display: swap;
 }
 
@@ -62,8 +51,8 @@
   --color-overlay: rgba(5, 5, 5, 0.42);
 
   /* Typography */
-  --font-display: "TFarrow Light", "Seasons", Georgia, "Times New Roman", serif;
-  --font-body: Optima, Candara, "Segoe UI", "Lucida Grande", sans-serif;
+  --font-display: "the-seasons", sans-serif;
+  --font-body: "Open Sans", "Open-sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   --text-hero: clamp(2.75rem, 6.5vw, 5.75rem);
   --text-display: clamp(2.25rem, 4.8vw, 4.25rem);

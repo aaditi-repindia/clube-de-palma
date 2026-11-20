@@ -4,6 +4,7 @@ import { initEventsTimeline } from "./modules/events-timeline.js"
 import { initContact } from "./modules/contact.js"
 import { initFooterReveal } from "./modules/motion.js"
 import { mountSiteFooter } from "./modules/site-footer.js"
+import { initStickyCallback } from "./modules/sticky-callback.js"
 
 mountSiteFooter()
 initNav()
@@ -11,3 +12,4 @@ initAmenitiesTabs()
 initEventsTimeline()
 initContact()
 initFooterReveal()
+initStickyCallback()

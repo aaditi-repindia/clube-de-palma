@@ -23,6 +23,8 @@ const checkIcon = `
 const cardMarkup = (item, index) => {
   const layout = index % 2 === 0 ? "image-left" : "image-right"
   const features = Array.isArray(item.features) ? item.features : []
+  const isDining = ["o bar azul", "sabores", "café verde", "cafe verde"].includes(item.name.toLowerCase())
+  const ctaLabel = isDining ? "Reserve a Table" : "Book Now"
 
   return `
     <article class="amenities-panel amenities-panel--${layout}" data-amenities-panel>
@@ -55,6 +57,12 @@ const cardMarkup = (item, index) => {
                 </ul>`
               : ""
           }
+          <div class="amenities-panel__actions">
+            <a class="amenities-panel__cta" href="contact.html" aria-label="${ctaLabel} for ${item.name}">
+              <span>${ctaLabel}</span>
+              <span class="btn__arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
         </div>
       </div>
     </article>
