@@ -5,6 +5,7 @@ import { initReveals } from "./reveals.js"
 import { initMagnetic } from "./magnetic.js"
 import { initCursor } from "./cursor.js"
 import { initPinnedStories } from "./pinned.js"
+import { initMarquee } from "./marquee.js"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -110,6 +111,7 @@ export function initMotion() {
   initSmoothScroll()
   initCursor()
   initMagnetic()
+  initMarquee()
   initReveals()
   initMembershipParallax()
   initFooterReveal()
