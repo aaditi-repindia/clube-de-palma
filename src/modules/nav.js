@@ -84,11 +84,25 @@ export function initNav() {
     ScrollTrigger.addEventListener("scroll", setSolid)
   }
 
+  const mobileNavQuery = window.matchMedia("(max-width: 980px)")
+  let overlay = document.querySelector(".nav-overlay")
+
+  if (!overlay) {
+    overlay = document.createElement("div")
+    overlay.className = "nav-overlay"
+    overlay.setAttribute("aria-hidden", "true")
+    document.body.appendChild(overlay)
+  }
+
   const setNavOpen = (open) => {
-    nav?.classList.toggle("is-open", open)
-    document.body.classList.toggle("nav-open", open)
-    document.body.classList.toggle("is-locked", open)
-    toggle?.setAttribute("aria-expanded", String(open))
+    const shouldOpen = Boolean(open) && mobileNavQuery.matches
+    nav?.classList.toggle("is-open", shouldOpen)
+    overlay?.classList.toggle("is-visible", shouldOpen)
+    document.body.classList.toggle("nav-open", shouldOpen)
+    document.body.classList.toggle("is-locked", shouldOpen)
+    toggle?.setAttribute("aria-expanded", String(shouldOpen))
+    if (shouldOpen) header?.classList.add("is-solid")
+    else setSolid()
   }
 
   toggle?.addEventListener("click", (event) => {
@@ -96,11 +110,22 @@ export function initNav() {
     setNavOpen(!nav?.classList.contains("is-open"))
   })
 
+  overlay?.addEventListener("click", () => setNavOpen(false))
+
   window.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && nav?.classList.contains("is-open")) {
       setNavOpen(false)
     }
   })
+
+  const onViewportChange = () => {
+    if (!mobileNavQuery.matches) setNavOpen(false)
+  }
+  if (typeof mobileNavQuery.addEventListener === "function") {
+    mobileNavQuery.addEventListener("change", onViewportChange)
+  } else {
+    mobileNavQuery.addListener(onViewportChange)
+  }
 
   nav?.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => setNavOpen(false))

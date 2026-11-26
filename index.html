@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap">
-<link rel="stylesheet" href="src/style.css" />
+<link rel="stylesheet" href="src/style.css?v=video-space1" />
     <script type="importmap">
       {
         "imports": {
@@ -159,7 +159,7 @@
             </a>
           </div>
 
-          <!-- Expandable Walkthrough Video (starts clipped to the anchor, smoothly expands to 100vw x 100vh on scroll) -->
+          <!-- Walkthrough video — full width, intrinsic aspect ratio -->
           <div class="about__walkthrough" data-walkthrough>
             <div class="about__walkthrough-frame" data-walkthrough-frame>
               <video
@@ -565,6 +565,7 @@
       <span class="site-cursor__label"></span>
     </div>
 
+    <script type="module" src="src/main.js?v=video-ratio1"></script>
     <script type="module" src="src/main.js?v=fixed1"></script>
   </body>
 </html>
