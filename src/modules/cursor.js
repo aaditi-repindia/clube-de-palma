@@ -13,11 +13,26 @@ export function initCursor() {
   }
 
   document.documentElement.classList.add("has-custom-cursor")
+  cursor.hidden = false
   const label = cursor.querySelector(".site-cursor__label")
+  let armed = false
 
   gsap.set(cursor, { xPercent: -50, yPercent: -50 })
 
+  const show = () => {
+    if (!armed) {
+      armed = true
+      cursor.classList.add("is-visible")
+    }
+  }
+
+  const hide = () => {
+    armed = false
+    cursor.classList.remove("is-visible")
+  }
+
   window.addEventListener("pointermove", (event) => {
+    show()
     gsap.to(cursor, {
       x: event.clientX,
       y: event.clientY,
@@ -26,6 +41,9 @@ export function initCursor() {
       overwrite: "auto",
     })
   })
+
+  document.documentElement.addEventListener("pointerleave", hide)
+  window.addEventListener("blur", hide)
 
   const setState = (state, text = "") => {
     cursor.dataset.state = state || ""
@@ -43,6 +61,7 @@ export function initCursor() {
         return
       }
       cursor.hidden = false
+      show()
       setState(el.dataset.cursor, el.dataset.cursorLabel || "")
     }
 

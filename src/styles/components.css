@@ -375,7 +375,13 @@
 
 /* ——— Breadcrumbs ——— */
 .breadcrumbs {
-  margin-bottom: clamp(0.75rem, 1.6vw, 1.15rem);
+  margin: 0 0 var(--space-heading);
+}
+
+/* Avoid double spacing when the parent already uses heading gap */
+.amenities-page__heading .breadcrumbs,
+.about-hero__copy .breadcrumbs {
+  margin-bottom: 0;
 }
 
 .breadcrumbs__list {

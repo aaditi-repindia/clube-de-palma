@@ -57,7 +57,33 @@ h4 {
   font-weight: 300;
   color: var(--color-title);
   line-height: var(--leading-tight);
-  margin: 0;
+  margin: 0 0 var(--space-heading);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-h1);
+}
+
+h2 {
+  font-size: var(--text-h2);
+}
+
+h3 {
+  font-size: var(--text-h3);
+}
+
+h4 {
+  font-size: var(--text-h4);
+}
+
+h1 + p,
+h2 + p,
+h3 + p,
+h4 + p,
+h1 + .lead,
+h2 + .lead {
+  margin-top: 0;
 }
 
 p {
@@ -119,7 +145,7 @@ ol {
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--color-terracotta);
-  margin-bottom: var(--space-sm);
+  margin: 0 0 var(--space-eyebrow);
 }
 
 .amenities .eyebrow,
@@ -128,7 +154,7 @@ ol {
 }
 
 .lead {
-  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  font-size: var(--text-lead);
   color: var(--color-heading);
   max-width: var(--narrow);
 }
