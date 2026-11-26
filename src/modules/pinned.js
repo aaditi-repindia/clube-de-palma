@@ -4,9 +4,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 gsap.registerPlugin(ScrollTrigger)
 
 export function initPinnedStories() {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   const about = document.querySelector(".section.about")
 
   if (about) {
+    const stage = about.querySelector("[data-about-stage]")
+    const content = about.querySelector("[data-about-content]")
+    const cta = about.querySelector(".about__cta")
+    const walkthrough = about.querySelector("[data-walkthrough]")
     const video = about.querySelector("[data-walkthrough-video]")
 
     if (video) {
@@ -25,14 +30,122 @@ export function initPinnedStories() {
           window.addEventListener("touchstart", onFirstInteract, { passive: true, once: true })
         })
       }
+    }
 
-      // Intrinsic ratio can settle after metadata; refresh triggers so layout stays accurate
-      const refreshLayout = () => ScrollTrigger.refresh()
-      if (video.readyState >= 1) {
-        refreshLayout()
-      } else {
-        video.addEventListener("loadedmetadata", refreshLayout, { once: true })
-      }
+    if (walkthrough) {
+      const mm = gsap.matchMedia()
+
+      // Desktop: video starts framed below CTA (no shadow) and expands to full screen on scroll
+      mm.add("(min-width: 721px)", () => {
+        const getRestingMetrics = () => {
+          const sRect = (stage || about).getBoundingClientRect()
+          const cRect = (cta || content).getBoundingClientRect()
+          const top = Math.round(cRect.bottom - sRect.top + 120)
+          const availableH = Math.max(200, Math.round(sRect.bottom - (sRect.top + top) - 24))
+          return { top, height: availableH }
+        }
+
+        const applyResting = () => {
+          const metrics = getRestingMetrics()
+          gsap.set(walkthrough, {
+            top: metrics.top,
+            height: metrics.height,
+            width: "min(1180px, 86vw)",
+            borderRadius: 0,
+            boxShadow: "none",
+          })
+        }
+
+        applyResting()
+
+        if (!reduced) {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: about,
+              start: "top top",
+              end: "+=260%",
+              pin: true,
+              pinSpacing: true,
+              scrub: 0.35,
+              invalidateOnRefresh: true,
+            },
+          })
+
+          // 1. Text fades out smoothly and drifts up
+          if (content) {
+            tl.fromTo(
+              content,
+              { autoAlpha: 1, y: 0 },
+              {
+                autoAlpha: 0,
+                y: -40,
+                duration: 0.28,
+                ease: "power1.inOut",
+              },
+              0.06,
+            )
+          }
+
+          // 2. Video expands from its card frame to 100vw x 100vh full screen
+          tl.to(
+            walkthrough,
+            {
+              top: 0,
+              height: "100%",
+              width: "100%",
+              borderRadius: 0,
+              boxShadow: "none",
+              duration: 0.58,
+              ease: "power1.inOut",
+            },
+            0.08,
+          )
+
+          // 3. Subtle camera aperture scale on video
+          if (video) {
+            tl.fromTo(
+              video,
+              { scale: 1.06 },
+              { scale: 1.0, duration: 0.58, ease: "power1.out" },
+              0.08,
+            )
+          }
+
+          // 4. Hold full screen briefly before transitioning to next section
+          tl.to({}, { duration: 0.34 }, 0.66)
+
+          const onRefresh = () => {
+            const st = tl.scrollTrigger
+            if (!st || st.progress <= 0.02) {
+              applyResting()
+            }
+          }
+          ScrollTrigger.addEventListener("refresh", onRefresh)
+
+          return () => {
+            ScrollTrigger.removeEventListener("refresh", onRefresh)
+            gsap.set([walkthrough, content, video].filter(Boolean), { clearProps: "all" })
+          }
+        }
+
+        return () => {
+          gsap.set(walkthrough, { clearProps: "all" })
+        }
+      })
+
+      // Mobile: keep static intrinsic aspect-ratio video without fullscreen scroll expansion
+      mm.add("(max-width: 720px)", () => {
+        if (!video) return undefined
+        const refreshLayout = () => ScrollTrigger.refresh()
+        if (video.readyState >= 1) {
+          refreshLayout()
+        } else {
+          video.addEventListener("loadedmetadata", refreshLayout, { once: true })
+        }
+        return () => {
+          video.removeEventListener("loadedmetadata", refreshLayout)
+        }
+      })
     }
   }
 

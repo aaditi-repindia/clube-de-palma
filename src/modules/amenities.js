@@ -43,7 +43,6 @@ export function initAmenities() {
           </div>
           <div class="amenity-card__content">
             <h3 class="amenity-card__title">${item.name}</h3>
-            <span class="amenity-card__rule" aria-hidden="true"></span>
             <div class="amenity-card__drawer">
               <p class="amenity-card__blurb">${item.blurb}</p>
               <a class="amenity-card__cta" href="contact.html" aria-label="${ctaLabel} for ${item.name}">

@@ -441,7 +441,9 @@
 
 /* Avoid double spacing when the parent already uses heading gap */
 .amenities-page__heading .breadcrumbs,
-.about-hero__copy .breadcrumbs {
+.about-hero__copy .breadcrumbs,
+.contact-page__form-intro .breadcrumbs,
+.page-shell__inner .breadcrumbs {
   margin-bottom: 0;
 }
 

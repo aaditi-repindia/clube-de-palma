@@ -107,14 +107,36 @@
   }
 }
 
+/* ——— Shared Section Headings (consistent across all pages) ——— */
+.amenities__intro h2,
+.membership-promo__title,
+.gallery__head h2,
+.journal__heading,
+.footer__reveal-heading,
+.events-page__intro h1,
+.contact-page__touch-title,
+.contact-page__form-intro h1,
+.page-shell__inner h1,
+.about-hero__copy h1,
+.about-story__intro h2,
+.amenities-page__title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--text-display);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+  text-transform: capitalize;
+}
+
 /* ——— About / Concept & Walkthrough Video ——— */
 .section.about {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   background: var(--color-cream);
-  height: auto;
-  min-height: 0;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 44rem;
   width: 100%;
   display: block;
   padding: 0;
@@ -122,18 +144,16 @@
 }
 
 .about__stage {
-  --about-video-space: clamp(2.5rem, 6vw, 4rem);
   position: relative;
   width: 100%;
-  height: auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   padding-top: 120px; /* 120px space above the Big para */
-  padding-bottom: 0;
   box-sizing: border-box;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .about__content {
@@ -158,9 +178,15 @@
   font-size: clamp(1.5rem, 3vw, 2.75rem);
   line-height: 1.18;
   letter-spacing: 0.01em;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--color-ink);
   text-wrap: balance;
+}
+
+@media (max-width: 1366px) {
+  .about__statement {
+    font-size: clamp(1.25rem, 0.9rem + 1.25vw, 2.05rem);
+  }
 }
 
 .about__support {
@@ -173,6 +199,12 @@
   line-height: var(--leading-body);
   color: var(--color-body);
   text-wrap: balance;
+}
+
+@media (max-width: 1366px) {
+  .about__support {
+    font-size: var(--text-lead);
+  }
 }
 
 .about__cta {
@@ -217,40 +249,35 @@
   transform: translateX(4px);
 }
 
-/* Walkthrough video: full width, intrinsic aspect ratio (no 100vh / cover crop) */
+/* Walkthrough video: desktop starts framed (no shadow) and expands to 100vw x 100vh on scroll */
 .about__walkthrough {
-  position: relative;
-  left: auto;
-  transform: none;
-  width: min(1180px, 100%);
-  max-width: 100%;
-  height: auto;
-  margin-block: var(--about-video-space);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1180px, 86vw);
   z-index: 2;
   pointer-events: auto;
   overflow: hidden;
   border-radius: 0;
-  box-shadow: 0 24px 60px -12px rgba(18, 30, 23, 0.22);
+  box-shadow: none;
+  will-change: width, height, top;
 }
 
 .about__walkthrough-frame {
   position: relative;
   width: 100%;
-  height: auto;
+  height: 100%;
   overflow: hidden;
   border-radius: 0;
-  line-height: 0;
 }
 
 .about__walkthrough-video {
   width: 100%;
-  height: auto;
-  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  object-fit: contain;
-  object-position: center;
   border-radius: 0;
-  vertical-align: top;
+  will-change: transform;
 }
 
 .about__walkthrough-scrim {
@@ -274,8 +301,10 @@
 
   .about__stage {
     --about-video-space: clamp(2rem, 5vw, 3rem);
+    height: auto;
     padding-top: clamp(60px, 10vh, 80px);
     padding-bottom: 0;
+    overflow: visible;
   }
 
   .about__content {
@@ -292,16 +321,35 @@
   }
 
   .about__walkthrough {
+    position: relative;
+    left: auto;
+    transform: none;
     width: 100%;
+    max-width: 100%;
+    height: auto;
     margin-block: var(--about-video-space);
     border-radius: 0;
     box-shadow: none;
+    will-change: auto;
+  }
+
+  .about__walkthrough-frame {
+    height: auto;
+    line-height: 0;
+  }
+
+  .about__walkthrough-video {
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: center;
+    vertical-align: top;
+    will-change: auto;
   }
 }
 
 /* ——— Amenities discovery ——— */
 .amenities {
-  --amenities-chrome: calc(var(--nav-h) + clamp(11.5rem, 20vh, 15rem));
   background: var(--color-cream);
   overflow: visible;
   padding-block: 0;
@@ -316,8 +364,8 @@
   flex-direction: column;
   justify-content: flex-start;
   gap: 0;
-  padding-top: calc(var(--nav-h) + clamp(0.5rem, 1.2vh, 0.95rem));
-  padding-bottom: clamp(0.85rem, 1.8vh, 1.35rem);
+  padding-top: calc(var(--nav-h) + clamp(0.65rem, 1.2vh, 1.1rem));
+  padding-bottom: clamp(4.25rem, 6.5vh, 5rem);
   box-sizing: border-box;
   background: var(--color-cream);
   overflow-x: clip;
@@ -332,16 +380,14 @@
   justify-content: space-between;
   gap: clamp(1rem, 2vw, 2rem);
   flex-shrink: 0;
-  margin-bottom: clamp(1.25rem, 1.8vw, 2rem);
+  margin-bottom: clamp(0.9rem, 1.5vh, 1.5rem);
 }
 
 .amenities__intro h2 {
-  font-size: clamp(1.85rem, 4.2vw, 4.25rem);
+  margin: 0;
   max-width: none;
   white-space: nowrap;
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  color: var(--color-pure);
+  color: var(--color-ink);
 }
 
 .amenities__controls {
@@ -375,12 +421,13 @@
 }
 
 .amenities-carousel {
+  container-type: size;
   position: relative;
   width: 100%;
   flex: 1 1 auto;
-  min-height: 0;
+  min-height: 18rem;
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   perspective: 2200px;
   cursor: grab;
   user-select: none;
@@ -393,14 +440,16 @@
 
 .amenities-carousel__viewport {
   width: 100%;
+  height: 100%;
   overflow-x: clip;
   overflow-y: visible;
-  padding-block: 0.35rem 0.85rem;
+  padding-block: 0;
 }
 
 .amenities-carousel__track {
   display: flex;
   align-items: stretch;
+  height: 100%;
   gap: clamp(1rem, 0.55rem + 0.85vw, 1.75rem);
   width: max-content;
   will-change: transform;
@@ -412,9 +461,8 @@
 .amenity-card {
   position: relative;
   flex: 0 0 auto;
-  width: min(78vw, 26.5rem, calc((100dvh - var(--amenities-chrome)) * 3 / 4));
-  aspect-ratio: 3 / 4;
-  max-height: calc(100dvh - var(--amenities-chrome));
+  width: min(85vw, calc(100cqh * 3 / 4));
+  height: min(100cqh, calc(85vw * 4 / 3));
   transform-style: preserve-3d;
 }
 
@@ -473,20 +521,11 @@
   margin: 0;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(1.7rem, 2.6vw, 2.35rem);
-  line-height: 1.02;
+  font-size: clamp(1.125rem, 0.5625rem + 1.25vw, 1.875rem);
+  line-height: 1.08;
   letter-spacing: 0.01em;
   color: #ffffff;
   text-shadow: 0 10px 28px rgba(5, 5, 5, 0.35);
-}
-
-.amenity-card__rule {
-  display: block;
-  width: 2.4rem;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.85);
-  margin-top: 0.55rem;
-  flex-shrink: 0;
 }
 
 .amenity-card__drawer {
@@ -598,32 +637,20 @@
 }
 
 @media (min-width: 1440px) {
-  .amenities {
-    --amenities-chrome: calc(var(--nav-h) + clamp(10rem, 16vh, 13rem));
-  }
-
   .amenities__frame {
-    padding-top: calc(var(--nav-h) + clamp(1rem, 1.8vw, 1.75rem));
-    padding-bottom: clamp(1.5rem, 3vh, 2.75rem);
+    padding-top: calc(var(--nav-h) + clamp(0.85rem, 1.5vw, 1.5rem));
+    padding-bottom: clamp(4.5rem, 6.5vh, 5.25rem);
   }
 
   .amenities__intro {
-    margin-bottom: clamp(1.5rem, 2vw, 2.25rem);
-  }
-
-  .amenities-carousel {
-    align-items: flex-start;
+    margin-bottom: clamp(1.15rem, 1.8vw, 1.75rem);
   }
 }
 
 @media (max-width: 900px) {
-  .amenities {
-    --amenities-chrome: calc(var(--nav-h) + clamp(11rem, 22vh, 14.5rem));
-  }
-
   .amenities__frame {
     min-height: 32rem;
-    padding-bottom: clamp(0.75rem, 1.5vh, 1.25rem);
+    padding-bottom: clamp(1rem, 2vh, 1.5rem);
   }
 
   .amenities__intro {
@@ -632,7 +659,7 @@
     align-items: end;
     column-gap: 1rem;
     row-gap: 0.75rem;
-    margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
+    margin-bottom: clamp(1rem, 1.8vw, 1.5rem);
   }
 
   .amenities__intro > :first-child {
@@ -653,16 +680,12 @@
     z-index: 2;
   }
 
-  .amenity-card {
-    width: min(80vw, 24rem, calc((100dvh - var(--amenities-chrome)) * 3 / 4));
+  .amenities-carousel__track {
+    align-items: center;
   }
 }
 
 @media (max-width: 640px) {
-  .amenities {
-    --amenities-chrome: calc(var(--nav-h) + clamp(11.5rem, 24vh, 15rem));
-  }
-
   .amenities__intro {
     grid-template-columns: minmax(0, 1fr) auto;
   }
@@ -670,10 +693,6 @@
   .amenities__nav {
     width: 2.5rem;
     height: 2.5rem;
-  }
-
-  .amenity-card {
-    width: min(85vw, 20rem, calc((100dvh - var(--amenities-chrome)) * 3 / 4));
   }
 
   .amenities-carousel__track {
@@ -778,11 +797,6 @@
 
 .membership-promo__title {
   margin: 0;
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: var(--text-display);
-  line-height: 1.05;
-  letter-spacing: 0.01em;
   color: #ffffff;
 }
 
@@ -894,7 +908,7 @@
 
 .gallery__head h2 {
   margin: 0;
-  font-size: var(--text-display);
+  color: var(--color-ink);
 }
 
 .gallery__hint {
@@ -991,22 +1005,17 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: var(--space-heading);
-  margin-bottom: var(--space-heading);
+  margin-bottom: clamp(1.5rem, 2.5vw, 2.25rem);
 }
 
 .journal__copy {
   max-width: 48rem;
-  display: grid;
-  gap: var(--space-heading);
+  display: block;
 }
 
 .journal__heading {
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: var(--text-display);
-  line-height: var(--leading-tight);
-  color: var(--color-title);
+  margin: 0 0 var(--space-heading);
+  color: var(--color-ink);
 }
 
 .journal__subheading {
@@ -1074,7 +1083,7 @@
   font-weight: 300;
   font-size: var(--text-h3);
   line-height: 1.15;
-  color: var(--color-title);
+  color: var(--color-ink);
   text-wrap: balance;
   letter-spacing: -0.01em;
 }
@@ -1220,13 +1229,7 @@
 
 .events-page__intro h1 {
   margin: 0 0 var(--space-heading);
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: var(--text-h1);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-  color: var(--color-title);
+  color: var(--color-ink);
   text-wrap: balance;
 }
 
@@ -1334,7 +1337,7 @@
   font-size: var(--text-h3);
   line-height: 1.15;
   letter-spacing: -0.02em;
-  color: var(--color-title);
+  color: var(--color-ink);
   text-wrap: balance;
 }
 
@@ -1482,12 +1485,6 @@
 
 .contact-page__touch-title {
   margin: 0;
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: var(--text-h2);
-  line-height: 1;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
   color: var(--color-pure);
 }
 
@@ -1564,13 +1561,7 @@ a.contact-page__detail-value:focus-visible {
 
 .contact-page__form-intro h1 {
   margin: 0;
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: var(--text-h1);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  color: var(--color-title);
+  color: var(--color-ink);
   max-width: 14ch;
 }
 
@@ -1736,10 +1727,13 @@ a.contact-page__detail-value:focus-visible {
   max-width: 40rem;
 }
 
+.page-shell__inner .eyebrow {
+  margin-bottom: 0;
+}
+
 .page-shell__inner h1 {
   margin: 0;
-  font-size: var(--text-h2);
-  color: var(--color-title);
+  color: var(--color-ink);
 }
 
 .page-shell__inner p {
@@ -1812,13 +1806,8 @@ a.contact-page__detail-value:focus-visible {
 
 .about-hero__copy h1 {
   margin: 0;
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: var(--text-display);
-  line-height: var(--leading-tight);
   color: var(--color-pure);
-  max-width: 14ch;
-  text-transform: uppercase;
+  max-width: 16ch;
   text-shadow: 0 12px 36px rgba(5, 5, 5, 0.35);
 }
 
@@ -1861,11 +1850,7 @@ a.contact-page__detail-value:focus-visible {
   margin: 0;
   display: grid;
   gap: 0.12em;
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: var(--text-h1);
-  line-height: var(--leading-tight);
-  color: var(--color-title);
+  color: var(--color-ink);
 }
 
 .about-story__intro h2 + p {
@@ -1922,7 +1907,7 @@ a.contact-page__detail-value:focus-visible {
   font-weight: 300;
   font-size: var(--text-h3);
   line-height: var(--leading-snug);
-  color: var(--color-title);
+  color: var(--color-ink);
 }
 
 .about-story__card p {
@@ -2044,13 +2029,7 @@ a.contact-page__detail-value:focus-visible {
 
 .amenities-page__title {
   margin: 0;
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: var(--text-h1);
-  line-height: 0.98;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-  color: var(--color-title);
+  color: var(--color-ink);
 }
 
 .amenities-page__lead {
@@ -2099,12 +2078,12 @@ a.contact-page__detail-value:focus-visible {
 
 .amenities-tabs__tab:hover,
 .amenities-tabs__tab:focus-visible {
-  color: var(--color-title);
+  color: var(--color-ink);
   outline: none;
 }
 
 .amenities-tabs__tab.is-active {
-  color: var(--color-title);
+  color: var(--color-ink);
 }
 
 .amenities-tabs__tab.is-active::after {
@@ -2210,7 +2189,7 @@ a.contact-page__detail-value:focus-visible {
   font-size: var(--text-h2);
   line-height: 1.1;
   letter-spacing: -0.02em;
-  color: var(--color-title);
+  color: var(--color-ink);
   text-wrap: balance;
 }
 
@@ -2785,12 +2764,7 @@ a.contact-page__detail-value:focus-visible {
 
 .footer__reveal-heading {
   margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--text-display);
-  font-weight: 300;
-  line-height: 1.05;
   color: #ffffff;
-  letter-spacing: -0.02em;
   text-wrap: balance;
   text-shadow: 0 4px 28px rgba(0, 0, 0, 0.5);
 }
@@ -2886,8 +2860,14 @@ a.contact-page__detail-value:focus-visible {
   }
 
   .footer__wordmark-text {
-    font-size: clamp(2.4rem, 11.8vw, 4.2rem);
+    font-size: clamp(2.1rem, 10.5vw, 3.6rem);
     letter-spacing: -0.01em;
+  }
+}
+
+@media (max-width: 1366px) and (min-width: 769px) {
+  .footer__wordmark-text {
+    font-size: clamp(2.4rem, 10.5vw, 9.5rem);
   }
 }
 
