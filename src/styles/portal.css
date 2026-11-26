@@ -7,8 +7,9 @@
   --portal-frame-deep: #a25d50;
   --portal-line: #a25d50;
   --portal-glow: transparent;
-  --portal-arch-w: min(38vw, 400px);
-  --portal-arch-h: min(76vh, 760px);
+  --portal-arch-h: min(74vh, 740px, 118vw);
+  --portal-arch-h: min(74dvh, 740px, 118vw);
+  --portal-arch-w: calc(var(--portal-arch-h) * 0.585);
 }
 
 .hero--portal {
@@ -138,7 +139,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(140px, 48%, 220px);
+  width: clamp(125px, 48%, 220px);
 }
 
 .hero__arch-badge img {
@@ -326,11 +327,6 @@
 }
 
 @media (max-width: 700px) {
-  :root {
-    --portal-arch-w: min(72vw, 290px);
-    --portal-arch-h: min(62vh, 540px);
-  }
-
   .hero__portal-top {
     top: 1rem;
     padding: 0 1.25rem;

@@ -1,7 +1,7 @@
 @import "../vendor/lenis/lenis.css";
-@import "./styles/tokens.css?v=resp7";
-@import "./styles/base.css?v=resp7";
-@import "./styles/components.css?v=resp7";
-@import "./styles/sections.css?v=resp8";
-@import "./styles/motion.css?v=resp7";
-@import "./styles/portal.css?v=resp7";
+@import "./styles/tokens.css?v=resp9";
+@import "./styles/base.css?v=resp9";
+@import "./styles/components.css?v=resp9";
+@import "./styles/sections.css?v=tablet-video2";
+@import "./styles/motion.css?v=resp9";
+@import "./styles/portal.css?v=arch10";

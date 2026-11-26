@@ -1,7 +1,7 @@
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { initMotion } from "./modules/motion.js"
 import { initHeroPortal } from "./modules/hero-portal.js?v=portal4"
-import { initPinnedStories } from "./modules/pinned.js?v=desktop-expand1"
+import { initPinnedStories } from "./modules/pinned.js?v=tablet-video1"
 import { initAboutReel } from "./modules/about-reel.js"
 import { initAmenities } from "./modules/amenities.js?v=headings3"
 import { initJournal } from "./modules/journal.js"

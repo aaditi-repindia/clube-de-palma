@@ -36,7 +36,7 @@ export function initPinnedStories() {
       const mm = gsap.matchMedia()
 
       // Desktop: video starts framed below CTA (no shadow) and expands to full screen on scroll
-      mm.add("(min-width: 721px)", () => {
+      mm.add("(min-width: 1025px)", () => {
         const getRestingMetrics = () => {
           const sRect = (stage || about).getBoundingClientRect()
           const cRect = (cta || content).getBoundingClientRect()
@@ -133,9 +133,32 @@ export function initPinnedStories() {
         }
       })
 
-      // Mobile: keep static intrinsic aspect-ratio video without fullscreen scroll expansion
-      mm.add("(max-width: 720px)", () => {
-        if (!video) return undefined
+      // Tablet, iPad & Mobile (<= 1024px): keep 100% width & auto height in original video ratio (no crop)
+      mm.add("(max-width: 1024px)", () => {
+        if (!reduced) {
+          gsap.fromTo(
+            walkthrough,
+            { scale: 0.9 },
+            {
+              scale: 1,
+              ease: "none",
+              transformOrigin: "center center",
+              scrollTrigger: {
+                trigger: walkthrough,
+                start: "top 92%",
+                end: "center center",
+                scrub: 0.3,
+              },
+            },
+          )
+        }
+
+        if (!video) {
+          return () => {
+            gsap.set(walkthrough, { clearProps: "transform" })
+          }
+        }
+
         const refreshLayout = () => ScrollTrigger.refresh()
         if (video.readyState >= 1) {
           refreshLayout()
@@ -144,6 +167,7 @@ export function initPinnedStories() {
         }
         return () => {
           video.removeEventListener("loadedmetadata", refreshLayout)
+          gsap.set(walkthrough, { clearProps: "transform" })
         }
       })
     }
