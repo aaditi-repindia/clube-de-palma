@@ -20,8 +20,20 @@ export function initAmenities() {
   track.innerHTML = amenities
     .map(
       (item, index) => {
-        const isDining = index < 3 || ["o bar azul", "sabores", "café verde", "cafe verde"].includes(item.name.toLowerCase())
-        const ctaLabel = isDining ? "Reserve a Table" : "Book Now"
+        const nameKey = item.name
+          .toLowerCase()
+          .normalize("NFKD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[\u2019\u2018\u02bc']/g, "")
+          .replace(/[^a-z0-9]+/g, " ")
+          .trim()
+        const isDining = ["o bar azul", "sabores", "cafe verde"].includes(nameKey)
+        const isExplore = [
+          "yoga garden",
+          "childrens play area",
+          "toddlers play area",
+        ].includes(nameKey)
+        const ctaLabel = isDining ? "Reserve a Table" : isExplore ? "Explore Now" : "Book Now"
         return `
       <article class="amenity-card" data-amenity-card data-index="${index}">
         <div class="amenity-card__fold" data-amenity-fold>

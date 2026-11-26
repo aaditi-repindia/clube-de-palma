@@ -195,13 +195,40 @@ export const amenityCategories = [
   },
 ]
 
+/** Homepage carousel sequence (names must match category items). */
+const homepageAmenityOrder = [
+  "O Bar Azul",
+  "Sabores",
+  "Café Verde",
+  "Pickleball",
+  "Tennis Ground",
+  "Squash",
+  "Badminton",
+  "Swimming Pools",
+  "Gymnasium",
+  "Yoga Garden",
+  "Billiards",
+  "Table Tennis",
+  "Cards Room",
+  "Kids’ Swimming Pool",
+  "Children’s Play Area",
+  "Toddlers’ Play Area",
+  "Kids’ Activities & Sport Lessons",
+]
+
+const amenityByName = new Map(
+  amenityCategories.flatMap((category) => category.items.map((item) => [item.name, item])),
+)
+
 /** Flat list for homepage carousel */
-export const amenities = amenityCategories.flatMap((category) =>
-  category.items.map((item) => ({
+export const amenities = homepageAmenityOrder
+  .map((name) => amenityByName.get(name))
+  .filter(Boolean)
+  .map((item) => ({
     name: item.name,
     blurb: item.cardBlurb || item.blurb,
     detail: item.features?.slice(0, 2).join(" · "),
     image: item.image,
     alt: item.alt,
-  })),
-)
+  }))
+
