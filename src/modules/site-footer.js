@@ -147,7 +147,7 @@ const FOOTER_HTML = `
           data-magnetic
         >
           <span class="footer__reveal-cta-text" data-magnetic-inner>
-            Become a member <span class="btn__arrow" aria-hidden="true">→</span>
+            Become A Member <span class="btn__arrow" aria-hidden="true">→</span>
           </span>
         </a>
       </div>
